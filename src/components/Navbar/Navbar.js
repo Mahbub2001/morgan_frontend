@@ -34,7 +34,7 @@ function Navbar() {
             </li>
           </ul>
           <h3 className="font-bold tracking-wider uppercase text-2xl font-sans cursor-pointer absolute left-1/2 transform -translate-x-1/2">
-            Ny Morgan
+            Ny Morgen
           </h3>
           <div className="flex gap-5">
             <CiSearch className="cursor-pointer" />
