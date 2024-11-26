@@ -1,4 +1,4 @@
-const categories = [
+export const categories = [
     {
       name: "Bags",
       items: [
@@ -37,4 +37,18 @@ const categories = [
     },
   ];
 
-export default categories;
+
+export const aboutNyItems = [
+  "Brand history",
+  "Meet our designer",
+  "Our Responsibility",
+  "Contact",
+  "Care instructions",
+];
+
+export const journalItems = [
+  "Stories",
+  "Decadent Community",
+  "Collections",
+  "Campaigns",
+];
