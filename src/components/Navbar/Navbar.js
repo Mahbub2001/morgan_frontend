@@ -4,14 +4,23 @@ import React, { useState, useEffect, useRef } from "react";
 import { CiSearch } from "react-icons/ci";
 import { FaShoppingBag } from "react-icons/fa";
 import { categories, aboutNyItems, journalItems } from "@/Data/Menu";
+import { useSpring, animated } from "@react-spring/web";
+import { HoverZoomImage } from "../ZoomImage/HoverZoomImage";
 
 const Dropdown = ({ title, items, isVisible, closeDropdown, dropdownRef }) => {
+  const animation = useSpring({
+    opacity: isVisible ? 1 : 0,
+    transform: isVisible ? "scaleY(1)" : "scaleY(0)",
+    config: { tension: 300, friction: 25 },
+  });
+
   if (!isVisible) return null;
 
   return (
-    <div
+    <animated.div
       ref={dropdownRef}
-      className="absolute left-0 right-0 mt-2 bg-white border-b-[1px] py-5"
+      style={animation}
+      className="absolute left-0 right-0 mt-2 bg-white border-b-[1px] py-5 origin-top"
     >
       <div className="container mx-auto flex justify-between px-40">
         <div className="flex-1">
@@ -28,25 +37,26 @@ const Dropdown = ({ title, items, isVisible, closeDropdown, dropdownRef }) => {
           </ul>
         </div>
       </div>
-    </div>
+    </animated.div>
   );
 };
 
 function Navbar() {
   const [activeDropdown, setActiveDropdown] = useState(null);
+  // const [styles, setStyles] = useSpring(() => ({
+  //   transform: "scale(1)",
+  //   config: { tension: 200, friction: 12 },
+  // }));
 
   const shopRef = useRef(null);
   const aboutNyRef = useRef(null);
   const journalRef = useRef(null);
-  const navbarRef = useRef(null); 
+  const navbarRef = useRef(null);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (
-        navbarRef.current &&
-        !navbarRef.current.contains(event.target) 
-      ) {
-        setActiveDropdown(null); 
+      if (navbarRef.current && !navbarRef.current.contains(event.target)) {
+        setActiveDropdown(null);
       }
     };
 
@@ -62,7 +72,10 @@ function Navbar() {
   };
 
   return (
-    <div className="border-b-[1px] py-8 flex-c justify-center items-center" ref={navbarRef}>
+    <div
+      className="border-b-[1px] py-8 flex-c justify-center items-center"
+      ref={navbarRef}
+    >
       <div className="container mx-auto">
         <div className="flex justify-between md:px-32 lg:px-40 items-center">
           <ul className="flex gap-8 text-[0.9rem]">
@@ -103,10 +116,18 @@ function Navbar() {
         </div>
       </div>
 
-      {/* Shop Dropdown */}
       {activeDropdown === "shop" && (
-        <div ref={shopRef} className="absolute left-0 right-0 mt-2 bg-white border-b-[1px] py-5">
-          <div className="container mx-auto flex justify-between px-40">
+        <animated.div
+          ref={shopRef}
+          style={{
+            opacity: activeDropdown === "shop" ? 1 : 0,
+            transform: activeDropdown === "shop" ? "scaleY(1)" : "scaleY(0)",
+            transition: "opacity 0.3s ease-out, transform 0.3s ease-out",
+            origin: "top",
+          }}
+          className="absolute left-0 right-0 mt-2 bg-white border-b-[1px] py-5"
+        >
+          <div className="container mx-auto grid grid-cols-7 gap-5 justify-between px-40">
             {categories.map((category) => (
               <div key={category.name} className="flex-1">
                 <p className="text-gray-700 text-sm">{category.name}</p>
@@ -122,11 +143,62 @@ function Navbar() {
                 </ul>
               </div>
             ))}
+            <div>
+              <p className="text-gray-700 text-sm">News!</p>
+              <ul className="space-y-2 mt-2">
+                <li className="text-[0.6rem]">
+                  <div className="relative overflow-hidden">
+                    <HoverZoomImage src="images/april1.jpeg" alt="news" />
+                  </div>
+                  <div className="">
+                    <div className="relative cursor-pointer gap-2 flex mt-2">
+                      <div className="w-3 h-3 bg-[#f6cda8] transition-all rounded-full block ring-[#f6cda8] hover:ring-2 ring-offset-1"></div>
+                      <div className="w-3 h-3 bg-[#d89d94] transition-all rounded-full block ring-[#d89d94] hover:ring-2 ring-offset-1"></div>
+                      <div className="w-3 h-3 bg-[#dd6b6c] transition-all rounded-full block ring-[#dd6b6c] hover:ring-2 ring-offset-1"></div>
+                      <div className="w-3 h-3 bg-[#875d71] transition-all rounded-full block ring-[#875d71] hover:ring-2 ring-offset-1"></div>
+                      <div className="w-3 h-3 bg-[#5b5b5b] transition-all rounded-full block ring-[#5b5b5b] hover:ring-2 ring-2 ring-offset-1"></div>
+                    </div>
+                    <div className="flex justify-between mt-3 mb-1 text-[0.7rem]">
+                      <p className="text-gray-700">APRIL</p>
+                      <p className="text-gray-700 line-through">DKK 2,850</p>
+                      <p className="text-red-700">DKK 2,250</p>
+                    </div>
+                    <p className="text-gray-500">Small Crossbody Bag-Mocha</p>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <p className="text-gray-700 text-sm">Trending</p>
+              <ul className="space-y-2 mt-2">
+                <li className="text-[0.6rem]">
+                  <div className="relative overflow-hidden">
+                    <HoverZoomImage src="images/april2.jpeg" alt="news" />
+                  </div>
+                  <div className="">
+                    <div className="relative cursor-pointer gap-2 flex mt-2">
+                      <div className="w-3 h-3 bg-[#f6cda8] transition-all rounded-full block ring-[#f6cda8] hover:ring-2 ring-offset-1"></div>
+                      <div className="w-3 h-3 bg-[#d89d94] transition-all rounded-full block ring-[#d89d94] hover:ring-2 ring-offset-1"></div>
+                      <div className="w-3 h-3 bg-[#dd6b6c] transition-all rounded-full block ring-[#dd6b6c] hover:ring-2 ring-offset-1"></div>
+                      <div className="w-3 h-3 bg-[#875d71] transition-all rounded-full block ring-[#875d71] hover:ring-2 ring-offset-1"></div>
+                      <div className="w-3 h-3 bg-[#5b5b5b] transition-all rounded-full block ring-[#5b5b5b] hover:ring-2 ring-2 ring-offset-1"></div>
+                      <div className="w-3 h-3 bg-[#a3ee77] transition-all rounded-full block ring-[#779410] hover:ring-2 ring-offset-1"></div>
+                      <div className="w-3 h-3 bg-[#bd2d2d] transition-all rounded-full block ring-[#cea1a1] hover:ring-2 ring-offset-1"></div>
+                    </div>
+                    <div className="flex justify-between mt-3 mb-1 text-[0.7rem]">
+                      <p className="text-gray-700">APRIL</p>
+                      <p className="text-gray-700 line-through">DKK 2,850</p>
+                      <p className="text-red-700">DKK 2,250</p>
+                    </div>
+                    <p className="text-gray-500">Small Crossbody Bag-Mocha</p>
+                  </div>
+                </li>
+              </ul>
+            </div>
           </div>
-        </div>
+        </animated.div>
       )}
 
-      {/* About Ny Dropdown */}
       {activeDropdown === "aboutNy" && (
         <Dropdown
           title="About Ny"
