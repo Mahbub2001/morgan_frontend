@@ -6,8 +6,8 @@ import { FaShoppingBag } from "react-icons/fa";
 import { categories, aboutNyItems, journalItems } from "@/Data/Menu";
 import { useSpring, animated } from "@react-spring/web";
 import { HoverZoomImage } from "../ZoomImage/HoverZoomImage";
-import { Dropdown } from "@/containers/common/DropDown_About/DropDownAbout";
-import { Dropdown2 } from "@/containers/common/DropDown_Journal/DropDownJournal";
+import Dropdown from "@/containers/common/DropDown_About/DropDownAbout";
+import Dropdown2 from "@/containers/common/DropDown_Journal/DropDownJournal";
 
 function Navbar() {
   const [activeDropdown, setActiveDropdown] = useState(null);
@@ -40,7 +40,7 @@ function Navbar() {
       ref={navbarRef}
     >
       <div className="container mx-auto">
-        <div className="flex justify-between md:px-32 lg:px-40 items-center">
+        <div className="flex justify-between md:px-24 lg:px-32 items-center">
           <ul className="flex gap-8 text-[0.9rem]">
             <li
               onClick={() => toggleDropdown("shop")}
@@ -90,7 +90,7 @@ function Navbar() {
           }}
           className="absolute left-0 right-0 mt-2 bg-white border-b-[1px] py-5"
         >
-          <div className="container mx-auto grid grid-cols-7 gap-5 justify-between px-40">
+          <div className="container mx-auto grid grid-cols-7 gap-5 justify-between md:px-24 lg:px-32 ">
             {categories.map((category) => (
               <div key={category.name} className="flex-1">
                 <p className="text-gray-700 text-sm">{category.name}</p>
@@ -161,7 +161,6 @@ function Navbar() {
           </div>
         </animated.div>
       )}
-
       {activeDropdown === "aboutNy" && (
         <Dropdown
           title="About Ny"

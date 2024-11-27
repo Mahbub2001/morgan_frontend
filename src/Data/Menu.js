@@ -43,7 +43,7 @@ export const aboutNyItems = [
   "Meet our designer",
   "Our Responsibility",
   "Contact",
-  "Care instructions",
+  "Inspiration",
 ];
 
 export const journalItems = [
