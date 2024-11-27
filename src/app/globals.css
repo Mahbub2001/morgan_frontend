@@ -32,3 +32,22 @@ p {
   font-family: var(--font-open-sans);
   font-weight: 300;
 }
+
+
+/* @media (max-width: 1150px) {
+  .main-navbar {
+    display: none;
+  }
+  .mobile-sidebar {
+    display: block;
+  }
+}
+
+@media (min-width: 1151px) {
+  .main-navbar {
+    display: block;
+  }
+  .mobile-sidebar {
+    display: none;
+  }
+} */
