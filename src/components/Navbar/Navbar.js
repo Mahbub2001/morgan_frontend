@@ -11,6 +11,7 @@ import Dropdown2 from "@/containers/common/DropDown_Journal/DropDownJournal";
 
 function Navbar() {
   const [activeDropdown, setActiveDropdown] = useState(null);
+  const [activeMenu, setActiveMenu] = useState(null); 
   const shopRef = useRef(null);
   const aboutNyRef = useRef(null);
   const journalRef = useRef(null);
@@ -20,6 +21,7 @@ function Navbar() {
     const handleClickOutside = (event) => {
       if (navbarRef.current && !navbarRef.current.contains(event.target)) {
         setActiveDropdown(null);
+        setActiveMenu(null);
       }
     };
 
@@ -32,6 +34,7 @@ function Navbar() {
 
   const toggleDropdown = (dropdownName) => {
     setActiveDropdown(activeDropdown === dropdownName ? null : dropdownName);
+    setActiveMenu(dropdownName);
   };
 
   return (
@@ -44,25 +47,35 @@ function Navbar() {
           <ul className="flex gap-8 text-[0.9rem]">
             <li
               onClick={() => toggleDropdown("shop")}
-              className="cursor-pointer border-b-2 border-transparent hover:border-black"
+              className={`cursor-pointer border-b-2 ${
+                activeMenu === "shop" ? "border-black" : "border-transparent"
+              } hover:border-black`}
             >
               Shop
             </li>
             <li
               onClick={() => toggleDropdown("showroom")}
-              className="cursor-pointer border-b-2 border-transparent hover:border-black"
+              className={`cursor-pointer border-b-2 ${
+                activeMenu === "showroom"
+                  ? "border-black"
+                  : "border-transparent"
+              } hover:border-black`}
             >
               Showroom
             </li>
             <li
               onClick={() => toggleDropdown("aboutNy")}
-              className="cursor-pointer border-b-2 border-transparent hover:border-black"
+              className={`cursor-pointer border-b-2 ${
+                activeMenu === "aboutNy" ? "border-black" : "border-transparent"
+              } hover:border-black`}
             >
               About Ny
             </li>
             <li
               onClick={() => toggleDropdown("journal")}
-              className="cursor-pointer border-b-2 border-transparent hover:border-black"
+              className={`cursor-pointer border-b-2 ${
+                activeMenu === "journal" ? "border-black" : "border-transparent"
+              } hover:border-black`}
             >
               Journal
             </li>
