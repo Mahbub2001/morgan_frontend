@@ -40,21 +40,21 @@ function Navbar() {
 
   return (
     <div>
-      <div className="bg-black text-white flex hidden flex-col justify-center items-center">
+      <div className="bg-black text-white upper flex flex-col justify-center items-center">
         <p className="py-2 tracking-widest text-sm">
           BLACK WEEK- SAVE 20% ON EVERYTHING
         </p>
       </div>
-      <div className="bg-gray-100 flex flex-col hidden justify-center items-center">
+      <div className="bg-gray-100 upper flex flex-col justify-center items-center">
         <p className="py-2 tracking-wider text-sm">
           Free shipping / Christmas gifts are exchanged empty 15-01-25 / Easy
           return
         </p>
       </div>
       <div className="border-b-[1px] py-8 " ref={navbarRef}>
-        <div className="hidden">
+        <div className="main-navbar">
           <div className="container mx-auto">
-            <div className="flex justify-between md:px-24 lg:px-32 items-center">
+            <div className="flex justify-between items-center">
               <ul className="flex gap-8 text-[0.9rem]">
                 <li
                   onClick={() => toggleDropdown("shop")}
@@ -121,7 +121,7 @@ function Navbar() {
               }}
               className="absolute left-0 right-0 mt-2 bg-white border-b-[1px] py-5"
             >
-              <div className="container mx-auto grid grid-cols-7 gap-5 justify-between md:px-24 lg:px-32 ">
+              <div className="container mx-auto grid grid-cols-7 gap-5 justify-between">
                 {categories.map((category) => (
                   <div key={category.name} className="flex-1">
                     <p className="text-gray-700 text-sm">{category.name}</p>
@@ -221,7 +221,7 @@ function Navbar() {
           )}
         </div>
       </div>
-      <div>
+      <div className="mobile-sidebar">
         <Sidebar />
       </div>
     </div>

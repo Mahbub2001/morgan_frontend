@@ -34,20 +34,26 @@ p {
 }
 
 
-/* @media (max-width: 1150px) {
+@media (max-width: 1050px) {
   .main-navbar {
     display: none;
   }
   .mobile-sidebar {
     display: block;
+  }
+  .upper{
+    display: none
   }
 }
 
-@media (min-width: 1151px) {
+@media (min-width: 1051px) {
   .main-navbar {
     display: block;
   }
   .mobile-sidebar {
     display: none;
   }
-} */
+  .upper{
+    display: flex
+  }
+}

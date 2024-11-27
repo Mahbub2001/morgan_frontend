@@ -77,7 +77,17 @@ const Sidebar = () => {
           <FiSearch />
         </button>
       </header>
-
+      <div className="bg-black text-white  flex flex-col justify-center items-center">
+        <p className="py-2 tracking-widest text-xs">
+          BLACK WEEK- SAVE 20% ON EVERYTHING
+        </p>
+      </div>
+      <div className="bg-gray-100 text-center flex flex-col justify-center items-center">
+        <p className="py-2 tracking-wider text-xs">
+          Free shipping / Christmas gifts are exchanged empty 15-01-25 / Easy
+          return
+        </p>
+      </div>
       <animated.div
         style={sidebarSpring}
         className={`fixed top-16 left-0 h-[calc(100%-4rem)] w-72 bg-white shadow-lg z-40`}

@@ -17,7 +17,7 @@ const Dropdown = ({ title, items, isVisible, closeDropdown, dropdownRef }) => {
       style={animation}
       className="absolute left-0 right-0 mt-2 bg-white border-b-[1px] py-5 origin-top"
     >
-      <div className="container mx-auto flex justify-between md:px-24 lg:px-32 ">
+      <div className="container mx-auto flex justify-between ">
         <div>
           <p className="text-gray-700 text-sm">{title}</p>
           <ul className="space-y-2 mt-2">
