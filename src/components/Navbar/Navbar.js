@@ -6,48 +6,11 @@ import { FaShoppingBag } from "react-icons/fa";
 import { categories, aboutNyItems, journalItems } from "@/Data/Menu";
 import { useSpring, animated } from "@react-spring/web";
 import { HoverZoomImage } from "../ZoomImage/HoverZoomImage";
-
-const Dropdown = ({ title, items, isVisible, closeDropdown, dropdownRef }) => {
-  const animation = useSpring({
-    opacity: isVisible ? 1 : 0,
-    transform: isVisible ? "scaleY(1)" : "scaleY(0)",
-    config: { tension: 300, friction: 25 },
-  });
-
-  if (!isVisible) return null;
-
-  return (
-    <animated.div
-      ref={dropdownRef}
-      style={animation}
-      className="absolute left-0 right-0 mt-2 bg-white border-b-[1px] py-5 origin-top"
-    >
-      <div className="container mx-auto flex justify-between px-40">
-        <div className="flex-1">
-          <p className="text-gray-700 text-sm">{title}</p>
-          <ul className="space-y-2 mt-2">
-            {items.map((item, index) => (
-              <li
-                key={index}
-                className="text-sm font-light cursor-pointer hover:bg-gray-200"
-              >
-                {item}
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
-    </animated.div>
-  );
-};
+import { Dropdown } from "@/containers/common/DropDown_About/DropDownAbout";
+import { Dropdown2 } from "@/containers/common/DropDown_Journal/DropDownJournal";
 
 function Navbar() {
   const [activeDropdown, setActiveDropdown] = useState(null);
-  // const [styles, setStyles] = useSpring(() => ({
-  //   transform: "scale(1)",
-  //   config: { tension: 200, friction: 12 },
-  // }));
-
   const shopRef = useRef(null);
   const aboutNyRef = useRef(null);
   const journalRef = useRef(null);
@@ -210,7 +173,7 @@ function Navbar() {
       )}
 
       {activeDropdown === "journal" && (
-        <Dropdown
+        <Dropdown2
           title="Journal"
           items={journalItems}
           isVisible={activeDropdown === "journal"}
