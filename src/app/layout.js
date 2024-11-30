@@ -7,6 +7,8 @@ import Footer from "@/components/Footer/Footer";
 const openSans = Open_Sans({
   subsets: ["latin"],
   variable: "--font-open-sans",
+  adjustFontFallback: false,
+  display: 'swap',
   weight: ["500", "700"],
 });
 
