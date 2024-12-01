@@ -166,16 +166,20 @@ export const categories = [
 ];
 
 export const aboutNyItems = [
-  "Brand history",
-  "Meet our designer",
+  "About Ny Morgen",
   "Our Responsibility",
+  "Our Sustainability",
   "Contact",
-  "Inspiration",
 ];
 
 export const journalItems = [
-  "Stories",
-  "Decadent Community",
-  "Collections",
+  "History Of Design",
+  "Bags,Belt,Accessories",
+  "Moments Of Production",
+  "Achievements",
   "Campaigns",
+];
+export const Inspiration = [
+  "Upcoming Design",
+
 ];

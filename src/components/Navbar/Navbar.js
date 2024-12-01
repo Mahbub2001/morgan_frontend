@@ -1,9 +1,14 @@
-'use client'
+"use client";
 
 import React, { useState, useEffect, useRef } from "react";
 import { CiSearch } from "react-icons/ci";
 import { FaShoppingBag } from "react-icons/fa";
-import { categories, aboutNyItems, journalItems } from "@/Data/Menu";
+import {
+  categories,
+  aboutNyItems,
+  journalItems,
+  Inspiration,
+} from "@/Data/Menu";
 import { useSpring, animated } from "@react-spring/web";
 import Dropdown from "@/containers/common/DropDown_About/DropDownAbout";
 import Dropdown2 from "@/containers/common/DropDown_Journal/DropDownJournal";
@@ -19,7 +24,7 @@ function Navbar() {
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (navbarRef.current && !navbarRef.current.contains(event.target)) {
-        setActiveDropdown(null);  
+        setActiveDropdown(null);
       }
     };
 
@@ -32,9 +37,9 @@ function Navbar() {
 
   const toggleDropdown = (dropdownName) => {
     if (activeDropdown === dropdownName) {
-      setActiveDropdown(null); 
+      setActiveDropdown(null);
     } else {
-      setActiveDropdown(dropdownName); 
+      setActiveDropdown(dropdownName);
     }
   };
 
@@ -60,24 +65,24 @@ function Navbar() {
                   Shop
                 </li>
                 <li
-                  onClick={() => toggleDropdown("showroom")}
+                  onClick={() => toggleDropdown("contact")}
                   className={`cursor-pointer border-b-2 ${
-                    activeDropdown === "showroom"
+                    activeDropdown === "contact"
                       ? "border-black"
                       : "border-transparent"
                   } hover:border-black`}
                 >
-                  Showroom
+                  Contact
                 </li>
                 <li
-                  onClick={() => toggleDropdown("aboutNy")}
+                  onClick={() => toggleDropdown("discover")}
                   className={`cursor-pointer border-b-2 ${
-                    activeDropdown === "aboutNy"
+                    activeDropdown === "discover"
                       ? "border-black"
                       : "border-transparent"
                   } hover:border-black`}
                 >
-                  About Ny
+                  Discover
                 </li>
                 <li
                   onClick={() => toggleDropdown("journal")}
@@ -88,6 +93,16 @@ function Navbar() {
                   } hover:border-black`}
                 >
                   Journal
+                </li>
+                <li
+                  onClick={() => toggleDropdown("inspiration")}
+                  className={`cursor-pointer border-b-2 ${
+                    activeDropdown === "inspiration"
+                      ? "border-black"
+                      : "border-transparent"
+                  } hover:border-black`}
+                >
+                  New Inspiration
                 </li>
               </ul>
               {/* Logo */}
@@ -102,7 +117,10 @@ function Navbar() {
             </div>
           </div>
 
-          {(activeDropdown === "Shop" || activeDropdown === "women" || activeDropdown === "men" || activeDropdown === "kids") && (
+          {(activeDropdown === "Shop" ||
+            activeDropdown === "women" ||
+            activeDropdown === "men" ||
+            activeDropdown === "kids") && (
             <div className="container mx-auto">
               <div className="flex gap-10 mt-5 font-thin text-sm">
                 <li
@@ -136,6 +154,35 @@ function Navbar() {
                   Kids
                 </li>
               </div>
+              <animated.div className="absolute left-0 right-0 mt-2 bg-white border-b-[1px] py-5">
+                <div className="container mx-auto">
+                  <div className="grid grid-cols-12 gap-5">
+                    <div className="col-span-8">
+                      <div className="grid grid-cols-3 gap-5">
+                        {categories[0].items.map((category) => (
+                          <div key={category.category}>
+                            <p className="text-gray-700 text-sm font-semibold">
+                              {category.category}
+                            </p>
+                            <ul className="space-y-2 mt-2">
+                              {category.items.map((item, index) => (
+                                <li
+                                  key={index}
+                                  className="text-sm font-light cursor-pointer hover:bg-gray-200"
+                                >
+                                  {item}
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                    <News />
+                    <Latest />
+                  </div>
+                </div>
+              </animated.div>
             </div>
           )}
 
@@ -235,11 +282,11 @@ function Navbar() {
             </animated.div>
           )}
 
-          {activeDropdown === "aboutNy" && (
+          {activeDropdown === "discover" && (
             <Dropdown
-              title="About Ny"
+              title="Discover"
               items={aboutNyItems}
-              isVisible={activeDropdown === "aboutNy"}
+              isVisible={activeDropdown === "discover"}
               closeDropdown={() => setActiveDropdown(null)}
             />
           )}
@@ -249,6 +296,14 @@ function Navbar() {
               title="Journal"
               items={journalItems}
               isVisible={activeDropdown === "journal"}
+              closeDropdown={() => setActiveDropdown(null)}
+            />
+          )}
+          {activeDropdown === "inspiration" && (
+            <Dropdown2
+              title="Inspiration"
+              items={Inspiration}
+              isVisible={activeDropdown === "inspiration"}
               closeDropdown={() => setActiveDropdown(null)}
             />
           )}
