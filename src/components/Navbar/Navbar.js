@@ -16,6 +16,7 @@ import Sidebar from "../SideBar/SideBar";
 import Announcement from "../Announcement/Announcement";
 import News from "../NewsPage/News";
 import Latest from "../LatestPage/Latest";
+import Link from "next/link";
 
 function Navbar() {
   const [activeDropdown, setActiveDropdown] = useState(null);
@@ -64,16 +65,17 @@ function Navbar() {
                 >
                   Shop
                 </li>
-                <li
+                <Link
                   onClick={() => toggleDropdown("contact")}
                   className={`cursor-pointer border-b-2 ${
                     activeDropdown === "contact"
                       ? "border-black"
                       : "border-transparent"
                   } hover:border-black`}
+                  href="/contact"
                 >
                   Contact
-                </li>
+                </Link>
                 <li
                   onClick={() => toggleDropdown("discover")}
                   className={`cursor-pointer border-b-2 ${
@@ -106,9 +108,9 @@ function Navbar() {
                 </li>
               </ul>
               {/* Logo */}
-              <h3 className="font-bold tracking-wider uppercase text-2xl font-sans cursor-pointer absolute left-1/2 transform -translate-x-1/2">
+              <Link href="/" className="font-bold tracking-wider uppercase text-2xl font-sans cursor-pointer absolute left-1/2 transform -translate-x-1/2">
                 Ny Morgen
-              </h3>
+              </Link>
 
               <div className="flex gap-5">
                 <CiSearch className="cursor-pointer" />

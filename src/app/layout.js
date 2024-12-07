@@ -22,7 +22,9 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={`${openSans.variable} antialiased font-sans`}>
         <Navbar/>
+        <div className="min-h-screen mt-44">
         {children}
+        </div>
         <Footer/>
       </body>
     </html>

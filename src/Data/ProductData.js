@@ -32,3 +32,51 @@ export const productData = [
       colors: ['#000000', '#5F5F5F', '#B3B3B3'],
     },
   ];
+
+
+  export const accessories = [
+    {
+      image: '/images/ac1.jpg',
+      imageHover: '/images/ac2.jpg',
+      title: 'HEART',
+      description: 'Key ring - Cognac',
+      price: '450 kr.',
+      colors: ['#8B4513', '#A0522D', '#D2B48C','#D3B48C'],
+    },
+    {
+      image: '/images/ac3.jpg',
+      imageHover: '/images/ac3.jpg',
+      title: 'ELINA',
+      description: 'Key ring - Black',
+      price: '350 kr.',
+      colors: ['#000000', '#4F4F4F', '#A9A9A9','#A6A9A9'],
+    },
+    {
+      image: '/images/ac4.jpg',
+      imageHover: '/images/ac5.jpg',
+      title: 'ESTHER',
+      description: 'Medium wallet - Mocha',
+      price: '1,150 kr.',
+      colors: ['#4E342E', '#795548', '#D7CCC8','#D7CCC0'],
+    },
+    {
+      image: '/images/ac6.jpg',
+      imageHover: '/images/ac7.jpg',
+      title: 'HEART',
+      description: 'Key ring - Suede Tan',
+      price: '450 kr.',
+      colors: ['#D2B48C', '#C19A6B', '#F5DEB3'],
+    },
+  ];
+  
+
+  export const insta = [
+    "/images/ac1.jpg",
+    "/images/ac2.jpg",
+    "/images/ac3.jpg",
+    "/images/ac4.jpg",
+    "/images/ac5.jpg",
+    "/images/ac6.jpg",
+    "/images/ac7.jpg",
+    "/images/ac2.jpg",
+  ];

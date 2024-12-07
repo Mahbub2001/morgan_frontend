@@ -1,7 +1,9 @@
+import Accessories from "@/components/Accessories/Accessories";
 import BannerFirstPage from "@/components/BannerFirstPage/BannerFirstPage";
 import Compromising from "@/components/Compromising/Compromising";
 import CrossbodyBags from "@/components/CrossBodyBags/CrossBodyBags";
 import Forside from "@/components/Forside/Forside";
+import LandingInsta from "@/components/Instagram/LandingInsta";
 import SecondBanner from "@/components/SecondBanner/SecondBanner";
 import SelectedFavor from "@/components/SelectedFavor/SelectedFavor";
 import SelectedSuede from "@/components/SelectedSuede/SelectedSuede";
@@ -28,6 +30,8 @@ export default function Home() {
       <SelectedSuede/>
       <CrossbodyBags />
       <Forside/>
+      <Accessories />
+      <LandingInsta />
     </div>
   );
 }
