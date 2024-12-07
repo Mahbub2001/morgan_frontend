@@ -164,15 +164,15 @@ function Navbar() {
                         {categories[0].items.map((category) => (
                           <div key={category.category}>
                             <p className="text-gray-700 text-sm font-semibold">
-                              {category.category}
+                              {category?.category?.name}
                             </p>
                             <ul className="space-y-2 mt-2">
-                              {category.items.map((item, index) => (
+                              {category?.items.map((item, index) => (
                                 <li
                                   key={index}
                                   className="text-sm font-light cursor-pointer hover:bg-gray-200"
                                 >
-                                  {item}
+                                  {item?.name}
                                 </li>
                               ))}
                             </ul>
@@ -197,7 +197,7 @@ function Navbar() {
                       {categories[0].items.map((category) => (
                         <div key={category.category}>
                           <p className="text-gray-700 text-sm font-semibold">
-                            {category.category}
+                            {category?.category?.name}
                           </p>
                           <ul className="space-y-2 mt-2">
                             {category.items.map((item, index) => (
@@ -205,7 +205,7 @@ function Navbar() {
                                 key={index}
                                 className="text-sm font-light cursor-pointer hover:bg-gray-200"
                               >
-                                {item}
+                                {item?.name}
                               </li>
                             ))}
                           </ul>
@@ -229,7 +229,7 @@ function Navbar() {
                       {categories[1].items.map((category) => (
                         <div key={category.category}>
                           <p className="text-gray-700 text-sm font-semibold">
-                            {category.category}
+                            {category.category?.name}
                           </p>
                           <ul className="space-y-2 mt-2">
                             {category.items.map((item, index) => (
@@ -237,7 +237,7 @@ function Navbar() {
                                 key={index}
                                 className="text-sm font-light cursor-pointer hover:bg-gray-200"
                               >
-                                {item}
+                                {item?.name}
                               </li>
                             ))}
                           </ul>
@@ -261,7 +261,7 @@ function Navbar() {
                       {categories[2].items.map((category) => (
                         <div key={category.category}>
                           <p className="text-gray-700 text-sm font-semibold">
-                            {category.category}
+                            {category?.category?.name}
                           </p>
                           <ul className="space-y-2 mt-2">
                             {category.items.map((item, index) => (
@@ -269,7 +269,7 @@ function Navbar() {
                                 key={index}
                                 className="text-sm font-light cursor-pointer hover:bg-gray-200"
                               >
-                                {item}
+                                {item?.name}
                               </li>
                             ))}
                           </ul>

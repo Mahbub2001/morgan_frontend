@@ -1,6 +1,7 @@
 // components/Dropdown.js
 import React from "react";
 import { useSpring, animated } from "@react-spring/web";
+import Link from "next/link";
 
 const Dropdown = ({ title, items, isVisible, closeDropdown, dropdownRef }) => {
   const animation = useSpring({
@@ -22,12 +23,13 @@ const Dropdown = ({ title, items, isVisible, closeDropdown, dropdownRef }) => {
           <p className="text-gray-700 text-sm">{title}</p>
           <ul className="space-y-2 mt-2">
             {items.map((item, index) => (
-              <li
+              <Link 
+                href={item?.link}
                 key={index}
-                className="text-sm font-light cursor-pointer hover:bg-gray-200"
+                className="block text-sm font-light cursor-pointer hover:bg-gray-200"
               >
-                {item}
-              </li>
+                {item?.name}
+              </Link>
             ))}
           </ul>
         </div>

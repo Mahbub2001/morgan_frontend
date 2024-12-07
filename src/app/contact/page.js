@@ -23,9 +23,9 @@ function Contact() {
 
       <div className="flex flex-col md:flex-row items-center justify-between gap-12 mt-16">
         <div className="w-full md:w-1/2">
+        <h3 className="text-2xl font-bold">Contact Information</h3>
           {[1, 2, 3].map((_, index) => (
             <div key={index} className="mt-8">
-              <h3 className="text-2xl font-bold">Contact Information</h3>
               <p className="font-sans font-light text-sm">Karina Mundt Holst</p>
               <p className="font-sans font-light text-sm">
                 Owner and Creative Director

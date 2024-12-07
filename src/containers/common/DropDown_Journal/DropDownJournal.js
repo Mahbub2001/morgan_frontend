@@ -26,7 +26,7 @@ const Dropdown2 = ({ title, items, isVisible, closeDropdown, dropdownRef }) => {
                   key={index}
                   className="text-sm font-light cursor-pointer hover:bg-gray-200"
                 >
-                  {item}
+                  {item?.name}
                 </li>
               ))}
             </ul>
