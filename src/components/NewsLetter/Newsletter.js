@@ -5,10 +5,10 @@ import React, { useState } from "react";
 const Newsletter = () => {
   const [email, setEmail] = useState("");
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    alert(`Email Registered: ${email}`);
-  };
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   alert(`Email Registered: ${email}`);
+  // };
 
   return (
     <div className="bg-gray-100">
@@ -31,7 +31,7 @@ const Newsletter = () => {
           first order!
         </p>
         <form
-          onSubmit={handleSubmit}
+          // onSubmit={handleSubmit}
           className="flex flex-col md:flex-row items-center w-full max-w-md border-b-[1px] border-black"
         >
           <input

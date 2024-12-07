@@ -44,7 +44,7 @@ function Navbar() {
   };
 
   return (
-    <div>
+    <div className="fixed top-0 left-0 w-full z-50 bg-white shadow-lg">
       <Announcement />
       <div className="border-b-[1px] py-8" ref={navbarRef}>
         <div className="main-navbar">

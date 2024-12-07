@@ -1,0 +1,86 @@
+.frame2 {
+    width: 90%;
+    /* margin: 40px auto; */
+    /* text-align: center; */
+  }
+  .bbn2 {
+    /* margin: 20px; */
+    outline: none;
+  }
+  .custom-btn2 {
+    width: 130px;
+    height: 35px;
+    padding: 10px 20px;
+    border: 2px solid black;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    display: inline-block;
+  }
+  
+ 
+  
+  /* 32 */
+  .btn-32 {
+    line-height: 30px;
+    padding: 0;
+  }
+  .btn-32:hover{
+    background: transparent;
+    color: black;
+  }
+  .btn-32 span {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+  .btn-32:before,
+  .btn-32:after {
+    position: absolute;
+    content: "";
+    left: 0;
+    top: 0;
+    background: black;
+    transition: all 0.3s ease;
+  }
+  .btn-32:before {
+    height: 0%;
+    width: 2px;
+  }
+  .btn-32:after {
+    width: 0%;
+    height: 2px;
+  }
+  .btn-32:hover:before {
+    height: 100%;
+  }
+  .btn-32:hover:after {
+    width: 100%;
+  }
+  .btn-32 span:before,
+  .btn-32 span:after {
+    position: absolute;
+    content: "";
+    right: 0;
+    bottom: 0;
+    background: black;
+    transition: all 0.3s ease;
+  }
+  .btn-32 span:before {
+    width: 2px;
+    height: 0%;
+  }
+  .btn-32 span:after {
+    width: 0%;
+    height: 2px;
+  }
+  .btn-32 span:hover:before {
+    height: 100%;
+  }
+  .btn-32 span:hover:after {
+    width: 100%;
+  }
+  
+ 

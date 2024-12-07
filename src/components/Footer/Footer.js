@@ -6,7 +6,7 @@ import FooterLast from "../FooterLast/FooterLast";
 function Footer() {
   
   return (
-    <footer>
+    <div>
       <Newsletter/>
       <div className="bg-gradient-to-r from-gray-100 via-[#f1f2f2] to-gray-100">
         <div className="max-w-screen-xl px-4 py-16 mx-auto sm:px-6 lg:px-8">
@@ -106,7 +106,7 @@ function Footer() {
         </div>
       </div>
       <FooterLast/>
-    </footer>
+    </div>
   );
 }
 
