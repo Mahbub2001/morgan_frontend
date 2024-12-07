@@ -1,6 +1,7 @@
 import BannerFirstPage from "@/components/BannerFirstPage/BannerFirstPage";
 import Compromising from "@/components/Compromising/Compromising";
 import CrossbodyBags from "@/components/CrossBodyBags/CrossBodyBags";
+import Forside from "@/components/Forside/Forside";
 import SecondBanner from "@/components/SecondBanner/SecondBanner";
 import SelectedFavor from "@/components/SelectedFavor/SelectedFavor";
 import SelectedSuede from "@/components/SelectedSuede/SelectedSuede";
@@ -26,6 +27,7 @@ export default function Home() {
       <SecondBanner />
       <SelectedSuede/>
       <CrossbodyBags />
+      <Forside/>
     </div>
   );
 }
