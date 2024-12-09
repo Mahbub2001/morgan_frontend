@@ -1,0 +1,127 @@
+.inputBox {
+  position: relative;
+  width: 25rem;
+}
+.inputBox .input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid white;
+  border-radius: 5px;
+  background: white;
+  outline: none;
+  color: black;
+  font-size: 1em;
+  outline: 1px solid gray;
+  transition: 0.5s;
+}
+.inputBox span {
+  position: absolute;
+  left: 0;
+  padding: 8px;
+  pointer-events: none;
+  font-size: 1em;
+  font-weight: 100;
+  color: black;
+  text-transform: uppercase;
+  transition: 0.5s;
+}
+.inputBox .input:focus ~ span,
+.inputBox .input:not(:placeholder-shown) ~ span {
+  color: black;
+  transform: translateX(10px) translateY(-7px);
+  font-size: 0.65em;
+  padding: 0 10px;
+  background-color: white;
+  color: gray;
+  border-radius: 2px;
+  letter-spacing: 0.2em;
+}
+.inputBox input:valid,
+.inputBox input:focus {
+  border: 1px solid gray;
+  outline: none;
+}
+
+.wrapper button {
+  display: block;
+  width: 25rem;
+  height: 40px;
+  line-height: 40px;
+  font-size: 18px;
+  font-family: sans-serif;
+  text-decoration: none;
+  color: white;
+  border: 1px solid #be8359;
+  background-color: #be8359;
+  letter-spacing: 2px;
+  text-align: center;
+  position: relative;
+  transition: all 0.35s;
+}
+
+.wrapper button span {
+  position: relative;
+  z-index: 2;
+}
+
+.wrapper button:after {
+  position: absolute;
+  content: "";
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  background: white;
+  transition: all 0.35s;
+  color: black;
+}
+
+.wrapper button:hover {
+  color: #be8359;
+  font-weight: 100;
+}
+
+.wrapper button:hover:after {
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .inputBox {
+    width: 95%;
+  }
+  .wrapper button {
+    width: 95%;
+  }
+  .ff {
+    font-size: 1rem;
+  }
+
+  .inputBox .input {
+    font-size: 0.9em;
+  }
+
+  .inputBox span {
+    font-size: 0.9em;
+  }
+}
+
+@media (max-width: 480px) {
+  .inputBox {
+    width: 100%;
+  }
+  .wrapper button {
+    width: 100%;
+  }
+  .ff {
+    font-size: 1rem;
+  }
+
+  .inputBox .input {
+    font-size: 0.8em;
+    padding: 10px;
+  }
+
+  .inputBox span {
+    font-size: 0.8em;
+  }
+}

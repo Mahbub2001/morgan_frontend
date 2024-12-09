@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { CiSearch } from "react-icons/ci";
+import { GoPerson } from "react-icons/go";
 import { FaShoppingBag } from "react-icons/fa";
 import {
   categories,
@@ -45,7 +46,7 @@ function Navbar() {
   };
 
   return (
-    <div className="fixed top-0 left-0 w-full z-50 bg-white shadow-lg">
+    <div className="fixed top-0 left-0 w-full z-50 bg-white shadow-sm">
       <Announcement />
       <div className="border-b-[1px] py-8" ref={navbarRef}>
         <div className="main-navbar">
@@ -115,6 +116,7 @@ function Navbar() {
               <div className="flex gap-5">
                 <CiSearch className="cursor-pointer" />
                 <FaShoppingBag className="cursor-pointer" />
+                <Link href="/login" className="cursor-pointer"><GoPerson/></Link>
               </div>
             </div>
           </div>
