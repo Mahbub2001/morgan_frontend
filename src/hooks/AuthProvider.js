@@ -56,19 +56,38 @@ const AuthProvider = ({ children }) => {
   };
 
   // Email Verification
-  const verifyEmail = async () => {
-    try {
-      if (!auth.currentUser) {
-        throw new Error("No user is currently signed in.");
-      }
-      await sendEmailVerification(auth.currentUser);
-      console.log("Verification email sent.");
-    } catch (error) {
-      console.error("Error sending verification email:", error);
-      throw error;
-    }
-  };
 
+  // const verifyEmail = async () => {
+  //   try {
+  //     if (!auth.currentUser) {
+  //       throw new Error("No user is currently signed in.");
+  //     }
+  //     await sendEmailVerification(auth.currentUser);
+  //     console.log("Verification email sent.");
+  //   } catch (error) {
+  //     console.error("Error sending verification email:", error);
+  //     throw error;
+  //   }
+  // };
+  // Email Verification
+const verifyEmail = async () => {
+  try {
+    if (!auth.currentUser) {
+      throw new Error("No user is currently signed in.");
+    }
+    const actionCodeSettings = {
+      url: `${window.location.origin}/verify`,
+      handleCodeInApp: true,
+    };
+    await sendEmailVerification(auth.currentUser, actionCodeSettings);
+    console.log("Verification email sent.");
+  } catch (error) {
+    console.error("Error sending verification email:", error);
+    throw error;
+  }
+};
+
+  
   // Update User Profile
   const updateUserProfile = async (name, photo) => {
     try {
@@ -116,29 +135,53 @@ const AuthProvider = ({ children }) => {
   };
 
   // Login with Password
+  // const signin = async (email, password) => {
+  //   try {
+  //     setLoading(true);
+  //     const userCredential = await signInWithEmailAndPassword(
+  //       auth,
+  //       email,
+  //       password
+  //     );
+  //     if (!user.emailVerified) {
+  //       await signOut(auth);
+  //       alert("Email not verified. Please check your inbox.");
+  //     }
+  //     const token = await userCredential.user.getIdToken();
+  //     setCookie("ny-token", token, { expires: 7 });
+  //     return userCredential;
+  //   } catch (error) {
+  //     console.error("Error signing in:", error);
+  //     throw error;
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+
   const signin = async (email, password) => {
     try {
       setLoading(true);
-      const userCredential = await signInWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-      if (!user.emailVerified) {
+  
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+      if (!user || !user.emailVerified) {
         await signOut(auth); 
-        // throw new Error("Email not verified. Please check your inbox.");
-        alert("Email not verified. Please check your inbox.");
+        removeCookie("ny-token");
+        alert("Email not verified. Please check your inbox to verify your email.");
+        // throw new Error("Email not verified");
       }
-      const token = await userCredential.user.getIdToken();
+      const token = await user.getIdToken();
       setCookie("ny-token", token, { expires: 7 });
-      return userCredential;
+  
+      return userCredential; 
     } catch (error) {
       console.error("Error signing in:", error);
-      throw error;
+      throw error; 
     } finally {
-      setLoading(false);
+      setLoading(false); 
     }
   };
+  
 
   // Reset Password
   const resetPassword = async (email) => {
@@ -156,19 +199,20 @@ const AuthProvider = ({ children }) => {
   // Observe Auth State Changes
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
-      if (currentUser) {
+      if (currentUser && currentUser.emailVerified) {
         const token = await currentUser.getIdToken();
         setCookie("ny-token", token, { expires: 7 });
+        setUser(currentUser);
       } else {
         removeCookie("ny-token");
+        setUser(null);
       }
-      setUser(currentUser);
       setLoading(false);
     });
-
+  
     return () => unsubscribe();
   }, []);
-
+  
   const authInfo = useMemo(
     () => ({
       user,
@@ -181,6 +225,7 @@ const AuthProvider = ({ children }) => {
       logout,
       signin,
       resetPassword,
+      auth,
     }),
     [user, loading]
   );

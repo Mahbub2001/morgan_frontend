@@ -4,7 +4,7 @@ import React, { useContext } from "react";
 import "../login/login.css";
 import { AuthContext } from "@/hooks/AuthProvider";
 import { useForm } from "react-hook-form";
-import { setAuthToken } from "@/api/auth";
+import { setAuthToken, setAuthToken1 } from "@/api/auth";
 // import { toast } from "react-toastify";
 
 function Register() {
@@ -29,8 +29,8 @@ function Register() {
 
     try {
       const result = await createUser(email, password);
-      setAuthToken(data);
-
+      
+      setAuthToken1(data);
       await updateUserProfile(firstName, display_url);
       await handleEmailVerification();
       // toast.success("Sign Up Successful");
@@ -45,12 +45,13 @@ function Register() {
     try {
       await verifyEmail();
       console.log("Verification email sent successfully.");
-      // toast.info("Verification email sent. Please check your inbox.");
+      alert("Verification email sent. Please check your inbox.");
     } catch (error) {
       console.error("Error sending verification email:", error);
-      // toast.error("Failed to send verification email.");
+      alert("Failed to send verification email.");
     }
   };
+  
 
   return (
     <div className="flex justify-center items-center min-h-screen pb-72">
