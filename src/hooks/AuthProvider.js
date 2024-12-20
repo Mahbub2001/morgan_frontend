@@ -6,6 +6,7 @@ import {
   createUserWithEmailAndPassword,
   getAuth,
   GoogleAuthProvider,
+  sendEmailVerification,
   onAuthStateChanged,
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
@@ -15,10 +16,8 @@ import {
 } from "firebase/auth";
 import app from "../firebase/firebase.config";
 
-// Create AuthContext
 export const AuthContext = createContext();
 
-// Firebase Auth & Providers
 const auth = getAuth(app);
 const googleProvider = new GoogleAuthProvider();
 
@@ -26,7 +25,6 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Helper function to manage cookies
   const setCookie = (name, value, options = {}) => {
     Cookies.set(name, value, { path: "/", ...options });
   };
@@ -43,7 +41,11 @@ const AuthProvider = ({ children }) => {
   const createUser = async (email, password) => {
     try {
       setLoading(true);
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
       return userCredential;
     } catch (error) {
       console.error("Error creating user:", error);
@@ -53,11 +55,28 @@ const AuthProvider = ({ children }) => {
     }
   };
 
+  // Email Verification
+  const verifyEmail = async () => {
+    try {
+      if (!auth.currentUser) {
+        throw new Error("No user is currently signed in.");
+      }
+      await sendEmailVerification(auth.currentUser);
+      console.log("Verification email sent.");
+    } catch (error) {
+      console.error("Error sending verification email:", error);
+      throw error;
+    }
+  };
+
   // Update User Profile
   const updateUserProfile = async (name, photo) => {
     try {
       setLoading(true);
-      await updateProfile(auth.currentUser, { displayName: name, photoURL: photo });
+      await updateProfile(auth.currentUser, {
+        displayName: name,
+        photoURL: photo,
+      });
     } catch (error) {
       console.error("Error updating profile:", error);
       throw error;
@@ -72,7 +91,7 @@ const AuthProvider = ({ children }) => {
       setLoading(true);
       const result = await signInWithPopup(auth, googleProvider);
       const token = await result.user.getIdToken();
-      setCookie("ny-token", token, { expires: 7 }); 
+      setCookie("ny-token", token, { expires: 7 });
       return result;
     } catch (error) {
       console.error("Error signing in with Google:", error);
@@ -100,9 +119,18 @@ const AuthProvider = ({ children }) => {
   const signin = async (email, password) => {
     try {
       setLoading(true);
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      if (!user.emailVerified) {
+        await signOut(auth); 
+        // throw new Error("Email not verified. Please check your inbox.");
+        alert("Email not verified. Please check your inbox.");
+      }
       const token = await userCredential.user.getIdToken();
-      setCookie("ny-token", token, { expires: 7 }); 
+      setCookie("ny-token", token, { expires: 7 });
       return userCredential;
     } catch (error) {
       console.error("Error signing in:", error);
@@ -147,6 +175,7 @@ const AuthProvider = ({ children }) => {
       loading,
       setLoading,
       createUser,
+      verifyEmail,
       updateUserProfile,
       signInWithGoogle,
       logout,

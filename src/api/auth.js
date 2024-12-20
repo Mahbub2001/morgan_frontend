@@ -23,8 +23,8 @@ export const setAuthToken = (data) => {
       console.log("Server Response:", response);
 
       if (response.token) {
-        // Save token in LocalStorage
-        localStorage.setItem("ny-token", response.token);
+        // // Save token in LocalStorage
+        // localStorage.setItem("ny-token", response.token);
 
         Cookies.set("ny-token", response.token, {
           expires: 7,

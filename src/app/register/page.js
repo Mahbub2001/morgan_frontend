@@ -8,7 +8,8 @@ import { setAuthToken } from "@/api/auth";
 // import { toast } from "react-toastify";
 
 function Register() {
-  const { createUser, updateUserProfile, setLoading } = useContext(AuthContext);
+  const { createUser, updateUserProfile, setLoading, verifyEmail } =
+    useContext(AuthContext);
 
   const {
     register,
@@ -16,7 +17,7 @@ function Register() {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     setLoading(true);
     const { firstName, lastName, email, password } = data;
 
@@ -25,24 +26,30 @@ function Register() {
 
     data.role = role;
     data.display_url = display_url;
-    
-    createUser(email, password)
-      .then((result) => {
-        setAuthToken(data);
-        updateUserProfile(firstName, display_url)
-          .then(() => {
-            // toast.success("Sign Up Successful");
-            setLoading(false);
-          })
-          .catch((err) => {
-            console.log(err);
-            setLoading(false);
-          });
-      })
-      .catch((err) => {
-        console.log(err);
-        setLoading(false);
-      });
+
+    try {
+      const result = await createUser(email, password);
+      setAuthToken(data);
+
+      await updateUserProfile(firstName, display_url);
+      await handleEmailVerification();
+      // toast.success("Sign Up Successful");
+    } catch (error) {
+      console.error("Error during registration:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleEmailVerification = async () => {
+    try {
+      await verifyEmail();
+      console.log("Verification email sent successfully.");
+      // toast.info("Verification email sent. Please check your inbox.");
+    } catch (error) {
+      console.error("Error sending verification email:", error);
+      // toast.error("Failed to send verification email.");
+    }
   };
 
   return (

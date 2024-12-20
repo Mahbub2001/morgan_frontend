@@ -138,7 +138,9 @@ function Navbar() {
                 <Link href="/login" className="cursor-pointer">
                   <GoPerson />
                 </Link>
-                {user && <FiLogOut onClick={handleLogOut} />}
+                {user && (
+                  <FiLogOut className="cursor-pointer" onClick={handleLogOut} />
+                )}
               </div>
             </div>
           </div>
