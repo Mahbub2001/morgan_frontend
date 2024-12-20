@@ -3,12 +3,13 @@ import { Open_Sans } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar/Navbar";
 import Footer from "@/components/Footer/Footer";
+import AuthProvider from "@/hooks/AuthProvider";
 
 const openSans = Open_Sans({
   subsets: ["latin"],
   variable: "--font-open-sans",
   adjustFontFallback: false,
-  display: 'swap',
+  display: "swap",
   weight: ["500", "700"],
 });
 
@@ -21,11 +22,11 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${openSans.variable} antialiased font-sans`}>
-        <Navbar/>
-        <div className="min-h-screen mt-44">
-        {children}
-        </div>
-        <Footer/>
+        <AuthProvider>
+          <Navbar />
+          <div className="min-h-screen mt-44">{children}</div>
+          <Footer />
+        </AuthProvider>
       </body>
     </html>
   );

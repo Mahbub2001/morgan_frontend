@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import { CiSearch } from "react-icons/ci";
 import { GoPerson } from "react-icons/go";
 import { FaShoppingBag } from "react-icons/fa";
@@ -18,10 +18,18 @@ import Announcement from "../Announcement/Announcement";
 import News from "../NewsPage/News";
 import Latest from "../LatestPage/Latest";
 import Link from "next/link";
+import { AuthContext } from "@/hooks/AuthProvider";
+import { FiLogOut } from "react-icons/fi";
 
 function Navbar() {
   const [activeDropdown, setActiveDropdown] = useState(null);
   const navbarRef = useRef(null);
+
+  const { user, logout } = useContext(AuthContext);
+
+  if (user) {
+    console.log(user);
+  }
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -43,6 +51,14 @@ function Navbar() {
     } else {
       setActiveDropdown(dropdownName);
     }
+  };
+
+  const handleLogOut = () => {
+    logout()
+      .then((result) => {})
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
@@ -109,14 +125,20 @@ function Navbar() {
                 </li>
               </ul>
               {/* Logo */}
-              <Link href="/" className="font-bold tracking-wider uppercase text-2xl font-sans cursor-pointer absolute left-1/2 transform -translate-x-1/2">
+              <Link
+                href="/"
+                className="font-bold tracking-wider uppercase text-2xl font-sans cursor-pointer absolute left-1/2 transform -translate-x-1/2"
+              >
                 Ny Morgen
               </Link>
 
               <div className="flex gap-5">
                 <CiSearch className="cursor-pointer" />
                 <FaShoppingBag className="cursor-pointer" />
-                <Link href="/login" className="cursor-pointer"><GoPerson/></Link>
+                <Link href="/login" className="cursor-pointer">
+                  <GoPerson />
+                </Link>
+                {user && <FiLogOut onClick={handleLogOut} />}
               </div>
             </div>
           </div>
