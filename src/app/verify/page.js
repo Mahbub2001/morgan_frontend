@@ -46,7 +46,8 @@ const Verify = () => {
       await applyActionCode(auth, oobCode);
       setSuccess(true);
       setTimeout(() => {
-        router.push("/login");
+        // router.push("/login");
+        router.push("/");
       }, 3000);
     } catch (error) {
       setError("Invalid or expired verification link.");

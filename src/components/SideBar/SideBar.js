@@ -27,7 +27,6 @@ const Sidebar = () => {
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
-
     if (!isSidebarOpen) {
       setMenuHistory(["main"]);
       setSubmenuItems([]);
@@ -49,7 +48,6 @@ const Sidebar = () => {
   const goBack = () => {
     const history = [...menuHistory];
     history.pop();
-
     const previousMenu = history[history.length - 1];
     setMenuHistory(history);
 
@@ -71,26 +69,15 @@ const Sidebar = () => {
         >
           {isSidebarOpen ? <AiOutlineClose /> : <AiOutlineMenu />}
         </button>
-
         <h1 className="text-lg font-semibold">Ny Morgen</h1>
         <button className="text-2xl focus:outline-none">
           <FiSearch />
         </button>
       </header>
-      <div className="bg-black text-white  flex flex-col justify-center items-center">
-        <p className="py-2 tracking-widest text-xs">
-          BLACK WEEK- SAVE 20% ON EVERYTHING
-        </p>
-      </div>
-      <div className="bg-gray-100 text-center flex flex-col justify-center items-center">
-        <p className="py-2 tracking-wider text-xs">
-          Free shipping / Christmas gifts are exchanged empty 15-01-25 / Easy
-          return
-        </p>
-      </div>
+
       <animated.div
         style={sidebarSpring}
-        className={`fixed top-16 left-0 h-[calc(100%-4rem)] w-72 bg-white shadow-lg z-40`}
+        className="fixed top-16 left-0 h-[calc(100%-4rem)] w-72 bg-white shadow-lg z-40"
       >
         {menuTransition((styles, currentMenu) => (
           <animated.div
@@ -99,30 +86,25 @@ const Sidebar = () => {
           >
             {currentMenu === "main" && (
               <ul className="space-y-4">
-                <li className="font-medium text-sm text-black">
-                  <span className="">Shop</span>
-                  <ul className="mt-5 space-y-4 text-gray-600">
-                    {categories.map((category, index) => (
-                      <div key={index}>
-                        <div
-                          onClick={() => openSubsubmenu(category.items || [])}
-                          className="cursor-pointer hover:text-blue-600 flex justify-between items-center font-thin"
-                        >
-                          <li className="">{category.name || category}</li>
-                          <FaGreaterThan className="inline-block text-[0.6rem]" />
-                        </div>
-                        <hr className="my-3" />
-                      </div>
-                    ))}
-                  </ul>
-                </li>
+                <p>Shop</p>
+                {categories.map((category, index) => (
+                  <div key={index}>
+                    <div
+                      onClick={() => openSubmenu(category.items || [])}
+                      className="cursor-pointer hover:text-blue-600 flex justify-between items-center font-thin"
+                    >
+                      <li className="">{category.name}</li>
+                      <FaGreaterThan className="inline-block text-[0.6rem]" />
+                    </div>
+                    <hr className="my-3" />
+                  </div>
+                ))}
                 <li
                   className="cursor-pointer hover:text-blue-600 font-medium text-sm"
                   onClick={() => openSubmenu(aboutNyItems)}
                 >
-                  About Ny
+                  About Ny Morgen
                 </li>
-
                 <li
                   className="cursor-pointer hover:text-blue-600 font-medium text-sm"
                   onClick={() => openSubmenu(journalItems)}
@@ -142,22 +124,21 @@ const Sidebar = () => {
                   <span>&larr; Back</span>
                 </button>
                 <ul className="space-y-4">
-                  {Array.isArray(submenuItems) &&
-                    submenuItems.map((item, index) => (
-                      <div key={index}>
-                        <div
-                          className="flex items-center justify-between cursor-pointer hover:text-blue-600 font-thin text-sm"
-                          onClick={() =>
-                            Array.isArray(item.items) &&
-                            openSubsubmenu(item.items)
-                          }
-                        >
-                          <li>{item.name || item}</li>
-                          <FaGreaterThan className="inline-block text-[0.6rem]" />
-                        </div>
-                        <hr className="my-2" />
+                  {submenuItems.map((item, index) => (
+                    <div key={index}>
+                      <div
+                        className="flex items-center justify-between cursor-pointer hover:text-blue-600 font-thin text-sm"
+                        onClick={() =>
+                          Array.isArray(item.items) &&
+                          openSubsubmenu(item.items)
+                        }
+                      >
+                        <li>{item.name || item.category}</li>
+                        <FaGreaterThan className="inline-block text-[0.6rem]" />
                       </div>
-                    ))}
+                      <hr className="my-2" />
+                    </div>
+                  ))}
                 </ul>
               </>
             )}
@@ -172,22 +153,18 @@ const Sidebar = () => {
                   <span>&larr; Back</span>
                 </button>
                 <ul className="space-y-4">
-                  {Array.isArray(subsubmenuItems) &&
-                    subsubmenuItems.map((item, index) => (
-                      <div key={index}>
-                        <div className="flex items-center justify-between cursor-pointer hover:text-blue-600 font-thin text-sm">
-                          <li className="">{item}</li>
-                          <FaGreaterThan className="inline-block text-[0.6rem]" />
-                        </div>
-                        <hr className="my-2" />
-                      </div>
-                    ))}
+                  {subsubmenuItems.map((item, index) => (
+                    <li key={index} className="hover:text-blue-600 text-sm">
+                      <a href={item.link}>{item.name}</a>
+                    </li>
+                  ))}
                 </ul>
               </>
             )}
           </animated.div>
         ))}
       </animated.div>
+
       {isSidebarOpen && (
         <div
           className="fixed inset-0 bg-black bg-opacity-50 z-30"

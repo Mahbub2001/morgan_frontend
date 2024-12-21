@@ -7,6 +7,7 @@ export const setAuthToken = (data) => {
     lastName: data.lastName,
     role: data.role,
     display_url: data.display_url,
+    // verify: false,
   };
 
   console.log("User to be saved:", currentUser);
@@ -23,9 +24,6 @@ export const setAuthToken = (data) => {
       console.log("Server Response:", response);
 
       if (response.token) {
-        // // Save token in LocalStorage
-        // localStorage.setItem("ny-token", response.token);
-
         Cookies.set("ny-token", response.token, {
           expires: 7,
           secure: true,
@@ -66,9 +64,6 @@ export const setAuthToken1 = (data) => {
       console.log("Server Response:", response);
 
       if (response.token) {
-        // // Save token in LocalStorage
-        // localStorage.setItem("ny-token", response.token);
-
         // Cookies.set("ny-token", response.token, {
         //   expires: 7,
         //   secure: true,
