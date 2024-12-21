@@ -24,7 +24,7 @@ export default function RootLayout({ children }) {
       <body className={`${openSans.variable} antialiased font-sans`}>
         <AuthProvider>
           <Navbar />
-          <div className="min-h-screen mt-44">{children}</div>
+          <div className="min-h-screen mt-40">{children}</div>
           <Footer />
         </AuthProvider>
       </body>

@@ -11,7 +11,7 @@ import Image from "next/image";
 
 export default function Home() {
   return (
-    <div className="min-h-screen container mx-auto mt-40 z-0 mb-20">
+    <div className="min-h-screen container mx-auto -mt-20 md:mt-40 z-0 mb-20">
       <BannerFirstPage />
       <div className="text-center mt-20">
         <p className="font-semibold font-sans text-2xl">
