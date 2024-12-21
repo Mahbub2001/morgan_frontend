@@ -6,9 +6,11 @@ import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { AuthContext } from "@/hooks/AuthProvider";
 import { setAuthToken } from "@/api/auth";
+import { useRouter } from "next/navigation";
 
 function Login() {
   const { signin, setLoading } = useContext(AuthContext);
+  const router = useRouter();
 
   const {
     register,
@@ -23,6 +25,7 @@ function Login() {
         // toast.success("Login Successful.....!");
         setLoading(false);
         setAuthToken(result.user);
+        router.push("/");
         // navigate(from, { replace: true });
       })
       .catch((err) => {

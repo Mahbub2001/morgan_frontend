@@ -20,12 +20,16 @@ import Latest from "../LatestPage/Latest";
 import Link from "next/link";
 import { AuthContext } from "@/hooks/AuthProvider";
 import { FiLogOut } from "react-icons/fi";
+import { useRouter } from "next/navigation";
+import Cookies from "js-cookie";
+import { getUserRole } from "@/api/user";
 
 function Navbar() {
   const [activeDropdown, setActiveDropdown] = useState(null);
   const navbarRef = useRef(null);
 
   const { user, logout } = useContext(AuthContext);
+  const [role, setRole] = useState(null);
 
   if (user) {
     console.log(user);
@@ -59,6 +63,25 @@ function Navbar() {
       .catch((error) => {
         console.log(error);
       });
+  };
+  const router = useRouter();
+  const handleProfileClick = async () => {
+    if (!user) {
+      router.push("/login");
+      return;
+    }
+    const role = Cookies.get("user-role");
+    if (role) {
+      if (role === "admin") {
+        router.push("/admindashboard");
+        return;
+      }
+      if (role === "user") {
+        router.push("/userdashboard");
+        return;
+      }
+    }
+    router.push("/check-user");
   };
 
   return (
@@ -135,9 +158,12 @@ function Navbar() {
               <div className="flex gap-5">
                 <CiSearch className="cursor-pointer" />
                 <FaShoppingBag className="cursor-pointer" />
-                <Link href="/login" className="cursor-pointer">
+                <button onClick={handleProfileClick} className="cursor-pointer">
                   <GoPerson />
-                </Link>
+                </button>
+                {/* <Link href="/login" className="cursor-pointer">
+                  <GoPerson />
+                </Link> */}
                 {user && (
                   <FiLogOut className="cursor-pointer" onClick={handleLogOut} />
                 )}

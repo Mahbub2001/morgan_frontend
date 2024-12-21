@@ -24,7 +24,6 @@ const googleProvider = new GoogleAuthProvider();
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-
   const setCookie = (name, value, options = {}) => {
     Cookies.set(name, value, { path: "/", ...options });
   };
@@ -55,41 +54,23 @@ const AuthProvider = ({ children }) => {
     }
   };
 
-  // Email Verification
-// const verifyEmail = async () => {
-//   try {
-//     if (!auth.currentUser) {
-//       throw new Error("No user is currently signed in.");
-//     }
-//     const actionCodeSettings = {
-//       url: `${window.location.origin}/verify`,
-//       handleCodeInApp: true,
-//     };
-//     await sendEmailVerification(auth.currentUser, actionCodeSettings);
-//     console.log("Verification email sent.");
-//   } catch (error) {
-//     console.error("Error sending verification email:", error);
-//     throw error;
-//   }
-// };
-const verifyEmail = async () => {
-  try {
-    if (!auth.currentUser) {
-      throw new Error("No user is currently signed in.");
+  const verifyEmail = async () => {
+    try {
+      if (!auth.currentUser) {
+        throw new Error("No user is currently signed in.");
+      }
+      const actionCodeSettings = {
+        url: `${window.location.origin}/verify?mode=verifyEmail`,
+        handleCodeInApp: true,
+      };
+      await sendEmailVerification(auth.currentUser, actionCodeSettings);
+      console.log("Verification email sent.");
+    } catch (error) {
+      console.error("Error sending verification email:", error);
+      throw error;
     }
-    const actionCodeSettings = {
-      url: `${window.location.origin}/verify?mode=verifyEmail`,
-      handleCodeInApp: true,
-    };
-    await sendEmailVerification(auth.currentUser, actionCodeSettings);
-    console.log("Verification email sent.");
-  } catch (error) {
-    console.error("Error sending verification email:", error);
-    throw error;
-  }
-};
+  };
 
-  
   // Update User Profile
   const updateUserProfile = async (name, photo) => {
     try {
@@ -128,6 +109,7 @@ const verifyEmail = async () => {
       setLoading(true);
       await signOut(auth);
       removeCookie("ny-token");
+      removeCookie("user-role");
     } catch (error) {
       console.error("Error signing out:", error);
       throw error;
@@ -137,66 +119,37 @@ const verifyEmail = async () => {
   };
 
   // Login with Password
-  // const signin = async (email, password) => {
-  //   try {
-  //     setLoading(true);
-  //     const userCredential = await signInWithEmailAndPassword(
-  //       auth,
-  //       email,
-  //       password
-  //     );
-  //     if (!user.emailVerified) {
-  //       await signOut(auth);
-  //       alert("Email not verified. Please check your inbox.");
-  //     }
-  //     const token = await userCredential.user.getIdToken();
-  //     setCookie("ny-token", token, { expires: 7 });
-  //     return userCredential;
-  //   } catch (error) {
-  //     console.error("Error signing in:", error);
-  //     throw error;
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-
   const signin = async (email, password) => {
     try {
       setLoading(true);
-  
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
       const user = userCredential.user;
       if (!user || !user.emailVerified) {
-        await signOut(auth); 
+        await signOut(auth);
         removeCookie("ny-token");
-        alert("Email not verified. Please check your inbox to verify your email.");
+        alert(
+          "Email not verified. Please check your inbox to verify your email."
+        );
         // throw new Error("Email not verified");
       }
       const token = await user.getIdToken();
       setCookie("ny-token", token, { expires: 7 });
-  
-      return userCredential; 
+
+      return userCredential;
     } catch (error) {
       console.error("Error signing in:", error);
-      throw error; 
+      throw error;
     } finally {
-      setLoading(false); 
+      setLoading(false);
     }
   };
-  
 
   // Reset Password
-  // const resetPassword = async (email) => {
-  //   try {
-  //     setLoading(true);
-  //     await sendPasswordResetEmail(auth, email);
-  //   } catch (error) {
-  //     console.error("Error resetting password:", error);
-  //     throw error;
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
   const resetPassword = async (email) => {
     try {
       const actionCodeSettings = {
@@ -210,7 +163,6 @@ const verifyEmail = async () => {
       throw error;
     }
   };
-  
 
   // Observe Auth State Changes
   useEffect(() => {
@@ -225,10 +177,10 @@ const verifyEmail = async () => {
       }
       setLoading(false);
     });
-  
+
     return () => unsubscribe();
   }, []);
-  
+
   const authInfo = useMemo(
     () => ({
       user,

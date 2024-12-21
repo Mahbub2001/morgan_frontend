@@ -20,14 +20,14 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body className={`${openSans.variable} antialiased font-sans`}>
+    // <html lang="en">
+      // <body className={`${openSans.variable} antialiased font-sans`}>
         <AuthProvider>
           <Navbar />
           <div className="min-h-screen mt-40">{children}</div>
           <Footer />
         </AuthProvider>
-      </body>
-    </html>
+      // </body>
+    // </html>
   );
 }
