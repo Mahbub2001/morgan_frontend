@@ -6,6 +6,7 @@ import { categories, aboutNyItems, journalItems } from "@/Data/Menu";
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
 import { FiSearch } from "react-icons/fi";
 import { FaGreaterThan } from "react-icons/fa";
+import Link from "next/link";
 
 const Sidebar = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -69,7 +70,9 @@ const Sidebar = () => {
         >
           {isSidebarOpen ? <AiOutlineClose /> : <AiOutlineMenu />}
         </button>
-        <h1 className="text-lg font-semibold">Ny Morgen</h1>
+        <Link href="/" className="text-lg font-semibold">
+          Ny Morgen
+        </Link>
         <button className="text-2xl focus:outline-none">
           <FiSearch />
         </button>
@@ -133,7 +136,13 @@ const Sidebar = () => {
                           openSubsubmenu(item.items)
                         }
                       >
-                        <li>{item.name || item.category}</li>
+                        {item.name ? (
+                          <Link onClick={toggleSidebar} href={item.link}>
+                            <li className="hover:underline">{item.name}</li>
+                          </Link>
+                        ) : (
+                          <li>{item.category}</li>
+                        )}
                         <FaGreaterThan className="inline-block text-[0.6rem]" />
                       </div>
                       <hr className="my-2" />
@@ -155,7 +164,9 @@ const Sidebar = () => {
                 <ul className="space-y-4">
                   {subsubmenuItems.map((item, index) => (
                     <li key={index} className="hover:text-blue-600 text-sm">
-                      <a href={item.link}>{item.name}</a>
+                      <Link onClick={toggleSidebar} href={item.link}>
+                        {item.name}
+                      </Link>
                     </li>
                   ))}
                 </ul>
