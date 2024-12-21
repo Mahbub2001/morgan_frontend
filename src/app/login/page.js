@@ -84,7 +84,7 @@ function Login() {
             />
             <span className="text-gray-500">Password</span>
             <Link
-              href="#"
+              href="/reset"
               className="absolute right-3 top-1/2 transform -translate-y-1/2 text-xs font-thin text-gray-500 hover:text-gray-700"
             >
               Forgot your password?

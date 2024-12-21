@@ -56,27 +56,29 @@ const AuthProvider = ({ children }) => {
   };
 
   // Email Verification
-
-  // const verifyEmail = async () => {
-  //   try {
-  //     if (!auth.currentUser) {
-  //       throw new Error("No user is currently signed in.");
-  //     }
-  //     await sendEmailVerification(auth.currentUser);
-  //     console.log("Verification email sent.");
-  //   } catch (error) {
-  //     console.error("Error sending verification email:", error);
-  //     throw error;
-  //   }
-  // };
-  // Email Verification
+// const verifyEmail = async () => {
+//   try {
+//     if (!auth.currentUser) {
+//       throw new Error("No user is currently signed in.");
+//     }
+//     const actionCodeSettings = {
+//       url: `${window.location.origin}/verify`,
+//       handleCodeInApp: true,
+//     };
+//     await sendEmailVerification(auth.currentUser, actionCodeSettings);
+//     console.log("Verification email sent.");
+//   } catch (error) {
+//     console.error("Error sending verification email:", error);
+//     throw error;
+//   }
+// };
 const verifyEmail = async () => {
   try {
     if (!auth.currentUser) {
       throw new Error("No user is currently signed in.");
     }
     const actionCodeSettings = {
-      url: `${window.location.origin}/verify`,
+      url: `${window.location.origin}/verify?mode=verifyEmail`,
       handleCodeInApp: true,
     };
     await sendEmailVerification(auth.currentUser, actionCodeSettings);
@@ -184,17 +186,31 @@ const verifyEmail = async () => {
   
 
   // Reset Password
+  // const resetPassword = async (email) => {
+  //   try {
+  //     setLoading(true);
+  //     await sendPasswordResetEmail(auth, email);
+  //   } catch (error) {
+  //     console.error("Error resetting password:", error);
+  //     throw error;
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
   const resetPassword = async (email) => {
     try {
-      setLoading(true);
-      await sendPasswordResetEmail(auth, email);
+      const actionCodeSettings = {
+        url: `${window.location.origin}/verify?mode=resetPassword`,
+        handleCodeInApp: true,
+      };
+      await sendPasswordResetEmail(auth, email, actionCodeSettings);
+      console.log("Password reset email sent.");
     } catch (error) {
-      console.error("Error resetting password:", error);
+      console.error("Error sending password reset email:", error);
       throw error;
-    } finally {
-      setLoading(false);
     }
   };
+  
 
   // Observe Auth State Changes
   useEffect(() => {
