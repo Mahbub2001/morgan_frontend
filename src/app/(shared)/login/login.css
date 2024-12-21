@@ -44,10 +44,12 @@
 
 .wrapper button {
   display: block;
-  width: 25rem;
+  width: 100%; 
+  max-width: 25rem;
+  min-width: 10rem;
   height: 40px;
   line-height: 40px;
-  font-size: 18px;
+  font-size: 14px;
   font-family: sans-serif;
   text-decoration: none;
   color: white;
@@ -90,7 +92,9 @@
     width: 95%;
   }
   .wrapper button {
-    width: 95%;
+    width: 95%; 
+    max-width: none;
+    min-width: 8rem;
   }
   .ff {
     font-size: 1rem;
@@ -111,6 +115,7 @@
   }
   .wrapper button {
     width: 100%;
+    font-size: 12px;
   }
   .ff {
     font-size: 1rem;

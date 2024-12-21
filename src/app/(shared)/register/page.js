@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import React, { useContext } from "react";
-import "../login/login.css"
+import "../login/login.css";
 import { AuthContext } from "@/hooks/AuthProvider";
 import { useForm } from "react-hook-form";
 import { setAuthToken, setAuthToken1 } from "@/api/auth";
@@ -29,7 +29,7 @@ function Register() {
 
     try {
       const result = await createUser(email, password);
-      
+
       setAuthToken1(data);
       await updateUserProfile(firstName, display_url);
       await handleEmailVerification();
@@ -51,7 +51,6 @@ function Register() {
       alert("Failed to send verification email.");
     }
   };
-  
 
   return (
     <div className="flex justify-center items-center min-h-screen pb-72">
@@ -64,7 +63,6 @@ function Register() {
           Enter your details to create an account
         </p>
 
-        {/* First Name */}
         <div className="inputBox">
           <input
             className="input border border-gray-300 rounded-lg px-4 py-2 w-full focus:outline-none focus:ring-2 focus:ring-gray-950"
@@ -78,7 +76,6 @@ function Register() {
           )}
         </div>
 
-        {/* Last Name */}
         <div className="inputBox">
           <input
             className="input border border-gray-300 rounded-lg px-4 py-2 w-full focus:outline-none focus:ring-2 focus:ring-gray-950"
@@ -92,7 +89,6 @@ function Register() {
           )}
         </div>
 
-        {/* Email */}
         <div className="inputBox">
           <input
             className="input border border-gray-300 rounded-lg px-4 py-2 w-full focus:outline-none focus:ring-2 focus:ring-gray-950"
@@ -112,7 +108,6 @@ function Register() {
           )}
         </div>
 
-        {/* Password */}
         <div className="inputBox relative">
           <input
             className="input border border-gray-300 rounded-lg px-4 py-2 w-full focus:outline-none focus:ring-2 focus:ring-gray-950"
@@ -132,14 +127,14 @@ function Register() {
           )}
         </div>
 
-        {/* Submit Button */}
-        <div className="wrapper">
-          <button type="submit">
-            <span className="tracking-wider ff px-5">CREATE ACCOUNT</span>
-          </button>
+        <div className="w-full">
+          <div className="wrapper">
+            <button type="submit">
+              <span className="tracking-wider ff px-5">CREATE ACCOUNT</span>
+            </button>
+          </div>
         </div>
 
-        {/* Login Link */}
         <p className="font-thin text-xs text-gray-400">
           Already have an account?{" "}
           <Link className="hover:text-gray-800" href="/login">

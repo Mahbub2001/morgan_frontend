@@ -1,18 +1,23 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useSpring, animated, useTransition } from "@react-spring/web";
 import { categories, aboutNyItems, journalItems } from "@/Data/Menu";
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
-import { FiSearch } from "react-icons/fi";
-import { FaGreaterThan } from "react-icons/fa";
+import { FiLogOut, FiSearch } from "react-icons/fi";
+import { FaGreaterThan, FaShoppingBag } from "react-icons/fa";
 import Link from "next/link";
+import { CiSearch } from "react-icons/ci";
+import { AuthContext } from "@/hooks/AuthProvider";
+import { GoPerson } from "react-icons/go";
 
 const Sidebar = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [menuHistory, setMenuHistory] = useState(["main"]);
   const [submenuItems, setSubmenuItems] = useState([]);
   const [subsubmenuItems, setSubsubmenuItems] = useState([]);
+
+  const { user, logout } = useContext(AuthContext);
 
   const sidebarSpring = useSpring({
     transform: isSidebarOpen ? "translateX(0%)" : "translateX(-100%)",
@@ -58,6 +63,15 @@ const Sidebar = () => {
     } else if (previousMenu === "submenu") {
       setSubsubmenuItems([]);
     }
+  };
+
+  const handleLogOut = () => {
+    toggleSidebar();
+    logout()
+      .then((result) => {})
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
@@ -172,6 +186,16 @@ const Sidebar = () => {
                 </ul>
               </>
             )}
+            <div className="flex gap-5 mt-10 ">
+              <CiSearch className="cursor-pointer" />
+              <FaShoppingBag className="cursor-pointer" />
+              <Link onClick={toggleSidebar} href="/login" className="cursor-pointer">
+                <GoPerson />
+              </Link>
+              {user && (
+                <FiLogOut className="cursor-pointer" onClick={handleLogOut} />
+              )}
+            </div>
           </animated.div>
         ))}
       </animated.div>
