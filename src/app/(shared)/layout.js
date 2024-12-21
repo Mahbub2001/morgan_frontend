@@ -1,6 +1,6 @@
 import localFont from "next/font/local";
 import { Open_Sans } from "next/font/google";
-import "./globals.css";
+import "../globals.css";
 import Navbar from "@/components/Navbar/Navbar";
 import Footer from "@/components/Footer/Footer";
 import AuthProvider from "@/hooks/AuthProvider";
@@ -23,7 +23,9 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={`${openSans.variable} antialiased font-sans`}>
         <AuthProvider>
-          <div>{children}</div>
+          <Navbar />
+          <div className="min-h-screen mt-40">{children}</div>
+          <Footer />
         </AuthProvider>
       </body>
     </html>

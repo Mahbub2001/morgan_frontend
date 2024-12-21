@@ -1,9 +1,6 @@
 import localFont from "next/font/local";
 import { Open_Sans } from "next/font/google";
-import "./globals.css";
-import Navbar from "@/components/Navbar/Navbar";
-import Footer from "@/components/Footer/Footer";
-import AuthProvider from "@/hooks/AuthProvider";
+import "../globals.css";
 
 const openSans = Open_Sans({
   subsets: ["latin"],
@@ -14,7 +11,7 @@ const openSans = Open_Sans({
 });
 
 export const metadata = {
-  title: "Ny Morgan",
+  title: "Admin Dashboard",
   description: "Created by Mahbub Ahmed",
 };
 
@@ -22,9 +19,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${openSans.variable} antialiased font-sans`}>
-        <AuthProvider>
-          <div>{children}</div>
-        </AuthProvider>
+        <div className="min-h-screen mt-40">{children}</div>
       </body>
     </html>
   );

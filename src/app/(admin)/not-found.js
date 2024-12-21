@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function NotFound() {
   return (
-    <div
+    <div 
       className="-mt-24 md:mt-0 relative flex size-full min-h-screen flex-col bg-white group/design-root overflow-x-hidden"
       style={{ fontFamily: '"Plus Jakarta Sans", "Noto Sans", sans-serif' }}
     >
@@ -14,7 +14,8 @@ export default function NotFound() {
                 <div
                   className="w-full h-[20rem] md:h-[30rem] bg-center bg-no-repeat bg-cover aspect-auto rounded-none flex-1"
                   style={{
-                    backgroundImage: 'url("/images/err1.png")',
+                    backgroundImage:
+                      'url("https://cdn.usegalileo.ai/sdxl10/862e6f95-15e3-43d7-a44d-bb5870c350c3.png")',
                   }}
                 ></div>
               </div>
@@ -28,9 +29,7 @@ export default function NotFound() {
             </p>
             <div className="flex px-4 py-3 justify-center">
               <button className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 px-4 bg-[#e2752c] hover:bg-[#f38b45] text-white text-sm font-bold leading-normal tracking-[0.015em]">
-                <Link href="/" className="truncate text-center">
-                  Back to shopping
-                </Link>
+                <Link href="/" className="truncate text-center">Back to shopping</Link>
               </button>
             </div>
             <h3 className="text-[#171411] text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4">
@@ -41,7 +40,8 @@ export default function NotFound() {
                 <div
                   className="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-xl"
                   style={{
-                    backgroundImage: 'url("/images/err2.png")',
+                    backgroundImage:
+                      'url("https://cdn.usegalileo.ai/sdxl10/daff86d9-b862-406b-b82d-9c5737f66373.png")',
                   }}
                 ></div>
                 <p className="text-[#171411] text-base font-medium leading-normal">
@@ -52,7 +52,8 @@ export default function NotFound() {
                 <div
                   className="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-xl"
                   style={{
-                    backgroundImage: 'url("/images/err3.png")',
+                    backgroundImage:
+                      'url("https://cdn.usegalileo.ai/sdxl10/96349d70-c994-4833-bb70-2341770ac486.png")',
                   }}
                 ></div>
                 <p className="text-[#171411] text-base font-medium leading-normal">

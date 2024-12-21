@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import React, { useContext } from "react";
-import "../login/login.css";
+import "../login/login.css"
 import { AuthContext } from "@/hooks/AuthProvider";
 import { useForm } from "react-hook-form";
 import { setAuthToken, setAuthToken1 } from "@/api/auth";
