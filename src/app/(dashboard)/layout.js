@@ -2,19 +2,11 @@
 import { Open_Sans } from "next/font/google";
 import "../globals.css";
 import DashboardSidebar from "@/components/DashboardSideBar/DashboardSidebar";
-import AdminRoute from "@/Wrapper/AdminRoute";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "@/hooks/AuthProvider";
 import { getUserRole } from "@/api/user";
 import Link from "next/link";
 
-const openSans = Open_Sans({
-  subsets: ["latin"],
-  variable: "--font-open-sans",
-  adjustFontFallback: false,
-  display: "swap",
-  weight: ["500", "700"],
-});
 
 export default function RootLayout({ children }) {
   const { user } = useContext(AuthContext);
@@ -41,7 +33,7 @@ export default function RootLayout({ children }) {
         <div>Loading...</div>
       ) : (
         <>
-          <div className="fixed w-full z-30 flex bg-white border p-2 items-center justify-center h-16 px-10">
+          <div className="bg-gray-100 fixed w-full z-30 flex border p-2 items-center justify-center h-16 px-10">
             <div className="logo ml-12 dark:text-black  transform ease-in-out duration-500 flex-none h-full flex items-center justify-center">
               <Link href="/"> NY MORGEN</Link>
             </div>
@@ -66,7 +58,7 @@ export default function RootLayout({ children }) {
           </div>
           <div className="flex gap-5">
             <DashboardSidebar role={role} />
-            <div className="bg-white text-black">{children}</div>
+            <div className="bg-gray-100 w-full min-h-screen text-black">{children}</div>
           </div>
         </>
       )}
