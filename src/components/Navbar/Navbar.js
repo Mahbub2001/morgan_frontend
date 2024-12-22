@@ -66,22 +66,14 @@ function Navbar() {
   };
   const router = useRouter();
   const handleProfileClick = async () => {
+    console.log("user", user);
+
     if (!user) {
       router.push("/login");
       return;
     }
-    const role = Cookies.get("user-role");
-    if (role) {
-      if (role === "admin") {
-        router.push("/admindashboard");
-        return;
-      }
-      if (role === "user") {
-        router.push("/userdashboard");
-        return;
-      }
-    }
-    router.push("/check-user");
+
+    router.push("/dash");
   };
 
   return (

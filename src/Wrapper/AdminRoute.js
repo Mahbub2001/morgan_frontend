@@ -1,7 +1,10 @@
+"use client";
+
 import React, { useContext, useEffect, useState } from "react";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { AuthContext } from "@/hooks/AuthProvider";
 import { getUserRole } from "@/api/user";
+import Cookies from "js-cookie";
 
 const AdminRoute = ({ children }) => {
   const { user, loading } = useContext(AuthContext);
@@ -10,16 +13,20 @@ const AdminRoute = ({ children }) => {
   const router = useRouter();
 
   useEffect(() => {
-    if (user?.email) {
-      setRoleLoading(true);
-      getUserRole(user.email)
-        .then((data) => {
-          setRole(data);
-          setRoleLoading(false);
-        })
-        .catch(() => setRoleLoading(false));
-    } else {
-      setRoleLoading(false);
+    setRole(Cookies.get("user-role"));
+
+    if (!role) {
+      if (user?.email) {
+        setRoleLoading(true);
+        getUserRole(user.email)
+          .then((data) => {
+            setRole(data);
+            setRoleLoading(false);
+          })
+          .catch(() => setRoleLoading(false));
+      } else {
+        setRoleLoading(false);
+      }
     }
   }, [user]);
 
@@ -36,7 +43,7 @@ const AdminRoute = ({ children }) => {
   }
 
   // Redirect to the dashboard if not authorized
-  router.push("/dashboard");
+  router.push("/admindashboard");
   return null;
 };
 

@@ -8,15 +8,19 @@ import { SiBrandfolder } from "react-icons/si";
 import { LuBox } from "react-icons/lu";
 import { IoPersonCircleOutline } from "react-icons/io5";
 import { IoSettingsOutline } from "react-icons/io5";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
-const DashboardSidebar = () => {
+const DashboardSidebar = ({ role }) => {
+  console.log(role);
+
   const [isSidebarOpen, setSidebarOpen] = useState(false);
-  // const [theme, setTheme] = useState("light");
+  const [activeLink, setActiveLink] = useState("/dash");
 
+  // const [theme, setTheme] = useState("light");
   const toggleSidebar = () => {
     setSidebarOpen(!isSidebarOpen);
   };
-
   // const toggleTheme = (newTheme) => {
   //   setTheme(newTheme);
   //   document.documentElement.classList.toggle("dark", newTheme === "dark");
@@ -78,15 +82,18 @@ const DashboardSidebar = () => {
             </div>
             <div className="flex items-center space-x-3 group bg-gradient-to-r dark:from-cyan-500 dark:to-blue-500 from-indigo-500 via-purple-500 to-purple-500 pl-10 pr-2 py-1 rounded-full text-white">
               <div className="transform ease-in-out duration-300 mr-12">
-                NERVE
+                <Link href="/">NY MORGEN</Link>
               </div>
             </div>
           </div>
-          <div className="pt-5">
+          <div className="pt-3">
             {isSidebarOpen && (
-              <span className="absolute right-12 font-medium text-sm ml-2 text-white">
-                NY Morgen
-              </span>
+              <Link
+                href="/"
+                className="border-l border-t border-b p-2 rounded absolute right-20 font-medium text-sm ml-2 text-white"
+              >
+                NY MORGEN
+              </Link>
             )}
           </div>
           <div
@@ -121,53 +128,90 @@ const DashboardSidebar = () => {
             <SidebarItem
               icon="dashboard"
               label="Dashboard"
+              href="/dash"
               isOpen={isSidebarOpen}
+              activeLink={activeLink}
+              setActiveLink={setActiveLink}
             />
             <SidebarItem
               icon="order"
               label="Order Management"
               isOpen={isSidebarOpen}
+              href={"/orders"}
+              activeLink={activeLink}
+              setActiveLink={setActiveLink}
             />
             <SidebarItem
               icon="cusomers"
               label="Customers"
               isOpen={isSidebarOpen}
+              href={"/customers"}
+              activeLink={activeLink}
+              setActiveLink={setActiveLink}
             />
             <SidebarItem
               icon="coupon"
               label="Coupon Code"
               isOpen={isSidebarOpen}
+              href={"/coupon"}
+              activeLink={activeLink}
+              setActiveLink={setActiveLink}
             />
             <SidebarItem
               icon="categories"
               label="Categories"
               isOpen={isSidebarOpen}
+              href={"/categories"}
+              activeLink={activeLink}
+              setActiveLink={setActiveLink}
             />
             <SidebarItem
               icon="transactions"
               label="Transaction"
               isOpen={isSidebarOpen}
+              href={"/transactions"}
+              activeLink={activeLink}
+              setActiveLink={setActiveLink}
             />
-            <SidebarItem icon="brand" label="Brand" isOpen={isSidebarOpen} />
+            <SidebarItem
+              icon="brand"
+              label="Brand"
+              isOpen={isSidebarOpen}
+              href={"/brand"}
+              activeLink={activeLink}
+              setActiveLink={setActiveLink}
+            />
             <SidebarItem
               icon="add_products"
               label="Add Product"
               isOpen={isSidebarOpen}
+              href={"/add_product"}
+              activeLink={activeLink}
+              setActiveLink={setActiveLink}
             />
             <SidebarItem
               icon="product_list"
               label="Product List"
               isOpen={isSidebarOpen}
+              href={"/product_list"}
+              activeLink={activeLink}
+              setActiveLink={setActiveLink}
             />
             <SidebarItem
               icon="manage_admins"
               label="Manage Admin"
               isOpen={isSidebarOpen}
+              href={"/manage_admins"}
+              activeLink={activeLink}
+              setActiveLink={setActiveLink}
             />
             <SidebarItem
               icon="admin_roles"
               label="Admin Roles"
               isOpen={isSidebarOpen}
+              href={"/admin_roles"}
+              activeLink={activeLink}
+              setActiveLink={setActiveLink}
             />
           </div>
         </aside>
@@ -176,28 +220,40 @@ const DashboardSidebar = () => {
   );
 };
 
-const SidebarItem = ({ icon, label, isOpen }) => {
+const SidebarItem = ({
+  icon,
+  label,
+  isOpen,
+  href,
+  activeLink,
+  setActiveLink,
+}) => {
+  const handleClick = () => {
+    setActiveLink(href);
+  };
+
   return (
-    <div
-      className={`hover:ml-4 ${
-        isOpen ? "pl-8" : "justify-end pr-5"
-      } text-white hover:text-purple-500 dark:hover:text-blue-500 w-full bg-[#1E293B] p-3 rounded-full transform ease-in-out duration-300 flex ${
-        isOpen ? "flex-row items-center space-x-3" : "justify-end"
-      }`}
+    <Link
+      href={`${href}`}
+      onClick={handleClick}
+      className={`hover:ml-4 text-white hover:text-purple-500
+       font-sans text-sm p-3 rounded-full transform ease-in-out duration-300 flex 
+       ${isOpen ? "flex-row items-center space-x-3 pl-8" : "justify-end pr-5"} 
+       ${activeLink === href ? "bg-purple-500 text-white" : ""}`}
     >
-      {icon == "dashboard" && <MdDashboard />}
-      {icon == "order" && <GoListOrdered />}
-      {icon == "cusomers" && <GoPerson />}
-      {icon == "coupon" && <FaTicketAlt />}
-      {icon == "transactions" && <AiOutlineTransaction />}
-      {icon == "brand" && <SiBrandfolder />}
-      {icon == "categories" && <MdCategory />}
-      {icon == "add_products" && <MdOutlineAddBox />}
-      {icon == "product_list" && <LuBox />}
-      {icon == "manage_admins" && <IoPersonCircleOutline />}
-      {icon == "admin_roles" && <IoSettingsOutline />}
+      {icon === "dashboard" && <MdDashboard />}
+      {icon === "order" && <GoListOrdered />}
+      {icon === "cusomers" && <GoPerson />}
+      {icon === "coupon" && <FaTicketAlt />}
+      {icon === "transactions" && <AiOutlineTransaction />}
+      {icon === "brand" && <SiBrandfolder />}
+      {icon === "categories" && <MdCategory />}
+      {icon === "add_products" && <MdOutlineAddBox />}
+      {icon === "product_list" && <LuBox />}
+      {icon === "manage_admins" && <IoPersonCircleOutline />}
+      {icon === "admin_roles" && <IoSettingsOutline />}
       {isOpen && <div>{label}</div>}
-    </div>
+    </Link>
   );
 };
 

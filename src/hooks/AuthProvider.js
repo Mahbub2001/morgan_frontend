@@ -168,8 +168,8 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       if (currentUser && currentUser.emailVerified) {
-        const token = await currentUser.getIdToken();
-        setCookie("ny-token", token, { expires: 7 });
+        // const token = await currentUser.getIdToken();
+        // setCookie("ny-token", token, { expires: 7 });
         setUser(currentUser);
       } else {
         removeCookie("ny-token");
