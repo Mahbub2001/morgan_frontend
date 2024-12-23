@@ -2,51 +2,174 @@ import React from "react";
 
 function LastTransaction({ transactions }) {
   return (
-    <div className="max-w-4xl  bg-white p-6 shadow-md rounded-lg">
-      <div className="flex justify-between items-center mb-4">
-        <h2 className="text-lg font-semibold">Last Transactions</h2>
-        <a href="#view-all" className="text-blue-500 hover:underline text-sm">
-          View All
-        </a>
-      </div>
-      <div className="overflow-x-auto ">
-        <table className="table-auto w-full border-collapse ">
-          <thead>
-            <tr className="bg-gray-100">
-              <th className="text-left px-4 py-2 text-sm font-medium text-gray-600">
+    <>
+      <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+        <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+          <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+              <th scope="col" className="px-6 py-3">
                 ID
               </th>
-              <th className="text-left px-4 py-2 text-sm font-medium text-gray-600">
-                Issued Date
+              <th scope="col" className="px-6 py-3">
+                CUSTOMER
               </th>
-              <th className="text-left px-4 py-2 text-sm font-medium text-gray-600">
-                Total
+              <th scope="col" className="px-6 py-3">
+                DATE
               </th>
-              <th className="text-left px-4 py-2 text-sm font-medium text-gray-600">
-                Actions
+              <th scope="col" className="px-6 py-3">
+                TOTAL
+              </th>
+              <th scope="col" className="px-6 py-3">
+                METHOD
+              </th>
+              <th scope="col" className="px-6 py-3">
+                STATUS
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Action
               </th>
             </tr>
           </thead>
           <tbody>
-            {transactions.map((transaction, index) => (
-              <tr key={index} className="border-t hover:bg-gray-50">
-                <td className="px-4 py-2 text-sm">{transaction.id}</td>
-                <td className="px-4 py-2 text-sm">{transaction.date}</td>
-                <td className="px-4 py-2 text-sm">{transaction.total}</td>
-                <td className="px-4 py-2 text-sm">
-                  <a
-                    href="#view-detail"
-                    className="text-blue-500 hover:underline"
-                  >
-                    View Detail
-                  </a>
-                </td>
-              </tr>
-            ))}
+            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+              <th
+                scope="row"
+                className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+              >
+                #21133
+              </th>
+              <td className="px-6 py-4">Mahfuz Ahmed</td>
+              <td className="px-6 py-4">6 April,2026</td>
+              <td className="px-6 py-4">565</td>
+              <td className="px-6 py-4">CC</td>
+              <td className="px-6 py-4">PENDING</td>
+              <td className="flex items-center px-6 py-4">
+                <a
+                  href="#"
+                  className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                >
+                  Edit
+                </a>
+                <a
+                  href="#"
+                  className="font-medium text-red-600 dark:text-red-500 hover:underline ms-3"
+                >
+                  Remove
+                </a>
+              </td>
+            </tr>
+            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+              <th
+                scope="row"
+                className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+              >
+                #21133
+              </th>
+              <td className="px-6 py-4">Mahfuz Ahmed</td>
+              <td className="px-6 py-4">6 April,2026</td>
+              <td className="px-6 py-4">565</td>
+              <td className="px-6 py-4">CC</td>
+              <td className="px-6 py-4">PENDING</td>
+              <td className="flex items-center px-6 py-4">
+                <a
+                  href="#"
+                  className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                >
+                  Edit
+                </a>
+                <a
+                  href="#"
+                  className="font-medium text-red-600 dark:text-red-500 hover:underline ms-3"
+                >
+                  Remove
+                </a>
+              </td>
+            </tr>
+            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+              <th
+                scope="row"
+                className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+              >
+                #21133
+              </th>
+              <td className="px-6 py-4">Mahfuz Ahmed</td>
+              <td className="px-6 py-4">6 April,2026</td>
+              <td className="px-6 py-4">565</td>
+              <td className="px-6 py-4">CC</td>
+              <td className="px-6 py-4">PENDING</td>
+              <td className="flex items-center px-6 py-4">
+                <a
+                  href="#"
+                  className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                >
+                  Edit
+                </a>
+                <a
+                  href="#"
+                  className="font-medium text-red-600 dark:text-red-500 hover:underline ms-3"
+                >
+                  Remove
+                </a>
+              </td>
+            </tr>
+            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+              <th
+                scope="row"
+                className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+              >
+                #21133
+              </th>
+              <td className="px-6 py-4">Mahfuz Ahmed</td>
+              <td className="px-6 py-4">6 April,2026</td>
+              <td className="px-6 py-4">565</td>
+              <td className="px-6 py-4">CC</td>
+              <td className="px-6 py-4">PENDING</td>
+              <td className="flex items-center px-6 py-4">
+                <a
+                  href="#"
+                  className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                >
+                  Edit
+                </a>
+                <a
+                  href="#"
+                  className="font-medium text-red-600 dark:text-red-500 hover:underline ms-3"
+                >
+                  Remove
+                </a>
+              </td>
+            </tr>
+            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+              <th
+                scope="row"
+                className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+              >
+                #21133
+              </th>
+              <td className="px-6 py-4">Mahfuz Ahmed</td>
+              <td className="px-6 py-4">6 April,2026</td>
+              <td className="px-6 py-4">565</td>
+              <td className="px-6 py-4">CC</td>
+              <td className="px-6 py-4">PENDING</td>
+              <td className="flex items-center px-6 py-4">
+                <a
+                  href="#"
+                  className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                >
+                  Edit
+                </a>
+                <a
+                  href="#"
+                  className="font-medium text-red-600 dark:text-red-500 hover:underline ms-3"
+                >
+                  Remove
+                </a>
+              </td>
+            </tr>
           </tbody>
         </table>
       </div>
-    </div>
+    </>
   );
 }
 

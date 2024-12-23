@@ -17,20 +17,12 @@ const DashboardSidebar = ({ role }) => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [activeLink, setActiveLink] = useState("/dash");
 
-  // const [theme, setTheme] = useState("light");
   const toggleSidebar = () => {
     setSidebarOpen(!isSidebarOpen);
   };
-  // const toggleTheme = (newTheme) => {
-  //   setTheme(newTheme);
-  //   document.documentElement.classList.toggle("dark", newTheme === "dark");
-  // };
 
   return (
-    <div
-    // className={`${theme === "dark" ? "dark" : ""}`}
-    >
-      <div className="relative">
+      <div className="">
         <aside
           className={`w-60 ${
             isSidebarOpen ? "translate-x-0" : "-translate-x-48"
@@ -41,7 +33,6 @@ const DashboardSidebar = ({ role }) => {
               <div
                 onClick={() => toggleTheme("dark")}
                 className={`moon text-white hover:text-blue-500 dark:hover:text-[#38BDF8]`}
-                // ${theme === "dark" ? "hidden" : "block"}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -62,7 +53,6 @@ const DashboardSidebar = ({ role }) => {
                 onClick={() => toggleTheme("light")}
                 className={`sun text-white hover:text-blue-500 dark:hover:text-[#38BDF8]`}
 
-                //  ${ theme === "dark" ? "block" : "hidden"}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -216,7 +206,6 @@ const DashboardSidebar = ({ role }) => {
           </div>
         </aside>
       </div>
-    </div>
   );
 };
 

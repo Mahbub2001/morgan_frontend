@@ -7,17 +7,11 @@ import {
   chartOrder,
 } from "@/Data/chart";
 import React from "react";
-const transactions = [
-  { id: "#5089", date: "31 March 2023", total: "$1200" },
-  { id: "#5089", date: "31 March 2023", total: "$1200" },
-  { id: "#5089", date: "31 March 2023", total: "$1200" },
-  { id: "#5089", date: "31 March 2023", total: "$1200" },
-  { id: "#5089", date: "31 March 2023", total: "$1200" },
-];
+
 function Dash() {
   return (
-    <div className="pt-20 ml-10 text-black">
-      <div className="flex gap-10 flex-wrap justify-center md:justify-start">
+    <div className="">
+      {/* <div className="">
         <div className="">
           <ChartBox {...chartBoxUser} />
         </div>
@@ -30,10 +24,8 @@ function Dash() {
         <div>
           <ChartBox {...chartBoxRevenue} />
         </div>
-      </div>
-      <div className="mt-10 px-5">
-       <LastTransaction transactions={transactions} />
-      </div>
+      </div> */}
+     <LastTransaction />
     </div>
   );
 }

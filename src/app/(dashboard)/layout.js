@@ -7,7 +7,6 @@ import { AuthContext } from "@/hooks/AuthProvider";
 import { getUserRole } from "@/api/user";
 import Link from "next/link";
 
-
 export default function RootLayout({ children }) {
   const { user } = useContext(AuthContext);
   console.log(user);
@@ -56,9 +55,11 @@ export default function RootLayout({ children }) {
               </div>
             </div>
           </div>
-          <div className="flex gap-5">
+          <div className="mb-10">
             <DashboardSidebar role={role} />
-            <div className="bg-gray-100 w-full min-h-screen text-black">{children}</div>
+            <div className="bg-gray-100 pt-20 pl-16 px-10 min-h-screen text-black">
+              {children}
+            </div>
           </div>
         </>
       )}
