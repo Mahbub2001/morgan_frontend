@@ -23,8 +23,9 @@ module.exports = {
     },
   },
   plugins: [
-    flowbite.plugin()({
-      charts:true,
-    }),
+    flowbite.plugin()
+    // ({
+    //   charts:true,
+    // }),
   ],
 };

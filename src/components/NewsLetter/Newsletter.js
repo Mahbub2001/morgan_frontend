@@ -40,7 +40,7 @@ const Newsletter = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            className="w-full md:w-3/4 p-2 bg-transparent focus:outline-0 placeholder-black text-sm"
+            className="w-full md:w-3/4 p-2 bg-transparent focus:outline-none focus:border-none placeholder-black text-sm !border-none"
           />
           <button type="submit" className="text-sm transition duration-300">
             Subscribe
