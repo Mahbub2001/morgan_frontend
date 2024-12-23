@@ -25,7 +25,7 @@ export default function RootLayout({ children }) {
         <AuthProvider>
           <div>{children}</div>
         </AuthProvider>
-      <script src="../path/to/flowbite/dist/flowbite.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
       </body>
     </html>
   );

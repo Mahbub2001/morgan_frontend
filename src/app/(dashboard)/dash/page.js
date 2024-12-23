@@ -11,21 +11,10 @@ import React from "react";
 function Dash() {
   return (
     <div className="">
-      {/* <div className="">
-        <div className="">
-          <ChartBox {...chartBoxUser} />
-        </div>
-        <div>
-          <ChartBox {...chartBoxProduct} />
-        </div>
-        <div>
-          <ChartBox {...chartOrder} />
-        </div>
-        <div>
-          <ChartBox {...chartBoxRevenue} />
-        </div>
-      </div> */}
-     <LastTransaction />
+      <div className="">
+        <div className="">{/* <ChartBox {...chartBoxUser} /> */}</div>
+      </div>
+      <LastTransaction />
     </div>
   );
 }
