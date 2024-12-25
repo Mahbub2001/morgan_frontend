@@ -18,9 +18,10 @@ function Products1({ products }) {
     <div className="font-sans font-extralight mb-10">
       <div className="mt-6 grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 px-5 lg:px-0">
         {products.map((product, index) => {
-          const isSoldOut = product?.utilities.every(
-            (utility) => utility?.numberOfProducts === 0
+          const validUtility = product?.utilities.find(
+            (utility) => utility?.numberOfProducts > 0
           );
+          const isSoldOut = !validUtility;
 
           return (
             <div key={product._id} className="group relative cursor-pointer">
@@ -30,11 +31,11 @@ function Products1({ products }) {
                 className="relative"
               >
                 <img
-                  alt={product?.productName}
+                  alt={validUtility?.productName || product?.productName}
                   src={
-                    hoveredIndex === index
-                      ? product?.utilities[1]?.pictures[1]
-                      : product?.utilities[0]?.pictures[0]
+                    hoveredIndex === index && validUtility?.pictures?.[1]
+                      ? validUtility?.pictures[1]
+                      : validUtility?.pictures?.[0]
                   }
                   className="w-full h-[300px] object-cover rounded-md bg-gray-200 group-hover:opacity-75 transition-all duration-300 ease-in-out transform group-hover:scale-105"
                 />

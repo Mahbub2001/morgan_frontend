@@ -45,16 +45,27 @@ function AddProduct() {
   const [colorInput, setColorInput] = useState("");
   const [productInput, setProductInput] = useState("");
   const [pictures, setPictures] = useState([]);
+  const [subnameInput, setSubnameInput] = useState("");
 
-  const handleAddColor = () => {
-    if (colorInput.trim() !== "" && productInput.trim() !== "") {
+  const handleAddColor = () => {    
+    if (
+      colorInput.trim() !== "" &&
+      productInput.trim() !== "" &&
+      subnameInput.trim() !== ""
+    ) {
       setColors([...colors, colorInput]);
       setPictures([
         ...pictures,
-        { color: colorInput, productCount: Number(productInput), images: [] },
+        {
+          color: colorInput,
+          productCount: Number(productInput),
+          subName: subnameInput,
+          images: [],
+        },
       ]);
       setColorInput("");
       setProductInput("");
+      setSubnameInput("");
     }
   };
 
@@ -110,13 +121,15 @@ function AddProduct() {
   const [utilities, setUtilities] = React.useState([]);
 
   const onSubmit = async (data) => {
+    console.log("Form data:", data);
+    
     try {
       data.features = dataArray;
 
       const newUtilities = [];
 
       for (const picture of pictures) {
-        const { color, productCount, images } = picture;
+        const { color, productCount, images, subName } = picture;
         const uploadedPictures = [];
 
         for (const file of images) {
@@ -136,6 +149,7 @@ function AddProduct() {
           color,
           pictures: uploadedPictures,
           numberOfProducts: productCount,
+          subName,
         });
       }
 
@@ -539,6 +553,22 @@ function AddProduct() {
                     placeholder="Number of products"
                     value={productInput}
                     onChange={(e) => setProductInput(e.target.value)}
+                  />
+                </div>
+                <div>
+                  <label
+                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    htmlFor="subname_input"
+                  >
+                    Subname of Product(Which will define the product color)
+                  </label>
+                  <input
+                    className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                    id="subname_input"
+                    type="text"
+                    placeholder="Sub Name"
+                    value={subnameInput}
+                    onChange={(e) => setSubnameInput(e.target.value)}
                   />
                 </div>
               </div>
