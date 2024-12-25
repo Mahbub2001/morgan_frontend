@@ -2,6 +2,11 @@
 
 import { categories } from "@/Data/Menu";
 import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import { useMutation } from "@tanstack/react-query";
+import { imageUpload } from "@/api/imageUploadApi";
+import Cookies from "js-cookie";
+
 function AddProduct() {
   const [selectedPerson, setSelectedPerson] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -38,13 +43,18 @@ function AddProduct() {
 
   const [colors, setColors] = useState([]);
   const [colorInput, setColorInput] = useState("");
+  const [productInput, setProductInput] = useState("");
   const [pictures, setPictures] = useState([]);
 
   const handleAddColor = () => {
-    if (colorInput.trim() !== "") {
+    if (colorInput.trim() !== "" && productInput.trim() !== "") {
       setColors([...colors, colorInput]);
-      setPictures([...pictures, { color: colorInput, images: [] }]);
+      setPictures([
+        ...pictures,
+        { color: colorInput, productCount: Number(productInput), images: [] },
+      ]);
       setColorInput("");
+      setProductInput("");
     }
   };
 
@@ -59,11 +69,95 @@ function AddProduct() {
     setPictures(updatedPictures);
   };
 
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    watch,
+    formState: { errors },
+  } = useForm();
+
+  const token = Cookies.get("ny-token");
+
+  const mutation = useMutation({
+    mutationFn: async (productData) => {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/products`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(productData),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to add product");
+      }
+
+      return response.json();
+    },
+    onSuccess: () => {
+      alert("Product added successfully!");
+    },
+    onError: (error) => {
+      console.error(error);
+      alert("Error adding product");
+    },
+  });
+  const [utilities, setUtilities] = React.useState([]);
+
+  const onSubmit = async (data) => {
+    try {
+      data.features = dataArray;
+
+      const newUtilities = [];
+
+      for (const picture of pictures) {
+        const { color, productCount, images } = picture;
+        const uploadedPictures = [];
+
+        for (const file of images) {
+          try {
+            const uploadResponse = await imageUpload(file);
+            if (uploadResponse?.data?.url) {
+              uploadedPictures.push(uploadResponse.data.url);
+            } else {
+              console.warn("Failed to upload image:", file.name);
+            }
+          } catch (error) {
+            console.error("Error uploading image:", error);
+          }
+        }
+
+        newUtilities.push({
+          color,
+          pictures: uploadedPictures,
+          numberOfProducts: productCount,
+        });
+      }
+
+      setUtilities(newUtilities);
+      console.log("Utilities array:", newUtilities);
+
+      alert("All images uploaded and data stored!");
+
+      data.utilities = newUtilities;
+
+      mutation.mutate(data);
+    } catch (error) {
+      console.error("Error in onSubmit:", error);
+      alert("Something went wrong while submitting the form.");
+    }
+  };
+
   return (
     <div className="container mx-auto  min-h-screen ">
       <h1 className="text-lg font-bold mb-4">Add Product</h1>
       <div className="max-w-[30rem] ">
-        <form onSubmit={(e) => e.preventDefault()}>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
             <div>
               <label
@@ -74,6 +168,7 @@ function AddProduct() {
               </label>
               <select
                 id="person"
+                {...register("person", { required: "Person is required" })}
                 className="cursor-pointer bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 value={selectedPerson}
                 onChange={handlePersonChange}
@@ -85,6 +180,9 @@ function AddProduct() {
                   </option>
                 ))}
               </select>
+              {errors.person && (
+                <p className="text-red-500 text-xs">{errors.person.message}</p>
+              )}
             </div>
             <div>
               {selectedPerson && (
@@ -97,6 +195,9 @@ function AddProduct() {
                   </label>
                   <select
                     id="category"
+                    {...register("category", {
+                      required: "Category is required",
+                    })}
                     className="cursor-pointer bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     value={selectedCategory}
                     onChange={handleCategoryChange}
@@ -108,6 +209,11 @@ function AddProduct() {
                       </option>
                     ))}
                   </select>
+                  {errors.category && (
+                    <p className="text-red-500 text-xs">
+                      {errors.category.message}
+                    </p>
+                  )}
                 </>
               )}
             </div>
@@ -122,6 +228,7 @@ function AddProduct() {
                   </label>
                   <select
                     id="subCategory"
+                    {...register("subCategory")}
                     className="cursor-pointer bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     value={selectedSubCategory}
                     onChange={(e) => setSelectedSubCategory(e.target.value)}
@@ -148,8 +255,16 @@ function AddProduct() {
               <input
                 type="text"
                 id="large-input"
+                {...register("productName", {
+                  required: "Product name is required",
+                })}
                 className="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               />
+              {errors.productName && (
+                <p className="text-red-500 text-xs">
+                  {errors.productName.message}
+                </p>
+              )}
             </div>
             <div className="mb-5">
               <label
@@ -161,8 +276,16 @@ function AddProduct() {
               <input
                 type="text"
                 id="large-input"
+                {...register("brandName", {
+                  required: "Brand name is required",
+                })}
                 className="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               />
+              {errors.brandName && (
+                <p className="text-red-500 text-xs">
+                  {errors.brandName.message}
+                </p>
+              )}
             </div>
             <div className="mb-5">
               <label
@@ -174,22 +297,58 @@ function AddProduct() {
               <input
                 type="text"
                 id="large-input"
+                {...register("subBrand", { required: "Sub brand is required" })}
                 className="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               />
+              {errors.subBrand && (
+                <p className="text-red-500 text-xs">
+                  {errors.subBrand.message}
+                </p>
+              )}
             </div>
             <div>
               <label
                 htmlFor="message"
                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
               >
-                Product Description
+                Product Description(Use '/n' for determine new paragraph)
               </label>
               <textarea
                 id="message"
+                {...register("productDescription", {
+                  required: "Product description is required",
+                })}
                 rows="4"
                 className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="Write Here..."
               ></textarea>
+              {errors.productDescription && (
+                <p className="text-red-500 text-xs">
+                  {errors.productDescription.message}
+                </p>
+              )}
+            </div>
+            <div className="mt-5">
+              <label
+                htmlFor="message"
+                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >
+                Leather & Care(Use '/n' for determine new paragraph)
+              </label>
+              <textarea
+                id="message"
+                {...register("leatherCare", {
+                  required: "Leather care is required",
+                })}
+                rows="4"
+                className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Write Here..."
+              ></textarea>
+              {errors.leatherCare && (
+                <p className="text-red-500 text-xs">
+                  {errors.leatherCare.message}
+                </p>
+              )}
             </div>
           </div>
           <div className="mt-5 grid grid-cols-3 gap-2">
@@ -203,8 +362,12 @@ function AddProduct() {
               <input
                 type="text"
                 id="large-input"
+                {...register("height", { required: "Height is required" })}
                 className="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               />
+              {errors.height && (
+                <p className="text-red-500 text-xs">{errors.height.message}</p>
+              )}
             </div>
             <div className="mb-5">
               <label
@@ -216,8 +379,12 @@ function AddProduct() {
               <input
                 type="text"
                 id="large-input"
+                {...register("width", { required: "Width is required" })}
                 className="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               />
+              {errors.width && (
+                <p className="text-red-500 text-xs">{errors.width.message}</p>
+              )}
             </div>
             <div className="mb-5">
               <label
@@ -229,8 +396,12 @@ function AddProduct() {
               <input
                 type="text"
                 id="large-input"
+                {...register("depth", { required: "Depth is required" })}
                 className="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               />
+              {errors.depth && (
+                <p className="text-red-500 text-xs">{errors.depth.message}</p>
+              )}
             </div>
           </div>
           <div className="grid grid-cols-3 gap-2">
@@ -244,8 +415,16 @@ function AddProduct() {
               <input
                 type="number"
                 id="large-input"
+                {...register("askingPrice", {
+                  required: "Asking Price is required",
+                })}
                 className="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               />
+              {errors.askingPrice && (
+                <p className="text-red-500 text-xs">
+                  {errors.askingPrice.message}
+                </p>
+              )}
             </div>
             <div className="mb-5">
               <label
@@ -257,8 +436,16 @@ function AddProduct() {
               <input
                 type="number"
                 id="large-input"
+                {...register("mainPrice", {
+                  required: "Main Price is required",
+                })}
                 className="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               />
+              {errors.mainPrice && (
+                <p className="text-red-500 text-xs">
+                  {errors.mainPrice.message}
+                </p>
+              )}
             </div>
             <div className="mb-5">
               <label
@@ -270,8 +457,14 @@ function AddProduct() {
               <input
                 type="number"
                 id="large-input"
+                {...register("discount", { required: "Discount is required" })}
                 className="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               />
+              {errors.discount && (
+                <p className="text-red-500 text-xs">
+                  {errors.discount.message}
+                </p>
+              )}
             </div>
           </div>
           <div>
@@ -280,7 +473,7 @@ function AddProduct() {
                 htmlFor="base-input"
                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
               >
-                Features
+                Features(Sizes & Details)
               </label>
               <div className="flex items-center justify-center gap-2">
                 <input
@@ -292,6 +485,7 @@ function AddProduct() {
                 />
                 <button
                   onClick={handleAdd}
+                  type="button"
                   className=" px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
                 >
                   Add
@@ -314,20 +508,40 @@ function AddProduct() {
           </div>
           <div>
             <div className="mb-4">
-              <label
-                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                htmlFor="color_input"
-              >
-                Enter Color
-              </label>
-              <input
-                className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                id="color_input"
-                type="text"
-                placeholder="Enter color"
-                value={colorInput}
-                onChange={(e) => setColorInput(e.target.value)}
-              />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                <div>
+                  <label
+                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    htmlFor="color_input"
+                  >
+                    Enter Color
+                  </label>
+                  <input
+                    className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                    id="color_input"
+                    type="text"
+                    placeholder="Enter color"
+                    value={colorInput}
+                    onChange={(e) => setColorInput(e.target.value)}
+                  />
+                </div>
+                <div>
+                  <label
+                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    htmlFor="product_input"
+                  >
+                    Enter Number of Products
+                  </label>
+                  <input
+                    className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                    id="product_input"
+                    type="number"
+                    placeholder="Number of products"
+                    value={productInput}
+                    onChange={(e) => setProductInput(e.target.value)}
+                  />
+                </div>
+              </div>
               <button
                 type="button"
                 onClick={handleAddColor}
@@ -336,44 +550,48 @@ function AddProduct() {
                 Add Color
               </button>
             </div>
-            {colors.map((color, index) => (
+            {pictures.map((picture, index) => (
               <div key={index} className="mb-4">
                 <h3 className="text-lg font-medium text-gray-900 dark:text-white">
-                  Upload images for {color}
+                  {picture.color} - {picture.productCount} Product(s)
                 </h3>
                 <div className="mt-2">
                   <input
                     type="file"
                     multiple
-                    onChange={(e) => handleImageUpload(e, color)}
+                    onChange={(e) => handleImageUpload(e, picture.color)}
                     className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
                   />
                 </div>
-                {pictures
-                  .filter((picture) => picture.color === color)
-                  .map((picture) => (
-                    <div key={color} className="mt-2">
-                      {picture.images.length > 0 && (
-                        <div>
-                          <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                            Uploaded Images for {color}:
-                          </h4>
-                          <ul>
-                            {picture.images.map((file, fileIndex) => (
-                              <li
-                                key={fileIndex}
-                                className="text-sm text-gray-600 dark:text-gray-400"
-                              >
-                                {file.name}
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      )}
-                    </div>
-                  ))}
+                {/* Displaying uploaded images */}
+                {picture.images.length > 0 && (
+                  <div className="mt-2">
+                    <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                      Uploaded Images for {picture.color}:
+                    </h4>
+                    <ul>
+                      {picture.images.map((file, fileIndex) => (
+                        <li
+                          key={fileIndex}
+                          className="text-sm text-gray-600 dark:text-gray-400"
+                        >
+                          {file.name}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
               </div>
             ))}
+          </div>
+          <div className="mt-5">
+            <button
+              type="submit"
+              className="bg-blue-500 text-white p-2 rounded-md"
+              disabled={mutation.isLoading}
+            >
+              {mutation.isLoading ? "Adding Product..." : "Add Product"}
+            </button>
           </div>
         </form>
       </div>
