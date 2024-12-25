@@ -18,10 +18,11 @@ function Products3({ products }) {
     <div className="font-sans font-extralight mb-10">
       <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 px-5 lg:px-0">
         {products.map((product, index) => {
-          const validUtility = product?.utilities.find(
+          let validUtility = product?.utilities.find(
             (utility) => utility?.numberOfProducts > 0
           );
           const isSoldOut = !validUtility;
+          isSoldOut ? (validUtility = product?.utilities[0]) : validUtility;
 
           return (
             <div key={product._id} className="group relative cursor-pointer">
