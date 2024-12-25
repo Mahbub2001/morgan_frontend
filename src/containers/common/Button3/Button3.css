@@ -1,0 +1,43 @@
+ .wrapper3 h1 {
+    display: block;
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+    font-size: 12px;
+    font-family: sans-serif;
+    text-decoration: none;
+    color: black;
+    border: 2px solid var(--dynamic-border-color, #333);
+    letter-spacing: 2px;
+    text-align: center;
+    position: relative;
+    background: var(--dynamic-bg-color, #ff003b); 
+    transition: all 0.35s;
+    font-weight: 100;
+  }
+  
+  .wrapper3 h1 span {
+    position: relative;
+    z-index: 2;
+  }
+  
+  .wrapper3 h1:after {
+    position: absolute;
+    content: "";
+    top: 0;
+    left: 0;
+    width: 100%; 
+    height: 100%;
+    background: var(--dynamic-bg-color, #ff003b); 
+    transition: all 0.35s;
+  }
+  
+  .wrapper3 h1:hover {
+    color: #333; 
+    background: transparent; 
+  }
+  
+  .wrapper3 h1:hover:after {
+    width: 0%; 
+  }
+  

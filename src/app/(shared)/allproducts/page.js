@@ -1,10 +1,15 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { HiMiniBars4 } from "react-icons/hi2";
 import { CgMenuGridR } from "react-icons/cg";
+import { FaAngleDown } from "react-icons/fa6";
+import { FaAngleUp } from "react-icons/fa6";
+import PriceFilter from "@/components/PriceFilter/PriceFilter";
+import Button3 from "@/containers/common/Button3/Button3";
 
 function AllProducts() {
   const [isOpen, setIsOpen] = useState(false);
+  const sidebarRef = useRef(null);
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -16,13 +21,40 @@ function AllProducts() {
     setIsOpenSidebar(!isOpenSidebar);
   };
 
+  const [expandedSections, setExpandedSections] = useState({});
+
+  const toggleSection = (section) => {
+    setExpandedSections((prev) => ({
+      ...prev,
+      [section]: !prev[section],
+    }));
+  };
+
+  const handlePriceChange = (range) => {
+    console.log("Selected Price Range: ", range);
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
+        setIsOpenSidebar(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
     <div className="-mt-20 lg:mt-24 xl:mt-20">
       <h1 className="text-center tracking-widest font-sans font-light  text-2xl pt-8">
         All | CURRENT COLLECTION
       </h1>
-      <div className="mt-8 ">
-        <div className="grid  grid-cols-2 md:grid-cols-3 items-center border border-gray-300 p-1 font-extralight">
+      <div className="mt-8 container mx-auto">
+        <div className="grid grid-cols-2 md:grid-cols-3 items-center border-b border-t border-gray-300 p-1 font-extralight">
           <div className="flex items-center space-x-1">
             <button className="p-1 border border-none rounded">
               <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
@@ -148,6 +180,7 @@ function AllProducts() {
                 Filter
               </button>
               <div
+                ref={sidebarRef}
                 className={`fixed z-50 top-0 right-0 h-full w-80 bg-gray-50 shadow-lg border-l border-gray-300 p-6 transition-transform duration-300 ease-in-out ${
                   isOpenSidebar ? "translate-x-0" : "translate-x-full"
                 }`}
@@ -161,86 +194,200 @@ function AllProducts() {
                 <h2 className="text-lg font-extralight tracking-widest mb-4">
                   FILTER
                 </h2>
-                <div className="mb-6">
-                  <h3 className="text-md font-medium mb-2">Availability</h3>
-                  <div>
-                    <label className="flex items-center space-x-2">
-                      <input type="checkbox" className="rounded text-black" />
-                      <span>In Stock (65)</span>
-                    </label>
-                    <label className="flex items-center space-x-2 mt-2">
-                      <input type="checkbox" className="rounded text-black" />
-                      <span>Pre Order (1)</span>
-                    </label>
-                  </div>
-                </div>
+                <hr />
 
-                <div className="mb-6">
-                  <h3 className="text-md font-medium mb-2">Colour</h3>
-                  <div className="flex flex-wrap gap-2">
-                    {[
-                      "black",
-                      "gray-800",
-                      "red-500",
-                      "brown-500",
-                      "green-500",
-                      "orange-400",
-                      "purple-400",
-                    ].map((color, index) => (
+                <div className="grid grid-cols-1 justify-between h-full">
+                  <div className="pt-3 text-xs mt-8">
+                    <div className="mb-2">
+                      <h3
+                        className="font-extralight flex items-center justify-between tracking-widest  mb-2 cursor-pointer"
+                        onClick={() => toggleSection("availability")}
+                      >
+                        <span className="">AVAILABILITY</span>
+                        {expandedSections.availability ? (
+                          <FaAngleDown className="rotate-180 transition-all duration-700 ease-in-out" />
+                        ) : (
+                          <FaAngleDown className="transition-all duration-700 ease-in-out" />
+                        )}
+                      </h3>
                       <div
-                        key={index}
-                        className={`w-6 h-6 rounded-full bg-${color} border border-gray-300 cursor-pointer`}
-                      />
-                    ))}
-                  </div>
-                </div>
-
-                <div className="mb-6">
-                  <h3 className="text-md font-medium mb-2">Price</h3>
-                  <div className="space-y-2">
-                    <input type="range" min="0" max="420" className="w-full" />
-                    <input type="range" min="0" max="420" className="w-full" />
-                  </div>
-                </div>
-
-                <div className="mb-6">
-                  <h3 className="text-md font-medium mb-2">Size</h3>
-                  <div>
-                    {["L-XL (9)", "S-M (9)"].map((size, index) => (
-                      <label
-                        key={index}
-                        className="flex items-center space-x-2 mt-2"
+                        className={`overflow-hidden transition-all duration-700 ease-in-out ${
+                          expandedSections.availability ? "max-h-40" : "max-h-0"
+                        }`}
                       >
-                        <input type="checkbox" className="rounded text-black" />
-                        <span>{size}</span>
-                      </label>
-                    ))}
-                  </div>
-                </div>
-                <div>
-                  <h3 className="text-md font-medium mb-2">Type of Strap</h3>
-                  <div>
-                    {[
-                      "Crossbody (37)",
-                      "Grab Handles (8)",
-                      "Shoulder (21)",
-                      "Waist Strap (9)",
-                    ].map((type, index) => (
-                      <label
-                        key={index}
-                        className="flex items-center space-x-2 mt-2"
-                      >
-                        <input type="checkbox" className="rounded text-black" />
-                        <span>{type}</span>
-                      </label>
-                    ))}
-                  </div>
-                </div>
+                        <label className="flex items-center space-x-2">
+                          <input
+                            type="checkbox"
+                            className="rounded text-black"
+                          />
+                          <span>In Stock (65)</span>
+                        </label>
+                        <label className="flex items-center space-x-2 mt-2 pb-2">
+                          <input
+                            type="checkbox"
+                            className="rounded text-black"
+                          />
+                          <span>Pre Order (1)</span>
+                        </label>
+                      </div>
+                    </div>
+                    <hr className="w-full " />
 
-                {/* View Results Button */}
-                <button className="w-full bg-yellow-500 hover:bg-yellow-600 text-white font-medium py-2 rounded mt-6">
-                  View Results
-                </button>
+                    <div className="mb-2 mt-3">
+                      <h3
+                        className="flex tracking-widest justify-between items-center mb-2 cursor-pointer"
+                        onClick={() => toggleSection("colour")}
+                      >
+                        <span>COLOR</span>
+                        {expandedSections.colour ? (
+                          <FaAngleDown className="rotate-180 transition-all duration-700 ease-in-out" />
+                        ) : (
+                          <FaAngleDown className="transition-all duration-700 ease-in-out" />
+                        )}
+                      </h3>
+                      <div
+                        className={`overflow-hidden transition-all duration-700 ease-in-out ${
+                          expandedSections.colour ? "max-h-40" : "max-h-0"
+                        }`}
+                      >
+                        <div className="flex flex-wrap gap-2 mt-2">
+                          {[
+                            "black",
+                            "gray",
+                            "red",
+                            "brown",
+                            "green",
+                            "orange",
+                            "purple",
+                          ].map((color, index) => (
+                            <div
+                              key={index}
+                              className="px-2 py-1 cursor-pointer bg-gray-200 text-gray-900 rounded border border-gray-300 transform transition-transform duration-300 ease-in-out hover:scale-105 hover:bg-gray-300"
+                            >
+                              {color}
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                    <hr className="mt-3" />
+
+                    <div className="mb-2 mt-3">
+                      <h3
+                        className="flex justify-between items-center tracking-widest mb-2 cursor-pointer"
+                        onClick={() => toggleSection("price")}
+                      >
+                        <span>PRICE</span>
+                        {expandedSections.price ? (
+                          <FaAngleDown className="rotate-180 transition-all duration-700 ease-in-out" />
+                        ) : (
+                          <FaAngleDown className="transition-all duration-700 ease-in-out" />
+                        )}
+                      </h3>
+                      <div
+                        className={`overflow-hidden transition-all duration-700 ease-in-out ${
+                          expandedSections.price ? "max-h-40" : "max-h-0"
+                        }`}
+                      >
+                        <div>
+                          <PriceFilter
+                            min={0}
+                            max={420}
+                            onChange={handlePriceChange}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <hr className="mt-3" />
+
+                    <div className="mb-2 mt-3">
+                      <h3
+                        className=" flex justify-between items-center tracking-widest  mb-2 cursor-pointer"
+                        onClick={() => toggleSection("size")}
+                      >
+                        <span>SIZE</span>
+                        {expandedSections.size ? (
+                          <FaAngleDown className="rotate-180 transition-all duration-700 ease-in-out" />
+                        ) : (
+                          <FaAngleDown className="transition-all duration-700 ease-in-out" />
+                        )}
+                      </h3>
+                      <div
+                        className={`overflow-hidden transition-all duration-700 ease-in-out ${
+                          expandedSections.size ? "max-h-40" : "max-h-0"
+                        }`}
+                      >
+                        <div className="mt-2">
+                          {["L-XL (9)", "S-M (9)"].map((size, index) => (
+                            <label
+                              key={index}
+                              className="flex items-center space-x-2 mt-2"
+                            >
+                              <input
+                                type="checkbox"
+                                className="rounded text-black"
+                              />
+                              <span>{size}</span>
+                            </label>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                    <hr className="mt-3" />
+
+                    <div className="mb-2 mt-3">
+                      <h3
+                        className=" mb-2 flex justify-between items-center tracking-widest cursor-pointer"
+                        onClick={() => toggleSection("typeOfStrap")}
+                      >
+                        <span>TYPE OF STRAP</span>
+                        {expandedSections.typeOfStrap ? (
+                          <FaAngleDown className="rotate-180 transition-all duration-700 ease-in-out" />
+                        ) : (
+                          <FaAngleDown className="transition-all duration-700 ease-in-out" />
+                        )}
+                      </h3>
+                      <div
+                        className={`overflow-hidden transition-all duration-700 ease-in-out ${
+                          expandedSections.typeOfStrap ? "max-h-40" : "max-h-0"
+                        }`}
+                      >
+                        <div className="mt-2">
+                          {[
+                            "Crossbody (37)",
+                            "Grab Handles (8)",
+                            "Shoulder (21)",
+                            "Waist Strap (9)",
+                          ].map((type, index) => (
+                            <label
+                              key={index}
+                              className="flex items-center space-x-2 mt-2"
+                            >
+                              <input
+                                type="checkbox"
+                                className="rounded text-black"
+                              />
+                              <span>{type}</span>
+                            </label>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+
+                  <div className="w-full mt-6 cursor-pointer">
+                    <hr className="mt-3 pb-5" />
+                    <Button3
+                      text="View Results"
+                      backgroundColor="#f5db8b"
+                      borderColor="#f5db8b"
+                    />
+                  </div>
+                </div>
               </div>
             </>
           </div>
