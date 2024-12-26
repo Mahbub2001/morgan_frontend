@@ -1,7 +1,10 @@
 "use client";
 
 import { fetchProduct } from "@/api/nyProducts";
+import Button3 from "@/containers/common/Button3/Button3";
 import React, { useEffect, useRef, useState } from "react";
+import { CgClose } from "react-icons/cg";
+import { FaAngleDown } from "react-icons/fa";
 import { IoMdAdd } from "react-icons/io";
 import { RiSubtractFill } from "react-icons/ri";
 
@@ -13,15 +16,17 @@ function ProductDetailspage({ id, color }) {
   const [leathercare, setLeatherCare] = useState([]);
   const [activeIndex, setActiveIndex] = useState(0);
   const [expandedSections, setExpandedSections] = useState({});
-
   const [quantity, setQuantity] = useState(0);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
-  // Handle increment
+  const toggleDrawer = () => {
+    setIsDrawerOpen(!isDrawerOpen);
+  };
+
   const increment = () => {
     setQuantity((prev) => Math.min(prev + 1, 50));
   };
 
-  // Handle decrement
   const decrement = () => {
     setQuantity((prev) => Math.max(prev - 1, 1));
   };
@@ -31,7 +36,7 @@ function ProductDetailspage({ id, color }) {
     if (!isNaN(value) && value >= 1 && value <= 50) {
       setQuantity(value);
     } else if (e.target.value === "") {
-      setQuantity(""); // Allow empty input for user edits
+      setQuantity("");
     }
   };
 
@@ -146,7 +151,7 @@ function ProductDetailspage({ id, color }) {
             ))}
           </div>
         </div>
-        <div className="col-span-6 lg:col-span-5 font-sans px-2 pl-5 sticky top-20 h-[calc(150vh-5rem)] overflow-auto">
+        <div className="col-span-6 lg:col-span-5 font-sans px-2 pl-1 sticky top-20 h-[calc(150vh-5rem)] overflow-auto">
           <div className="relative">
             <div>
               <p className="uppercase text-gray-500 tracking-widest">
@@ -277,7 +282,7 @@ function ProductDetailspage({ id, color }) {
                 </div>
                 <hr className="mt-2 mb-4" />
               </div>
-              <div>
+              <div className="">
                 <div className="">
                   <div className="relative flex items-center max-w-[8rem] border border-gray-200 dark:border-gray-700 rounded-sm">
                     <button
@@ -335,6 +340,50 @@ function ProductDetailspage({ id, color }) {
                         />
                       </svg>
                     </button>
+                  </div>
+                </div>
+                <div
+                  onClick={toggleDrawer}
+                  className="w-full mt-6 cursor-pointer"
+                >
+                  <hr className="mt-3 pb-5" />
+                  <Button3
+                    text="ADD TO CARD"
+                    backgroundColor="#be834f"
+                    borderColor="#be834f"
+                    textColor="#fff"
+                  />
+                </div>
+                <div
+                  className={`z-50 fixed rounded-lg top-16 lg:top-44 right-0 h-full lg:h-4/5 w-96 bg-white shadow-2xl border transition-transform duration-300 ${
+                    isDrawerOpen ? "translate-x-0" : "translate-x-full"
+                  }`}
+                >
+                  <div className="p-4 relative">
+                    <div className="flex flex-col justify-between">
+                      <div>
+                        <div className="flex justify-between">
+                          <p className="tracking-widest font-extralight">
+                            CART
+                          </p>
+                          <CgClose
+                            className="cursor-pointer"
+                            onClick={toggleDrawer}
+                          />
+                        </div>
+                        <hr className="my-2 mt-4" />
+                        <p className="text-center text-xs tracking-widest">
+                          You are eligible for shipping
+                        </p>
+                        <hr className="my-2" />
+                      </div>
+                      <div>
+                        
+                      </div>
+                      <div>
+                        adasd
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>

@@ -2,7 +2,7 @@ import React from "react";
 
 function Responsibility() {
   return (
-    <div className="container mx-auto px-6 max-w-screen-lg">
+    <div className="container mx-auto px-6 max-w-screen-lg -mt-20 lg:mt-24 xl:mt-20">
       <div className="flex flex-col md:flex-row items-center justify-between gap-12">
         <div className="w-full md:w-1/2">
           <h3 className="text-2xl font-bold">Our Responsibility</h3>
