@@ -36,6 +36,25 @@ p {
   font-family: var(--font-futura-sans), sans-serif;
 }
 
+.dynamic-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: gray lightgray; 
+}
+
+.dynamic-scrollbar::-webkit-scrollbar {
+  width: var(--scrollbar-width, 1px);
+}
+
+.dynamic-scrollbar::-webkit-scrollbar-thumb {
+  background: gray; 
+  border-radius: 4px;
+}
+
+.dynamic-scrollbar::-webkit-scrollbar-track {
+  background: lightgray; 
+}
+
+
 
 @media (max-width: 1050px) {
   .main-navbar {
