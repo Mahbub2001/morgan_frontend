@@ -16,6 +16,7 @@
     "firebase": "^11.1.0",
     "flowbite-react": "^0.10.2",
     "js-cookie": "^3.0.5",
+    "lodash": "^4.17.21",
     "next": "15.0.3",
     "react": "19.0.0-rc-66855b96-20241106",
     "react-apexcharts": "^1.7.0",

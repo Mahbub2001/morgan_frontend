@@ -11,6 +11,21 @@ const openSans = Open_Sans({
   weight: ["500", "700"],
 });
 
+const futuraSans = localFont({
+  src: [
+    {
+      path: "/fonts/FuturaLT.woff",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "/fonts/FuturaLT.woff", 
+      style: "normal",
+    },
+  ],
+  variable: "--font-futura-sans", 
+});
+
 export const metadata = {
   title: "Ny Morgan",
   description: "Created by Mahbub Ahmed",
@@ -19,7 +34,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${openSans.variable} antialiased font-sans`}>
+      <body className={`${openSans.variable} ${futuraSans.variable} antialiased`}>
         <AuthProvider>
           <div>{children}</div>
         </AuthProvider>

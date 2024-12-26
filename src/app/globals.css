@@ -32,6 +32,9 @@ p {
   font-family: var(--font-open-sans);
   font-weight: 300;
 }
+.font-futura-sans {
+  font-family: var(--font-futura-sans), sans-serif;
+}
 
 
 @media (max-width: 1050px) {

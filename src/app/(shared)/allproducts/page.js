@@ -70,7 +70,7 @@ function AllProducts() {
           <div className="flex items-center space-x-1 mb-4">
             <button
               onClick={() => handleLayoutChange("grid")}
-              className="p-1 border border-none rounded"
+              className="px-1 mt-3 text-gray-600 hover:text-black  border border-none rounded"
             >
               <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                 <rect x="2" y="2" width="6" height="6" />
@@ -81,13 +81,13 @@ function AllProducts() {
             </button>
             <button
               onClick={() => handleLayoutChange("menu")}
-              className="p-1 border border-none rounded"
+              className="px-1 mt-3 text-gray-600 hover:text-black border border-none rounded"
             >
               <CgMenuGridR className="w-5 h-5 hover:font-bold" />
             </button>
             <button
               onClick={() => handleLayoutChange("list")}
-              className="p-1 border border-none rounded"
+              className="px-1 mt-3 text-gray-600 hover:text-black border border-none rounded"
             >
               <HiMiniBars4 className="w-5 h-5" />
             </button>
