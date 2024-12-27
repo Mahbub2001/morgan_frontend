@@ -47,7 +47,7 @@ function AddProduct() {
   const [pictures, setPictures] = useState([]);
   const [subnameInput, setSubnameInput] = useState("");
 
-  const handleAddColor = () => {    
+  const handleAddColor = () => {
     if (
       colorInput.trim() !== "" &&
       productInput.trim() !== "" &&
@@ -122,7 +122,7 @@ function AddProduct() {
 
   const onSubmit = async (data) => {
     console.log("Form data:", data);
-    
+
     try {
       data.features = dataArray;
 
@@ -375,8 +375,12 @@ function AddProduct() {
               </label>
               <input
                 type="text"
+                step="0.01"
                 id="large-input"
-                {...register("height", { required: "Height is required" })}
+                {...register("height", {
+                  required: "Height is required",
+                  valueAsNumber: true,
+                })}
                 className="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               />
               {errors.height && (
@@ -392,8 +396,12 @@ function AddProduct() {
               </label>
               <input
                 type="text"
+                step="0.01"
                 id="large-input"
-                {...register("width", { required: "Width is required" })}
+                {...register("width", {
+                  required: "Width is required",
+                  valueAsNumber: true,
+                })}
                 className="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               />
               {errors.width && (
@@ -409,8 +417,12 @@ function AddProduct() {
               </label>
               <input
                 type="text"
+                step="0.01"
                 id="large-input"
-                {...register("depth", { required: "Depth is required" })}
+                {...register("depth", {
+                  required: "Depth is required",
+                  valueAsNumber: true,
+                })}
                 className="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               />
               {errors.depth && (
@@ -428,9 +440,11 @@ function AddProduct() {
               </label>
               <input
                 type="number"
+                step="0.01"
                 id="large-input"
                 {...register("askingPrice", {
                   required: "Asking Price is required",
+                  valueAsNumber: true,
                 })}
                 className="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               />
@@ -449,9 +463,11 @@ function AddProduct() {
               </label>
               <input
                 type="number"
+                step="0.01"
                 id="large-input"
                 {...register("mainPrice", {
                   required: "Main Price is required",
+                  valueAsNumber: true,
                 })}
                 className="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               />
@@ -470,8 +486,12 @@ function AddProduct() {
               </label>
               <input
                 type="number"
+                step="0.01"
                 id="large-input"
-                {...register("discount", { required: "Discount is required" })}
+                {...register("discount", {
+                  required: "Discount is required",
+                  valueAsNumber: true,
+                })}
                 className="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               />
               {errors.discount && (

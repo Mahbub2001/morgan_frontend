@@ -10,6 +10,7 @@ import { FaAngleDown } from "react-icons/fa";
 import { IoMdAdd } from "react-icons/io";
 import { RiSubtractFill } from "react-icons/ri";
 import RelatedProduct from "../RelatedProduct/RelatedProduct";
+import ProductDetailFooter from "../ProductDetailFooter/ProductDetailFooter";
 
 function ProductDetailspage({ id, color }) {
   const [data, setData] = useState(null);
@@ -135,11 +136,15 @@ function ProductDetailspage({ id, color }) {
     };
   }, [pageDataI]);
 
+  const afterDiscount =
+    parseFloat(pageDataI?.allData?.askingPrice) -
+    (parseFloat(pageDataI?.allData?.askingPrice) *
+      parseFloat(pageDataI?.allData?.discount)) /
+      100;
+
   if (!pageDataI) {
     return <div>Loading...</div>;
   }
-
-  // console.log("relatedProducts", relatedProducts);
 
   return (
     <div className="container mx-auto -mt-20 lg:mt-24 xl:mt-20 mb-10">
@@ -194,8 +199,28 @@ function ProductDetailspage({ id, color }) {
                 {pageDataI?.allData?.subBrand}
               </p>
               <p className="pt-5 text-gray-500 tracking-wider">
-                € {pageDataI?.allData?.askingPrice}.00
+                {pageDataI?.allData?.discount > 0 ? (
+                  <span className="flex gap-3">
+                    <span className="text-gold">
+                      €{" "}
+                      {Number.isInteger(afterDiscount)
+                        ? afterDiscount
+                        : afterDiscount.toFixed(2)}
+                    </span>
+                    <span className="line-through">
+                      € {(pageDataI?.allData?.askingPrice).toFixed(2)}
+                    </span>{" "}
+                  </span>
+                ) : (
+                  <>
+                    €{" "}
+                    {Number.isInteger(afterDiscount)
+                      ? afterDiscount.toFixed(2)
+                      : afterDiscount.toFixed(2)}
+                  </>
+                )}
               </p>
+
               <hr className="mt-8 mb-5" />
               <p className="text-2xl lg:text-3xl text-gray-700 tracking-widest mb-3">
                 DESCRIPTION
@@ -467,6 +492,11 @@ function ProductDetailspage({ id, color }) {
             <RelatedProduct relatedProducts={relatedProducts} />
           </div>
         </div>
+        <hr className="mt-16" />
+        <div className="mt-10">
+          <ProductDetailFooter />
+        </div>
+        <hr className="mt-16" />
       </div>
     </div>
   );
