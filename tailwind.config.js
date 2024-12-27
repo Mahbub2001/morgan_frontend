@@ -9,22 +9,23 @@ module.exports = {
   ],
   theme: {
     screens: {
-      sm: "600px", // Custom small screen
-      md: "768px", // Default medium screen
-      lg: "1024px", // Default large screen
-      xl: "1280px", // Default extra-large screen
-      "2xl": "1440px", // Custom breakpoint for very large screens
+      sm: "600px",
+      md: "768px",
+      lg: "1024px",
+      xl: "1280px",
+      "2xl": "1440px",
     },
     extend: {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        gold: "#be834f", 
       },
     },
   },
   plugins: [
     flowbite.plugin(),
-    require('tailwind-scrollbar')
+    require("tailwind-scrollbar"),
     // ({
     //   charts:true,
     // }),

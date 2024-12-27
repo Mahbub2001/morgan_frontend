@@ -1,13 +1,15 @@
 "use client";
 
-import { fetchProduct } from "@/api/nyProducts";
+import { fetchProduct, fetchRelatedProducts } from "@/api/nyProducts";
 import Button3 from "@/containers/common/Button3/Button3";
 import SliderComponent from "@/containers/common/SliderProductPage/SliderComponent";
+import Link from "next/link";
 import React, { useEffect, useRef, useState } from "react";
 import { CgClose } from "react-icons/cg";
 import { FaAngleDown } from "react-icons/fa";
 import { IoMdAdd } from "react-icons/io";
 import { RiSubtractFill } from "react-icons/ri";
+import RelatedProduct from "../RelatedProduct/RelatedProduct";
 
 function ProductDetailspage({ id, color }) {
   const [data, setData] = useState(null);
@@ -16,6 +18,7 @@ function ProductDetailspage({ id, color }) {
   const [descriptionLines, setDescriptionLines] = useState([]);
   const [leathercare, setLeatherCare] = useState([]);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [relatedProducts, setRelatedProducts] = useState([]);
   const [expandedSections, setExpandedSections] = useState({});
   const [quantity, setQuantity] = useState(0);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -77,6 +80,7 @@ function ProductDetailspage({ id, color }) {
 
           if (matchedUtility) {
             setPageDataI({ allData: productData, utility: matchedUtility });
+
             if (productData?.productDescription) {
               const lines = productData.productDescription.split("\\n");
               setDescriptionLines(lines);
@@ -89,13 +93,24 @@ function ProductDetailspage({ id, color }) {
             setError("No matching color found in utilities");
           }
         }
+
+        return fetchRelatedProducts(
+          productData.productName,
+          productData.category,
+          productData.subCategory,
+          8
+        );
+      })
+      .then((relatedProductsData) => {
+        if (relatedProductsData) {
+          setRelatedProducts(relatedProductsData);
+        }
       })
       .catch((error) => {
-        console.error("Error fetching product:", error);
-        setError("Failed to load product data");
+        console.error("Error fetching product or related products:", error);
+        setError("Failed to load product or related product data");
       });
   }, [id, color]);
-
   useEffect(() => {
     const imageElements = document.querySelectorAll(".middle-image");
     const observer = new IntersectionObserver(
@@ -124,9 +139,11 @@ function ProductDetailspage({ id, color }) {
     return <div>Loading...</div>;
   }
 
+  // console.log("relatedProducts", relatedProducts);
+
   return (
     <div className="container mx-auto -mt-20 lg:mt-24 xl:mt-20 mb-10">
-      <div className="grid grid-cols-6 lg:grid-cols-12 gap-4 pt-5">
+      <div className="grid grid-cols-6 lg:grid-cols-12 lg:gap-4 pt-5">
         <div className="hidden lg:block col-span-1 sticky top-20 h-[calc(100vh-5rem)] overflow-auto">
           <div className="flex flex-col gap-2">
             {pageDataI?.utility?.pictures?.map((image, index) => (
@@ -160,12 +177,12 @@ function ProductDetailspage({ id, color }) {
             ))}
           </div>
         </div>
-        <div className="lg:hidden col-span-6 px-2">
+        <div className=" col-span-6 lg:hidden px-2">
           <SliderComponent images={pageDataI?.utility?.pictures} />
         </div>
 
-        <div className="col-span-6 lg:col-span-5 font-sans px-2 pl-1 lg:sticky top-20 lg:h-[calc(150vh-5rem)] lg:overflow-auto">
-          <div className="relative">
+        <div className="col-span-6 lg:col-span-5 font-sans lg:sticky top-20 lg:h-[calc(150vh-5rem)] lg:overflow-auto px-1 lg:px-0">
+          <div className="relative mt-4 lg:mt-0">
             <div>
               <p className="uppercase text-gray-500 tracking-widest">
                 {pageDataI?.allData?.brandName}
@@ -180,7 +197,7 @@ function ProductDetailspage({ id, color }) {
                 € {pageDataI?.allData?.askingPrice}.00
               </p>
               <hr className="mt-8 mb-5" />
-              <p className="text-3xl text-gray-700 tracking-widest mb-3">
+              <p className="text-2xl lg:text-3xl text-gray-700 tracking-widest mb-3">
                 DESCRIPTION
               </p>
               <div className="text-gray-700 text-sm">
@@ -228,7 +245,7 @@ function ProductDetailspage({ id, color }) {
                 <hr className="mt-2 mb-4" />
                 <div className="mb-2">
                   <h3
-                    className="font-extralight flex items-center justify-between tracking-widest  mb-2 cursor-pointer"
+                    className="font-extralight flex items-center justify-between tracking-widest mb-2 cursor-pointer"
                     onClick={() => toggleSection("clr")}
                   >
                     <span className="text-sm">COLOR</span>
@@ -245,13 +262,17 @@ function ProductDetailspage({ id, color }) {
                   >
                     <div className="flex gap-2 py-2">
                       {pageDataI?.allData?.utilities?.map((feature, index) => (
-                        <p
+                        <Link
+                          href={{
+                            pathname: `/allproducts/${pageDataI?.allData?._id}`,
+                            query: { color: feature?.color },
+                          }}
                           className="text-gray-600 font-futura-sans rounded hover:text-gray-900 cursor-pointer py-1 text-sm border px-1"
                           key={index}
                           tooltip={feature?.color}
                         >
                           {feature?.color}
-                        </p>
+                        </Link>
                       ))}
                     </div>
                   </div>
@@ -368,7 +389,7 @@ function ProductDetailspage({ id, color }) {
                   />
                 </div>
                 <div
-                  className={`z-50 fixed rounded-lg top-16 lg:top-44 right-0 h-full lg:h-4/5 w-96 bg-white shadow-2xl border transition-transform duration-300 ${
+                  className={`z-50 fixed rounded-lg top-16 lg:top-44 right-0 h-full lg:h-4/5  w-96 bg-white shadow-2xl border transition-transform duration-300 ${
                     isDrawerOpen ? "translate-x-0" : "translate-x-full"
                   }`}
                 >
@@ -437,7 +458,16 @@ function ProductDetailspage({ id, color }) {
         </div>
       </div>
       <hr className="mt-16" />
-      <div className="mt-20"></div>
+      <div className="mt-10">
+        <p className="font-extralight tracking-widest mb-6 text-center text-2xl md:text-3xl">
+          RELATED PRODUCTS
+        </p>
+        <div>
+          <div className="mt-10">
+            <RelatedProduct relatedProducts={relatedProducts} />
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
