@@ -3,7 +3,7 @@ import "./Button3.css";
 
 function Button3({ text, backgroundColor, borderColor,textColor }) {
   return (
-    <div className="wrapper3">
+    <div className="wrapper3 cursor-pointer">
       <h1
         style={{
           "--dynamic-bg-color": backgroundColor,
