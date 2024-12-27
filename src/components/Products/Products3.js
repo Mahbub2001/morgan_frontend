@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import React, { useState } from "react";
 import { IoAdd } from "react-icons/io5";
 
@@ -25,7 +26,14 @@ function Products3({ products }) {
           isSoldOut ? (validUtility = product?.utilities[0]) : validUtility;
 
           return (
-            <div key={product._id} className="group relative cursor-pointer">
+            <Link
+              href={{
+                pathname: `/allproducts/${product._id}`,
+                query: { color: validUtility.color },
+              }}
+              key={product._id}
+              className="group relative cursor-pointer"
+            >
               <div
                 onMouseEnter={() => handleMouseEnter(index)}
                 onMouseLeave={handleMouseLeave}
@@ -59,7 +67,7 @@ function Products3({ products }) {
               <p className="pt-1 text-center text-xs">
                 £ {product?.askingPrice}.00
               </p>
-            </div>
+            </Link>
           );
         })}
       </div>
