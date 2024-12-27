@@ -2,6 +2,7 @@
 
 import { fetchProduct } from "@/api/nyProducts";
 import Button3 from "@/containers/common/Button3/Button3";
+import SliderComponent from "@/containers/common/SliderProductPage/SliderComponent";
 import React, { useEffect, useRef, useState } from "react";
 import { CgClose } from "react-icons/cg";
 import { FaAngleDown } from "react-icons/fa";
@@ -125,7 +126,7 @@ function ProductDetailspage({ id, color }) {
 
   return (
     <div className="container mx-auto -mt-20 lg:mt-24 xl:mt-20 mb-10">
-      <div className="grid grid-cols-6 md:grid-cols-12 gap-4 pt-5">
+      <div className="grid grid-cols-6 lg:grid-cols-12 gap-4 pt-5">
         <div className="hidden lg:block col-span-1 sticky top-20 h-[calc(100vh-5rem)] overflow-auto">
           <div className="flex flex-col gap-2">
             {pageDataI?.utility?.pictures?.map((image, index) => (
@@ -146,7 +147,7 @@ function ProductDetailspage({ id, color }) {
           </div>
         </div>
 
-        <div className="px-2 col-span-6 lg:col-span-6">
+        <div className="hidden lg:block px-2 col-span-6 lg:col-span-6">
           <div className="flex flex-col gap-4">
             {pageDataI?.utility?.pictures?.map((image, index) => (
               <img
@@ -159,7 +160,11 @@ function ProductDetailspage({ id, color }) {
             ))}
           </div>
         </div>
-        <div className="col-span-6 lg:col-span-5 font-sans px-2 pl-1 sticky top-20 h-[calc(150vh-5rem)] overflow-auto">
+        <div className="lg:hidden col-span-6 px-2">
+          <SliderComponent images={pageDataI?.utility?.pictures} />
+        </div>
+
+        <div className="col-span-6 lg:col-span-5 font-sans px-2 pl-1 lg:sticky top-20 lg:h-[calc(150vh-5rem)] lg:overflow-auto">
           <div className="relative">
             <div>
               <p className="uppercase text-gray-500 tracking-widest">
@@ -410,7 +415,7 @@ function ProductDetailspage({ id, color }) {
                         <div className="p-4 flex flex-col h-full">
                           <p className="text-xs py-2">Order note</p>
                           <textarea
-                            className="mb-4 w-full h-full border placeholder:text-xs border-gray-300 rounded-sm p-2 resize-none"
+                            className="mb-4 w-full h-full border placeholder:text-xs border-gray-300 rounded-sm p-2 !focus:outline-none !focus:border-none resize-none"
                             placeholder="Write your order note here..."
                           ></textarea>
                           <div onClick={saveNote} className="rounded border-t">
@@ -431,6 +436,8 @@ function ProductDetailspage({ id, color }) {
           </div>
         </div>
       </div>
+      <hr className="mt-16" />
+      <div className="mt-20"></div>
     </div>
   );
 }
