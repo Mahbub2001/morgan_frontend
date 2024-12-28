@@ -126,9 +126,18 @@ function CartDrawer({
     }
   };
 
+  const handleRemove = (productId, color) => {
+    const updatedProductDetails = productDetails.filter(
+      (product) => !(product.id === productId && product.color === color)
+    );
+    setProductDetails(updatedProductDetails);
+
+    localStorage.setItem("cartItems", JSON.stringify(updatedProductDetails));
+  };
+
   return (
     <div
-      className={`!z-50 font-futara-sans fixed rounded-lg top-0 lg:top-0 right-0 h-full w-96 bg-white shadow-2xl border transition-transform duration-300 ${
+      className={`!z-50 font-futara-sans fixed rounded-lg top-16 lg:top-0 right-0 h-full w-80 bg-white shadow-2xl border transition-transform duration-300 ${
         isDrawerOpen ? "translate-x-0" : "translate-x-full"
       }`}
     >
@@ -145,93 +154,106 @@ function CartDrawer({
             </p>
           </div>
           <hr className="my-2" />
-          <div>
-            {productDetails.length > 0 ? (
-              productDetails.map((product) => (
-                <div
-                  className="flex justify-evenly items-center"
-                  key={product.id}
-                >
-                  <div>
-                    <img
-                      src={product.image}
-                      alt={product.name}
-                      className="w-16 h-16"
-                    />
-                  </div>
-                  <div>
-                    <p className="text-sm font-extralight font-futura-sans">
-                      {product.name}
-                    </p>
-                    <p className="text-xs">{product.price}</p>
-                    <p className="text-xs">{product.discountPrice}</p>
-                  </div>
-                  <div>
+          <div className="overflow-auto max-h-[60vh]">
+            <div className="flex flex-col gap-5 items-start  justify-center">
+              {productDetails.length > 0 ? (
+                productDetails.map((product) => (
+                  <div
+                    className="flex justify-evenly gap-5 items-center"
+                    key={product.id}
+                  >
                     <div>
-                      <div className="relative flex items-center max-w-[8rem] border border-gray-200 dark:border-gray-700 rounded-sm">
-                        <button
-                          type="button"
-                          id="decrement-button"
-                          onClick={() => decrement(product.id)}
-                          className="rounded-s-lg p-3 h-11 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none"
-                        >
-                          <svg
-                            className="w-3 h-3 text-gray-900 dark:text-white"
-                            aria-hidden="true"
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 18 2"
+                      <img
+                        src={product.image}
+                        alt={product.name}
+                        className="w-28 h-28"
+                      />
+                    </div>
+                    <div className="flex flex-col gap-3">
+                      <div>
+                        <p className="text-sm font-extralight font-futura-sans">
+                          {product.name}
+                        </p>
+                        <p className="font-futura-sans text-xs pt-1">
+                          $ {Number(product.discountPrice).toFixed(2)}
+                        </p>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <div className="flex items-center max-w-[6rem] border border-gray-200 dark:border-gray-700 rounded-sm">
+                          <button
+                            type="button"
+                            id="decrement-button"
+                            onClick={() => decrement(product.id)}
+                            className="rounded-s-lg p-2 h-8 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none"
                           >
-                            <path
-                              stroke="currentColor"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth="2"
-                              d="M1 1h16"
-                            />
-                          </svg>
-                        </button>
-                        <input
-                          type="text"
-                          id="quantity-input"
-                          value={quantities[product.id] || 1}
-                          onChange={(e) => handleChange(e, product.id)}
-                          onBlur={() => handleBlur(product.id)}
-                          className="border-none focus:ring-0 focus:border-none outline-none h-11 text-center text-gray-900 text-sm block w-full py-2.5 dark:bg-gray-700 dark:placeholder-gray-400 dark:text-white"
-                          placeholder="999"
-                          required
-                        />
+                            <svg
+                              className="w-2 h-2 text-gray-900 dark:text-white"
+                              aria-hidden="true"
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 18 2"
+                            >
+                              <path
+                                stroke="currentColor"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
+                                d="M1 1h16"
+                              />
+                            </svg>
+                          </button>
+                          <input
+                            type="text"
+                            id="quantity-input"
+                            value={quantities[product.id] || 1}
+                            onChange={(e) => handleChange(e, product.id)}
+                            onBlur={() => handleBlur(product.id)}
+                            className="border-none focus:ring-0 focus:border-none outline-none h-8 text-center text-gray-900 text-sm block w-full py-2 dark:bg-gray-700 dark:placeholder-gray-400 dark:text-white"
+                            placeholder="999"
+                            required
+                          />
 
-                        <button
-                          type="button"
-                          id="increment-button"
-                          onClick={() => increment(product.id)}
-                          className="rounded-e-lg p-3 h-11  focus:outline-none"
-                        >
-                          <svg
-                            className="w-3 h-3 text-gray-900 dark:text-white"
-                            aria-hidden="true"
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 18 18"
+                          <button
+                            type="button"
+                            id="increment-button"
+                            onClick={() => increment(product.id)}
+                            className="rounded-e-lg p-2 h-8  focus:outline-none"
                           >
-                            <path
-                              stroke="currentColor"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth="2"
-                              d="M9 1v16M1 9h16"
-                            />
-                          </svg>
-                        </button>
+                            <svg
+                              className="w-2 h-2 text-gray-900 dark:text-white"
+                              aria-hidden="true"
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 18 18"
+                            >
+                              <path
+                                stroke="currentColor"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
+                                d="M9 1v16M1 9h16"
+                              />
+                            </svg>
+                          </button>
+                        </div>
+                        <div>
+                          <p
+                            onClick={() =>
+                              handleRemove(product.id, product.color)
+                            }
+                            className="font-futura-sans text-xs underline cursor-pointer"
+                          >
+                            Remove
+                          </p>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              ))
-            ) : (
-              <p>NO DATA FOUND</p>
-            )}
+                ))
+              ) : (
+                <p>NO DATA FOUND</p>
+              )}
+            </div>
           </div>
         </div>
 
