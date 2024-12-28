@@ -1,4 +1,5 @@
-import React from "react";
+"use client";
+import React, { useState, useEffect } from "react";
 import { CgClose } from "react-icons/cg";
 import Button3 from "../Button3/Button3";
 
@@ -13,7 +14,41 @@ function CartDrawer({
   pageDataI,
   setQuantity,
 }) {
-  console.log(pageDataI);
+  const [productDetails, setProductDetails] = useState({});
+  useEffect(() => {
+    if (isDrawerOpen) {
+      if (quantity === 0) {
+        setQuantity((prev) => Math.min(prev + 1, 50));
+      }
+    }
+    if (isDrawerOpen && pageDataI) {
+      const newProductDetails = {
+        id: pageDataI?.allData?._id,
+        image: pageDataI?.utility?.pictures[0],
+        price: pageDataI?.allData?.price,
+        color: pageDataI?.utility?.color,
+        quantity: quantity,
+        discountPrice: afterDiscount,
+      };
+      const storedCartItems =
+        JSON.parse(localStorage.getItem("cartItems")) || [];
+
+      const existingProductIndex = storedCartItems.findIndex(
+        (item) =>
+          item.id === newProductDetails.id &&
+          item.color === newProductDetails.color
+      );
+
+      if (existingProductIndex !== -1) {
+        storedCartItems[existingProductIndex].quantity +=
+          newProductDetails.quantity;
+      } else {
+        storedCartItems.push(newProductDetails);
+      }
+      localStorage.setItem("cartItems", JSON.stringify(storedCartItems));
+      setProductDetails(newProductDetails);
+    }
+  }, [isDrawerOpen, pageDataI, quantity]);
 
   return (
     <div
@@ -34,7 +69,8 @@ function CartDrawer({
           <hr className="my-2" />
         </div>
 
-        <div className="flex-grow overflow-y-auto"></div>
+        <div className=""></div>
+
         <div className="absolute bottom-20 lg:bottom-0 left-0 w-full p-4 bg-white border-t z-40">
           <button
             className="text-[0.8rem] text-gray-700 w-full text-left py-2 rounded-lg"
@@ -52,6 +88,7 @@ function CartDrawer({
             textColor="black"
           ></Button3>
         </div>
+
         <div
           className={`z-50 bottom-20 lg:bottom-0 absolute left-0 w-full bg-white border-t transition-all duration-300 ${
             isNoteVisible ? "bottom-0 h-56" : "bottom-[-12rem] h-0"

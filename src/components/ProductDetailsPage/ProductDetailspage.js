@@ -35,34 +35,6 @@ function ProductDetailspage({ id, color }) {
     setIsDrawerOpen(!isDrawerOpen);
   };
 
-  const increment = () => {
-    setQuantity((prev) => Math.min(prev + 1, 50));
-  };
-
-  const decrement = () => {
-    setQuantity((prev) => Math.max(prev - 1, 1));
-  };
-
-  const handleChange = (e) => {
-    const value = parseInt(e.target.value, 10);
-    if (!isNaN(value) && value >= 1 && value <= 50) {
-      setQuantity(value);
-    } else if (e.target.value === "") {
-      setQuantity("");
-    }
-  };
-
-  const handleBlur = () => {
-    if (quantity === "" || quantity < 1) setQuantity(1);
-  };
-
-  const toggleSection = (section) => {
-    setExpandedSections((prev) => ({
-      ...prev,
-      [section]: !prev[section],
-    }));
-  };
-
   useEffect(() => {
     if (!id) {
       setError("Product ID is required");
@@ -134,6 +106,39 @@ function ProductDetailspage({ id, color }) {
       imageElements.forEach((el) => observer.unobserve(el));
     };
   }, [pageDataI]);
+
+  console.log(pageDataI?.utility?.numberOfProducts);
+
+  const handleChange = (e) => {
+    const value = parseInt(e.target.value, 10);
+    const maxQuantity = pageDataI?.utility?.numberOfProducts || 50; 
+
+    if (!isNaN(value) && value >= 1 && value <= maxQuantity) {
+      setQuantity(value);
+    } else if (e.target.value === "") {
+      setQuantity("");
+    }
+  };
+
+  const increment = () => {
+    const maxQuantity = pageDataI?.utility?.numberOfProducts || 50; 
+    setQuantity((prev) => Math.min(prev + 1, maxQuantity));
+  };
+
+  const decrement = () => {
+    setQuantity((prev) => Math.max(prev - 1, 1));
+  };
+
+  const handleBlur = () => {
+    if (quantity === "" || quantity < 1) setQuantity(1);
+  };
+
+  const toggleSection = (section) => {
+    setExpandedSections((prev) => ({
+      ...prev,
+      [section]: !prev[section],
+    }));
+  };
 
   const afterDiscount =
     parseFloat(pageDataI?.allData?.askingPrice) -
