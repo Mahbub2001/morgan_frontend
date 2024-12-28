@@ -5,7 +5,7 @@ async function ProductDetails({ params, searchParams }) {
   const { id } = await params;
 
   const { color } = await searchParams;
-  console.log("ProductDetails", id, color);
+  // console.log("ProductDetails", id, color);
 
   return (
     <>

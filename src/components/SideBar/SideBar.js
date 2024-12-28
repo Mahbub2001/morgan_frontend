@@ -70,7 +70,7 @@ const Sidebar = () => {
     logout()
       .then((result) => {})
       .catch((error) => {
-        console.log(error);
+        // console.log(error);
       });
   };
 

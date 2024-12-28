@@ -44,7 +44,7 @@ function Register() {
   const handleEmailVerification = async () => {
     try {
       await verifyEmail();
-      console.log("Verification email sent successfully.");
+      // console.log("Verification email sent successfully.");
       alert("Verification email sent. Please check your inbox.");
     } catch (error) {
       console.error("Error sending verification email:", error);

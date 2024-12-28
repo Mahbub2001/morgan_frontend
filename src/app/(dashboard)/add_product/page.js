@@ -121,7 +121,7 @@ function AddProduct() {
   const [utilities, setUtilities] = React.useState([]);
 
   const onSubmit = async (data) => {
-    console.log("Form data:", data);
+    // console.log("Form data:", data);
 
     try {
       data.features = dataArray;
@@ -154,7 +154,7 @@ function AddProduct() {
       }
 
       setUtilities(newUtilities);
-      console.log("Utilities array:", newUtilities);
+      // console.log("Utilities array:", newUtilities);
 
       alert("All images uploaded and data stored!");
 

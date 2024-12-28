@@ -32,7 +32,7 @@ function Navbar() {
   const [role, setRole] = useState(null);
 
   if (user) {
-    console.log(user);
+    // console.log(user);
   }
 
   useEffect(() => {
@@ -61,12 +61,12 @@ function Navbar() {
     logout()
       .then((result) => {})
       .catch((error) => {
-        console.log(error);
+        // console.log(error);
       });
   };
   const router = useRouter();
   const handleProfileClick = async () => {
-    console.log("user", user);
+    // console.log("user", user);
 
     if (!user) {
       router.push("/login");

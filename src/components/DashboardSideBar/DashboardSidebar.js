@@ -12,7 +12,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 const DashboardSidebar = ({ role }) => {
-  console.log(role);
+  // console.log(role);
 
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [activeLink, setActiveLink] = useState("/dash");

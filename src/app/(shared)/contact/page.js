@@ -1,3 +1,4 @@
+import Button3 from "@/containers/common/Button3/Button3";
 import React from "react";
 
 function Contact() {
@@ -30,7 +31,7 @@ function Contact() {
                 />
                 <label
                   htmlFor="name"
-                  className="absolute left-3 -top-6 bg-transparent text-sm leading-7 text-gray-500 transition-all peer-placeholder-shown:left-3 peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-focus:left-3 peer-focus:-top-6 peer-focus:text-sm peer-focus:text-indigo-500"
+                  className="absolute left-3 -top-6 bg-transparent text-sm leading-7 text-gray-500 transition-all peer-placeholder-shown:left-3 peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-focus:left-3 peer-focus:-top-6 peer-focus:text-sm peer-focus:text-gray-500"
                 >
                   Name
                 </label>
@@ -47,7 +48,7 @@ function Contact() {
                 />
                 <label
                   htmlFor="email"
-                  className="absolute left-3 -top-6 bg-transparent text-sm leading-7 text-gray-500 transition-all peer-placeholder-shown:left-3 peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-focus:left-3 peer-focus:-top-6 peer-focus:text-sm peer-focus:text-gray-400"
+                  className="absolute left-3 -top-6 bg-transparent text-sm leading-7 text-gray-500 transition-all peer-placeholder-shown:left-3 peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-focus:left-3 peer-focus:-top-6 peer-focus:text-sm peer-focus:text-gray-500"
                 >
                   E-mail
                 </label>
@@ -70,9 +71,12 @@ function Contact() {
               </div>
             </div>
             <div className="w-full p-2">
-              <button className=" tracking-wider mx-auto flex rounded border-0 bg-orange-400 py-2 px-8 text-lg text-white hover:bg-orange-500 focus:outline-none items-center justify-center w-full">
-                SEND MESSAGE
-              </button>
+              <Button3
+                text="SEND MESSAGE"
+                backgroundColor="orange"
+                borderColor="orange"
+                textColor="white"
+              />
             </div>
           </div>
         </div>

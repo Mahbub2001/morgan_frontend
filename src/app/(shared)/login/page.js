@@ -19,7 +19,7 @@ function Login() {
   } = useForm();
 
   const onSubmit = (data) => {
-    console.log(data);
+    // console.log(data);
     signin(data?.email, data?.password)
       .then((result) => {
         // toast.success("Login Successful.....!");
@@ -30,7 +30,7 @@ function Login() {
       })
       .catch((err) => {
         // toast.error(err.message);
-        console.log(err);
+        // console.log(err);
         setLoading(false);
       });
   };

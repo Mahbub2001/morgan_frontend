@@ -2,13 +2,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import { HiMiniBars4 } from "react-icons/hi2";
 import { CgMenuGridR } from "react-icons/cg";
-import { FaAngleDown } from "react-icons/fa6";
-import PriceFilter from "@/components/PriceFilter/PriceFilter";
 import Button3 from "@/containers/common/Button3/Button3";
 import { fetchProducts } from "@/api/nyProducts";
 import Products1 from "@/components/Products/Products1";
 import Products2 from "@/components/Products/Products2";
 import Products3 from "@/components/Products/Products3";
+import FilterDrawer from "@/containers/common/FilterDrawer/FilterDrawer";
 
 function AllProducts() {
   const [isOpen, setIsOpen] = useState(false);
@@ -16,8 +15,15 @@ function AllProducts() {
   const sortRef = useRef(null);
   const [products, setProducts] = useState([]);
   const [isOpenSidebar, setIsOpenSidebar] = useState(false);
-  const [expandedSections, setExpandedSections] = useState({});
   const [layout, setLayout] = useState("list");
+
+  const [filterParams, setFilterParams] = useState({
+    availability: [],
+    color: [],
+    price: null,
+    size: [],
+    typeOfProducts: {},
+  });
 
   const handleLayoutChange = (newLayout) => {
     setLayout(newLayout);
@@ -29,17 +35,6 @@ function AllProducts() {
 
   const toggleSidebar = () => {
     setIsOpenSidebar(!isOpenSidebar);
-  };
-
-  const toggleSection = (section) => {
-    setExpandedSections((prev) => ({
-      ...prev,
-      [section]: !prev[section],
-    }));
-  };
-
-  const handlePriceChange = (range) => {
-    console.log("Selected Price Range: ", range);
   };
 
   useEffect(() => {
@@ -59,6 +54,8 @@ function AllProducts() {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  console.log(filterParams);
 
   return (
     <div className="-mt-20 lg:mt-24 xl:mt-20">
@@ -98,7 +95,7 @@ function AllProducts() {
           <div className="flex justify-end items-center space-x-1 text-xs">
             <div>
               <div className="flex items-center justify-center ">
-                <div className="relative inline-block text-left">
+                <div className="z-50 relative inline-block text-left">
                   <span className="">
                     <button
                       className="inline-flex justify-center w-full px-4 py-2 text-xs  leading-5  transition duration-150 ease-in-out font-thin rounded-sm text-gray-500 hover:text-black focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-50 active:text-gray-800"
@@ -219,183 +216,7 @@ function AllProducts() {
                 <hr />
 
                 <div className="grid grid-cols-1 justify-between h-full">
-                  <div className="pt-3 text-xs mt-8">
-                    <div className="mb-2">
-                      <h3
-                        className="font-extralight flex items-center justify-between tracking-widest  mb-2 cursor-pointer"
-                        onClick={() => toggleSection("availability")}
-                      >
-                        <span className="">AVAILABILITY</span>
-                        {expandedSections.availability ? (
-                          <FaAngleDown className="rotate-180 transition-all duration-700 ease-in-out" />
-                        ) : (
-                          <FaAngleDown className="transition-all duration-700 ease-in-out" />
-                        )}
-                      </h3>
-                      <div
-                        className={`overflow-hidden transition-all duration-700 ease-in-out ${
-                          expandedSections.availability ? "max-h-40" : "max-h-0"
-                        }`}
-                      >
-                        <label className="flex items-center space-x-2">
-                          <input
-                            type="checkbox"
-                            className="rounded text-black"
-                          />
-                          <span>In Stock (65)</span>
-                        </label>
-                        <label className="flex items-center space-x-2 mt-2 pb-2">
-                          <input
-                            type="checkbox"
-                            className="rounded text-black"
-                          />
-                          <span>Pre Order (1)</span>
-                        </label>
-                      </div>
-                    </div>
-                    <hr className="w-full " />
-
-                    <div className="mb-2 mt-3">
-                      <h3
-                        className="flex tracking-widest justify-between items-center mb-2 cursor-pointer"
-                        onClick={() => toggleSection("colour")}
-                      >
-                        <span>COLOR</span>
-                        {expandedSections.colour ? (
-                          <FaAngleDown className="rotate-180 transition-all duration-700 ease-in-out" />
-                        ) : (
-                          <FaAngleDown className="transition-all duration-700 ease-in-out" />
-                        )}
-                      </h3>
-                      <div
-                        className={`overflow-hidden transition-all duration-700 ease-in-out ${
-                          expandedSections.colour ? "max-h-40" : "max-h-0"
-                        }`}
-                      >
-                        <div className="flex flex-wrap gap-2 mt-2">
-                          {[
-                            "black",
-                            "gray",
-                            "red",
-                            "brown",
-                            "green",
-                            "orange",
-                            "purple",
-                          ].map((color, index) => (
-                            <div
-                              key={index}
-                              className="px-2 py-1 cursor-pointer bg-gray-200 text-gray-900 rounded border border-gray-300 transform transition-transform duration-300 ease-in-out hover:scale-105 hover:bg-gray-300"
-                            >
-                              {color}
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                    <hr className="mt-3" />
-
-                    <div className="mb-2 mt-3">
-                      <h3
-                        className="flex justify-between items-center tracking-widest mb-2 cursor-pointer"
-                        onClick={() => toggleSection("price")}
-                      >
-                        <span>PRICE</span>
-                        {expandedSections.price ? (
-                          <FaAngleDown className="rotate-180 transition-all duration-700 ease-in-out" />
-                        ) : (
-                          <FaAngleDown className="transition-all duration-700 ease-in-out" />
-                        )}
-                      </h3>
-                      <div
-                        className={`overflow-hidden transition-all duration-700 ease-in-out ${
-                          expandedSections.price ? "max-h-40" : "max-h-0"
-                        }`}
-                      >
-                        <div>
-                          <PriceFilter
-                            min={0}
-                            max={420}
-                            onChange={handlePriceChange}
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <hr className="mt-3" />
-
-                    <div className="mb-2 mt-3">
-                      <h3
-                        className=" flex justify-between items-center tracking-widest  mb-2 cursor-pointer"
-                        onClick={() => toggleSection("size")}
-                      >
-                        <span>SIZE</span>
-                        {expandedSections.size ? (
-                          <FaAngleDown className="rotate-180 transition-all duration-700 ease-in-out" />
-                        ) : (
-                          <FaAngleDown className="transition-all duration-700 ease-in-out" />
-                        )}
-                      </h3>
-                      <div
-                        className={`overflow-hidden transition-all duration-700 ease-in-out ${
-                          expandedSections.size ? "max-h-40" : "max-h-0"
-                        }`}
-                      >
-                        <div className="mt-2">
-                          {["L-XL (9)", "S-M (9)"].map((size, index) => (
-                            <label
-                              key={index}
-                              className="flex items-center space-x-2 mt-2"
-                            >
-                              <input
-                                type="checkbox"
-                                className="rounded text-black"
-                              />
-                              <span>{size}</span>
-                            </label>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                    <hr className="mt-3" />
-
-                    <div className="mb-2 mt-3">
-                      <h3
-                        className=" mb-2 flex justify-between items-center tracking-widest cursor-pointer"
-                        onClick={() => toggleSection("typeOfStrap")}
-                      >
-                        <span>TYPE OF STRAP</span>
-                        {expandedSections.typeOfStrap ? (
-                          <FaAngleDown className="rotate-180 transition-all duration-700 ease-in-out" />
-                        ) : (
-                          <FaAngleDown className="transition-all duration-700 ease-in-out" />
-                        )}
-                      </h3>
-                      <div
-                        className={`overflow-hidden transition-all duration-700 ease-in-out ${
-                          expandedSections.typeOfStrap ? "max-h-40" : "max-h-0"
-                        }`}
-                      >
-                        <div className="mt-2">
-                          {[
-                            "Crossbody (37)",
-                            "Grab Handles (8)",
-                            "Shoulder (21)",
-                            "Waist Strap (9)",
-                          ].map((type, index) => (
-                            <label
-                              key={index}
-                              className="flex items-center space-x-2 mt-2"
-                            >
-                              <input
-                                type="checkbox"
-                                className="rounded text-black"
-                              />
-                              <span>{type}</span>
-                            </label>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  <FilterDrawer setFilterParams={setFilterParams} />
                   <div></div>
                   <div></div>
                   <div></div>

@@ -16,7 +16,7 @@ import {
 
 export default function RootLayout({ children }) {
   const { user } = useContext(AuthContext);
-  console.log(user);
+  // console.log(user);
 
   const [role, setRole] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -31,7 +31,7 @@ export default function RootLayout({ children }) {
     }
   }, [user]);
 
-  console.log(role);
+  // console.log(role);
 
   const queryClient = new QueryClient();
 

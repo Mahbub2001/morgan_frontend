@@ -64,7 +64,7 @@ const AuthProvider = ({ children }) => {
         handleCodeInApp: true,
       };
       await sendEmailVerification(auth.currentUser, actionCodeSettings);
-      console.log("Verification email sent.");
+      // console.log("Verification email sent.");
     } catch (error) {
       console.error("Error sending verification email:", error);
       throw error;
@@ -157,7 +157,7 @@ const AuthProvider = ({ children }) => {
         handleCodeInApp: true,
       };
       await sendPasswordResetEmail(auth, email, actionCodeSettings);
-      console.log("Password reset email sent.");
+      // console.log("Password reset email sent.");
     } catch (error) {
       console.error("Error sending password reset email:", error);
       throw error;

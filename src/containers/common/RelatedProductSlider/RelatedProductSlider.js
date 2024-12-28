@@ -6,7 +6,7 @@ import "./RelatedSlider.css";
 import Link from "next/link";
 
 const RelatedProductSlider = ({ productInfo, pictures }) => {
-  console.log(productInfo);
+  // console.log(productInfo);
   const [hoveredIndex, setHoveredIndex] = useState(null);
 
   const splideRef = useRef(null);

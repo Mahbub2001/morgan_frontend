@@ -45,7 +45,7 @@ function RelatedProduct({ relatedProducts }) {
     setProductInfo(productInfoArray);
   }, [relatedProducts]);
 
-  console.log(productInfo);
+  // console.log(productInfo);
 
   return (
     <div>

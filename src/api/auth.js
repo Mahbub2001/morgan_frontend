@@ -10,7 +10,7 @@ export const setAuthToken = (data) => {
     // verify: false,
   };
 
-  console.log("User to be saved:", currentUser);
+  // console.log("User to be saved:", currentUser);
 
   fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/${currentUser.email}`, {
     method: "PUT",
@@ -21,7 +21,7 @@ export const setAuthToken = (data) => {
   })
     .then((res) => res.json())
     .then((response) => {
-      console.log("Server Response:", response);
+      // console.log("Server Response:", response);
 
       if (response.token) {
         Cookies.set("ny-token", response.token, {
@@ -30,7 +30,7 @@ export const setAuthToken = (data) => {
           sameSite: "strict",
         });
 
-        console.log("Token saved in both localStorage and cookies");
+        // console.log("Token saved in both localStorage and cookies");
       } else {
         console.error("Token not received from server");
       }
@@ -50,7 +50,7 @@ export const setAuthToken1 = (data) => {
     display_url: data.display_url,
   };
 
-  console.log("User to be saved:", currentUser);
+  // console.log("User to be saved:", currentUser);
 
   fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/${currentUser.email}`, {
     method: "PUT",
@@ -61,7 +61,7 @@ export const setAuthToken1 = (data) => {
   })
     .then((res) => res.json())
     .then((response) => {
-      console.log("Server Response:", response);
+      // console.log("Server Response:", response);
 
       if (response.token) {
         // Cookies.set("ny-token", response.token, {
@@ -70,7 +70,7 @@ export const setAuthToken1 = (data) => {
         //   sameSite: "strict",
         // });
 
-        console.log("Token is not saved in both localStorage and cookies");
+        // console.log("Token is not saved in both localStorage and cookies");
       } else {
         console.error("Token not received from server");
       }
