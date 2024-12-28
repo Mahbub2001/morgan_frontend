@@ -1,10 +1,22 @@
 // components/PriceFilter.js
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Range } from "react-range";
 
-const PriceFilter = ({ min = 0, max = 500, step = 1, onChange }) => {
+const PriceFilter = ({
+  min = 0,
+  max = 500,
+  step = 1,
+  onChange,
+  resetFilter,
+}) => {
   const [values, setValues] = useState([min, max]);
+
+  useEffect(() => {
+    if (resetFilter) {
+      setValues([min, max]);
+    }
+  }, [resetFilter, min, max]);
 
   const handleRangeChange = (newValues) => {
     setValues(newValues);

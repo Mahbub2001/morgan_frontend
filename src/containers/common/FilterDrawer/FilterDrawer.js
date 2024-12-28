@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaAngleDown } from "react-icons/fa6";
 import PriceFilter from "@/components/PriceFilter/PriceFilter";
 import { categories } from "@/Data/Menu";
 
-function FilterDrawer({ setFilterParams, filterParams }) {
+function FilterDrawer({ setFilterParams, filterParams, resetFilter }) {
   const [expandedSections, setExpandedSections] = useState({});
   const [selectedGender, setSelectedGender] = useState(null);
 
@@ -12,7 +12,7 @@ function FilterDrawer({ setFilterParams, filterParams }) {
   };
 
   const toggleSection = (section) => {
-    console.log("section", section);
+    // console.log("section", section);
 
     setExpandedSections((prev) => {
       const newState = { ...prev };
@@ -83,6 +83,20 @@ function FilterDrawer({ setFilterParams, filterParams }) {
     }));
   };
 
+  useEffect(() => {
+    if (resetFilter) {
+      setExpandedSections({});
+      setSelectedGender(null);
+      setFilterParams({
+        availability: [],
+        color: [],
+        price: null,
+        size: [],
+        typeOfProducts: {},
+      });
+    }
+  }, [resetFilter, setFilterParams]);
+
   return (
     <div className="pt-1 text-xs mt-8">
       <div className="mb-2">
@@ -108,6 +122,7 @@ function FilterDrawer({ setFilterParams, filterParams }) {
                 type="checkbox"
                 className="rounded text-black"
                 onChange={() => handleAvailabilityChange(item)}
+                checked={filterParams?.availability?.includes(item)}
               />
               <span>{item}</span>
             </label>
@@ -178,7 +193,7 @@ function FilterDrawer({ setFilterParams, filterParams }) {
             expandedSections.price ? "max-h-40" : "max-h-0"
           }`}
         >
-          <PriceFilter min={0} max={420} onChange={handlePriceChange} />
+          <PriceFilter min={0} max={420} onChange={handlePriceChange} resetFilter={resetFilter} />
         </div>
       </div>
       <hr className="mt-3" />
@@ -206,6 +221,7 @@ function FilterDrawer({ setFilterParams, filterParams }) {
                 type="checkbox"
                 className="rounded text-black"
                 onChange={() => handleSizeChange(size)}
+                checked={filterParams?.size?.includes(size)}
               />
               <span>{size}</span>
             </label>
@@ -284,6 +300,11 @@ function FilterDrawer({ setFilterParams, filterParams }) {
                                 <input
                                   type="checkbox"
                                   className="rounded text-black"
+                                  checked={
+                                    !!filterParams?.typeOfProducts?.[
+                                      gender.name
+                                    ]?.[category.category]?.[subCategory.name]
+                                  }
                                   onChange={() =>
                                     handleSubCategoryChange(
                                       gender.name,
