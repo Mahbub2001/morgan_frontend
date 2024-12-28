@@ -24,7 +24,7 @@ const RelatedProductSlider = ({ productInfo, pictures }) => {
   };
 
   return (
-    <div className="mt-10 relative">
+    <div className="mt-10 relative !z-40">
       <Splide
         ref={splideRef}
         options={{
@@ -61,7 +61,7 @@ const RelatedProductSlider = ({ productInfo, pictures }) => {
                   }}
                   src={hoveredIndex === index ? src[1] : src[0]}
                   alt={`Slide ${index + 1}`}
-                  className="w-full h-48 object-cover rounded-sm shadow-sm"
+                  className="w-full h-full object-cover rounded-sm shadow-sm"
                 />
                 {productInfo[index]?.discount > 0 && (
                   <div

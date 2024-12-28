@@ -27,6 +27,37 @@ h1 {
   font-family: var(--font-open-sans);
   font-weight: 700; 
 }
+.z-110 {
+  z-index: 10;
+}
+.z-220 {
+  z-index: 20;
+}
+.z-330 {
+  z-index: 30;
+}
+.z-440 {
+  z-index: 40;
+}
+.z-550 {
+  z-index: 50;
+}
+.z-660 {
+  z-index: 60;
+}
+.z-770 {
+  z-index: 70;
+}
+.z-880 {
+  z-index: 80;
+}
+.z-990 {
+  z-index: 90;
+}
+.z-1000 {
+  z-index: 100;
+}
+
 
 p {
   font-family: var(--font-open-sans);
