@@ -159,6 +159,7 @@ function AddProduct() {
       alert("All images uploaded and data stored!");
 
       data.utilities = newUtilities;
+      data.date = new Date();
 
       mutation.mutate(data);
     } catch (error) {

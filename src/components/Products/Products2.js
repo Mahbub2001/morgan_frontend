@@ -31,7 +31,8 @@ function Products2({ products }) {
                 pathname: `/allproducts/${product._id}`,
                 query: { color: validUtility.color },
               }}
-              key={product._id}
+              key={index}
+              // key={product._id}
               className="group relative cursor-pointer"
             >
               <div

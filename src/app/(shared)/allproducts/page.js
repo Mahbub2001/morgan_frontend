@@ -8,6 +8,7 @@ import Products1 from "@/components/Products/Products1";
 import Products2 from "@/components/Products/Products2";
 import Products3 from "@/components/Products/Products3";
 import FilterDrawer from "@/containers/common/FilterDrawer/FilterDrawer";
+import SortByDrawer from "@/containers/common/SortByDrawer/SortByDrawer";
 
 function AllProducts() {
   const [isOpen, setIsOpen] = useState(false);
@@ -16,7 +17,7 @@ function AllProducts() {
   const [products, setProducts] = useState([]);
   const [isOpenSidebar, setIsOpenSidebar] = useState(false);
   const [layout, setLayout] = useState("list");
-
+  const [sortingParams, setSortingParams] = useState("");
   const [filterParams, setFilterParams] = useState({
     availability: [],
     color: [],
@@ -38,24 +39,31 @@ function AllProducts() {
   };
 
   useEffect(() => {
-    fetchProducts().then((data) => setProducts(data));
-
-    const handleClickOutside = (event) => {
-      if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
-        setIsOpenSidebar(false);
-      }
-      if (sortRef.current && !sortRef.current.contains(event.target)) {
-        setIsOpen(false);
-      }
+    const fetchFilteredProducts = async () => {
+      const filteredProducts = await fetchProducts(filterParams);
+      setProducts(filteredProducts);
     };
 
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
+    fetchFilteredProducts();
 
-  console.log(filterParams);
+    if (isOpenSidebar) {
+      const handleClickOutside = (event) => {
+        if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
+          setIsOpenSidebar(false);
+        }
+        if (sortRef.current && !sortRef.current.contains(event.target)) {
+          setIsOpen(false);
+        }
+      };
+
+      document.addEventListener("mousedown", handleClickOutside);
+      return () => {
+        document.removeEventListener("mousedown", handleClickOutside);
+      };
+    }
+  }, [filterParams, isOpenSidebar]);
+
+  // console.log("filterParams", filterParams);
 
   return (
     <div className="-mt-20 lg:mt-24 xl:mt-20">
@@ -121,76 +129,13 @@ function AllProducts() {
                   </span>
                   {isOpen && (
                     <div className="dropdown-menu transition-all duration-300 transform origin-top-right">
-                      <div
-                        className="absolute right-0 w-40 mt-2 origin-top-right bg-white border border-gray-200 divide-y divide-gray-100 rounded-md shadow-lg outline-none"
-                        role="menu"
-                      >
-                        <div className="!text-xs">
-                          <div className="py-1">
-                            <li
-                              href="#"
-                              className="cursor-pointer text-gray-700 hover:text-black block px-4 py-2 "
-                              role="menuitem"
-                            >
-                              Featured
-                            </li>
-                            <li
-                              href="#"
-                              className="cursor-pointer text-gray-700 hover:text-black block px-4 py-2 "
-                              role="menuitem"
-                            >
-                              Best selling
-                            </li>
-                            <li
-                              href="#"
-                              className="cursor-pointer text-gray-700 hover:text-black block px-4 py-2 "
-                              role="menuitem"
-                            >
-                              Alphabetically, A-Z
-                            </li>
-                            <li
-                              href="#"
-                              className="cursor-pointer text-gray-700 hover:text-black block px-4 py-2 "
-                              role="menuitem"
-                            >
-                              Alphabetically, Z-A
-                            </li>
-                            <li
-                              href="#"
-                              className="cursor-pointer text-gray-700 hover:text-black block px-4 py-2 "
-                              role="menuitem"
-                            >
-                              Price, low to high
-                            </li>
-                            <li
-                              href="#"
-                              className="cursor-pointer text-gray-700 hover:text-black block px-4 py-2 "
-                              role="menuitem"
-                            >
-                              Price, high to low
-                            </li>
-                            <li
-                              href="#"
-                              className="cursor-pointer text-gray-700 hover:text-black block px-4 py-2 "
-                              role="menuitem"
-                            >
-                              Date, old to new
-                            </li>
-                            <li
-                              href="#"
-                              className="cursor-pointer text-gray-700 hover:text-black block px-4 py-2 "
-                              role="menuitem"
-                            >
-                              Date, new to old
-                            </li>
-                          </div>
-                        </div>
-                      </div>
+                      <SortByDrawer setSortingParams={setSortingParams} />
                     </div>
                   )}
                 </div>
               </div>
             </div>
+
             <>
               <button
                 onClick={toggleSidebar}
@@ -215,14 +160,14 @@ function AllProducts() {
                 </h2>
                 <hr />
 
-                <div className="grid grid-cols-1 justify-between h-full">
-                  <FilterDrawer setFilterParams={setFilterParams} />
-                  <div></div>
-                  <div></div>
-                  <div></div>
-                  <div></div>
-
-                  <div className="w-full mt-6 cursor-pointer">
+                <div className="flex flex-col justify-between h-full space-y-4">
+                  <div>
+                    <FilterDrawer
+                      setFilterParams={setFilterParams}
+                      filterParams={filterParams}
+                    />
+                  </div>
+                  <div className="w-full pb-10">
                     <hr className="mt-3 pb-5" />
                     <Button3
                       text="View Results"

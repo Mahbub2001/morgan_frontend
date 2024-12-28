@@ -3,7 +3,7 @@ import { FaAngleDown } from "react-icons/fa6";
 import PriceFilter from "@/components/PriceFilter/PriceFilter";
 import { categories } from "@/Data/Menu";
 
-function FilterDrawer({setFilterParams}) {
+function FilterDrawer({ setFilterParams, filterParams }) {
   const [expandedSections, setExpandedSections] = useState({});
   const [selectedGender, setSelectedGender] = useState(null);
 
@@ -12,10 +12,24 @@ function FilterDrawer({setFilterParams}) {
   };
 
   const toggleSection = (section) => {
-    setExpandedSections((prev) => ({
-      ...prev,
-      [section]: !prev[section],
-    }));
+    console.log("section", section);
+
+    setExpandedSections((prev) => {
+      const newState = { ...prev };
+      if (
+        section === "Accessories" ||
+        section === "Bags" ||
+        section === "Small Leather Goods"
+      ) {
+        newState["Accessories"] = false;
+        newState["Bags"] = false;
+        newState["Small Leather Goods"] = false;
+      }
+
+      newState[section] = !prev[section];
+
+      return newState;
+    });
   };
 
   const handleAvailabilityChange = (value) => {
@@ -69,9 +83,8 @@ function FilterDrawer({setFilterParams}) {
     }));
   };
 
-
   return (
-    <div className="pt-3 text-xs mt-8">
+    <div className="pt-1 text-xs mt-8">
       <div className="mb-2">
         <h3
           className="font-extralight flex items-center justify-between tracking-widest mb-2 cursor-pointer"
@@ -117,21 +130,32 @@ function FilterDrawer({setFilterParams}) {
         </h3>
         <div
           className={`overflow-hidden transition-all duration-700 ease-in-out ${
-            expandedSections.color ? "max-h-40" : "max-h-0"
+            expandedSections.color ? "max-h-96" : "max-h-0"
           }`}
         >
-          <div className="flex flex-wrap gap-2 mt-2">
-            {["black", "gray", "red", "brown", "green", "orange", "purple"].map(
-              (color, index) => (
-                <div
-                  key={index}
-                  className="px-2 py-1 cursor-pointer bg-gray-200 text-gray-900 rounded border border-gray-300 transform transition-transform duration-300 ease-in-out hover:scale-105 hover:bg-gray-300"
-                  onClick={() => handleColorChange(color)}
-                >
-                  {color}
-                </div>
-              )
-            )}
+          <div className="flex flex-wrap gap-1 mt-2">
+            {[
+              "black",
+              "gray",
+              "red",
+              "brown",
+              "green",
+              "orange",
+              "purple",
+              "Dark Chocolate",
+            ].map((color, index) => (
+              <div
+                key={index}
+                className={`${
+                  filterParams?.color?.includes(color)
+                    ? "border-2 border-blue-500"
+                    : ""
+                } px-2 py-1 cursor-pointer  text-gray-900 rounded transform transition-transform duration-300 ease-in-out`}
+                onClick={() => handleColorChange(color)}
+              >
+                <span className="">{color}</span>
+              </div>
+            ))}
           </div>
         </div>
       </div>
