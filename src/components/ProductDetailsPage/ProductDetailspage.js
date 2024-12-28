@@ -22,14 +22,7 @@ function ProductDetailspage({ id, color }) {
   const [expandedSections, setExpandedSections] = useState({});
   const [quantity, setQuantity] = useState(0);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const [isNoteVisible, setIsNoteVisible] = useState(false);
 
-  const toggleNote = () => {
-    setIsNoteVisible(!isNoteVisible);
-  };
-  const saveNote = () => {
-    setIsNoteVisible(false);
-  };
 
   const toggleDrawer = () => {
     setIsDrawerOpen(!isDrawerOpen);
@@ -111,7 +104,7 @@ function ProductDetailspage({ id, color }) {
 
   const handleChange = (e) => {
     const value = parseInt(e.target.value, 10);
-    const maxQuantity = pageDataI?.utility?.numberOfProducts || 50; 
+    const maxQuantity = pageDataI?.utility?.numberOfProducts || 50;
 
     if (!isNaN(value) && value >= 1 && value <= maxQuantity) {
       setQuantity(value);
@@ -121,7 +114,7 @@ function ProductDetailspage({ id, color }) {
   };
 
   const increment = () => {
-    const maxQuantity = pageDataI?.utility?.numberOfProducts || 50; 
+    const maxQuantity = pageDataI?.utility?.numberOfProducts || 50;
     setQuantity((prev) => Math.min(prev + 1, maxQuantity));
   };
 
@@ -425,9 +418,9 @@ function ProductDetailspage({ id, color }) {
       <CartDrawer
         isDrawerOpen={isDrawerOpen}
         toggleDrawer={toggleDrawer}
-        toggleNote={toggleNote}
-        isNoteVisible={isNoteVisible}
-        saveNote={saveNote}
+        // toggleNote={toggleNote}
+        // isNoteVisible={isNoteVisible}
+        // saveNote={saveNote}
         quantity={quantity}
         afterDiscount={afterDiscount}
         pageDataI={pageDataI}
