@@ -83,19 +83,19 @@ function FilterDrawer({ setFilterParams, filterParams, resetFilter }) {
     }));
   };
 
-  useEffect(() => {
-    if (resetFilter) {
-      setExpandedSections({});
-      setSelectedGender(null);
-      setFilterParams({
-        availability: [],
-        color: [],
-        price: null,
-        size: [],
-        typeOfProducts: {},
-      });
-    }
-  }, [resetFilter, setFilterParams]);
+  // useEffect(() => {
+  //   if (resetFilter) {
+  //     setExpandedSections({});
+  //     setSelectedGender(null);
+  //     setFilterParams({
+  //       availability: [],
+  //       color: [],
+  //       price: null,
+  //       size: [],
+  //       typeOfProducts: {},
+  //     });
+  //   }
+  // }, [resetFilter, setFilterParams]);
 
   return (
     <div className="pt-1 text-xs mt-8">
@@ -193,7 +193,12 @@ function FilterDrawer({ setFilterParams, filterParams, resetFilter }) {
             expandedSections.price ? "max-h-40" : "max-h-0"
           }`}
         >
-          <PriceFilter min={0} max={420} onChange={handlePriceChange} resetFilter={resetFilter} />
+          <PriceFilter
+            min={0}
+            max={420}
+            onChange={handlePriceChange}
+            resetFilter={resetFilter}
+          />
         </div>
       </div>
       <hr className="mt-3" />

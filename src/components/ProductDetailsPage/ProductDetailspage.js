@@ -23,7 +23,6 @@ function ProductDetailspage({ id, color }) {
   const [quantity, setQuantity] = useState(0);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
-
   const toggleDrawer = () => {
     setIsDrawerOpen(!isDrawerOpen);
   };

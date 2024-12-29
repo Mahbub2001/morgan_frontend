@@ -209,7 +209,7 @@ function Navbar() {
                     Kids
                   </li>
                 </div>
-                <animated.div className="absolute left-0 right-0 mt-2 bg-white border-b-[1px] py-5">
+                <animated.div className="absolute left-0 right-0 mt-2 bg-white border-b-[1px] py-3">
                   <div className="container mx-auto">
                     <div className="grid grid-cols-12 gap-5">
                       <div className="col-span-8">
@@ -219,13 +219,21 @@ function Navbar() {
                               <p className="text-gray-700 text-sm font-semibold">
                                 {category?.category?.name}
                               </p>
-                              <ul className="space-y-2 mt-2">
+                              <ul className="space-y-2 mt-0">
                                 {category?.items.map((item, index) => (
                                   <li
                                     key={index}
-                                    className="text-sm font-light cursor-pointer hover:bg-gray-200"
+                                    className="text-sm font-light cursor-pointe"
                                   >
-                                    {item?.name}
+                                    <Link
+                                      className="!font-futara-sans !text-xs text-gray-800 hover:text-blue-900"
+                                      href={{
+                                        pathname: "/allproducts",
+                                        query: { take: item?.link },
+                                      }}
+                                    >
+                                      {item?.name}
+                                    </Link>
                                   </li>
                                 ))}
                               </ul>
@@ -240,9 +248,8 @@ function Navbar() {
                 </animated.div>
               </div>
             )}
-
             {activeDropdown === "women" && (
-              <animated.div className="absolute left-0 right-0 mt-2 bg-white border-b-[1px] py-5">
+              <animated.div className="absolute left-0 right-0 mt-2 bg-white border-b-[1px] py-3">
                 <div className="container mx-auto">
                   <div className="grid grid-cols-12 gap-5">
                     <div className="col-span-8">
@@ -252,13 +259,21 @@ function Navbar() {
                             <p className="text-gray-700 text-sm font-semibold">
                               {category?.category?.name}
                             </p>
-                            <ul className="space-y-2 mt-2">
+                            <ul className="space-y-2 mt-0">
                               {category.items.map((item, index) => (
                                 <li
                                   key={index}
-                                  className="text-sm font-light cursor-pointer hover:bg-gray-200"
+                                  className="text-sm font-light cursor-pointer"
                                 >
-                                  {item?.name}
+                                  <Link
+                                    className="!font-futara-sans !text-xs text-gray-800 hover:text-blue-900"
+                                    href={{
+                                      pathname: "/allproducts",
+                                      query: { take: item?.link },
+                                    }}
+                                  >
+                                    {item?.name}
+                                  </Link>
                                 </li>
                               ))}
                             </ul>
@@ -274,7 +289,7 @@ function Navbar() {
             )}
 
             {activeDropdown === "men" && (
-              <animated.div className="absolute left-0 right-0 mt-2 bg-white border-b-[1px] py-5">
+              <animated.div className="absolute left-0 right-0 mt-2 bg-white border-b-[1px] py-3">
                 <div className="container mx-auto">
                   <div className="grid grid-cols-12 gap-5">
                     <div className="col-span-8">
@@ -284,13 +299,21 @@ function Navbar() {
                             <p className="text-gray-700 text-sm font-semibold">
                               {category.category?.name}
                             </p>
-                            <ul className="space-y-2 mt-2">
+                            <ul className="space-y-2 mt-0">
                               {category.items.map((item, index) => (
                                 <li
                                   key={index}
-                                  className="text-sm font-light cursor-pointer hover:bg-gray-200"
+                                  className="text-sm font-light cursor-pointer"
                                 >
-                                  {item?.name}
+                                  <Link
+                                    className="!font-futara-sans !text-xs text-gray-800 hover:text-blue-900"
+                                    href={{
+                                      pathname: "/allproducts",
+                                      query: { take: item?.link },
+                                    }}
+                                  >
+                                    {item?.name}
+                                  </Link>
                                 </li>
                               ))}
                             </ul>
@@ -306,7 +329,7 @@ function Navbar() {
             )}
 
             {activeDropdown === "kids" && (
-              <animated.div className="absolute left-0 right-0 mt-2 bg-white border-b-[1px] py-5">
+              <animated.div className="absolute left-0 right-0 mt-2 bg-white border-b-[1px] py-3">
                 <div className="container mx-auto">
                   <div className="grid grid-cols-12 gap-5">
                     <div className="col-span-8">
@@ -316,13 +339,21 @@ function Navbar() {
                             <p className="text-gray-700 text-sm font-semibold">
                               {category?.category?.name}
                             </p>
-                            <ul className="space-y-2 mt-2">
+                            <ul className="space-y-2 mt-0">
                               {category.items.map((item, index) => (
                                 <li
                                   key={index}
-                                  className="text-sm font-light cursor-pointer hover:bg-gray-200"
+                                  className="text-sm font-light cursor-pointer"
                                 >
-                                  {item?.name}
+                                  <Link
+                                    className="!font-futara-sans !text-xs text-gray-800 hover:text-blue-900"
+                                    href={{
+                                      pathname: "/allproducts",
+                                      query: { take: item?.link },
+                                    }}
+                                  >
+                                    {item?.name}
+                                  </Link>
                                 </li>
                               ))}
                             </ul>

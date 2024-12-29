@@ -1,64 +1,64 @@
 export const categories = [
   {
     name: "Women",
-    link: "/categories/women",
+    link: "/Women",
     items: [
       {
         category: "Bags",
-        link: "/categories/women/bags",
+        link: "/Women/Bags",
         items: [
-          { name: "All", link: "/categories/women/bags/all" },
-          { name: "Signature", link: "/categories/women/bags/signature" },
-          { name: "Tote", link: "/categories/women/bags/tote" },
-          { name: "CrossBody", link: "/categories/women/bags/crossbody" },
-          { name: "Shoulder", link: "/categories/women/bags/shoulder" },
-          { name: "Work", link: "/categories/women/bags/work" },
-          { name: "Shoppers", link: "/categories/women/bags/shoppers" },
+          { name: "All", link: "/Women/Bags/All" },
+          { name: "Signature", link: "Women/Bags/Signature" },
+          { name: "Tote", link: "/Women/Bags/Tote" },
+          { name: "CrossBody", link: "/Women/Bags/Crossbody" },
+          { name: "Shoulder", link: "/Women/Bags/Shoulder" },
+          { name: "Work", link: "/Women/Bags/Work" },
+          { name: "Shoppers", link: "/Women/Bags/Shoppers" },
         ],
       },
       {
         category: "Small Leather Goods",
-        link: "/categories/women/small-leather-goods",
+        link: "/Women/Small leather goods",
         items: [
           {
             name: "Wallets",
-            link: "/categories/women/small-leather-goods/wallets",
+            link: "/Women/Small Leather Goods/Wallets",
           },
           {
             name: "Card holders",
-            link: "/categories/women/small-leather-goods/card-holders",
+            link: "/Women/Small Leather Goods/Card holders",
           },
           {
             name: "Makeup & Toiletry bags",
-            link: "/categories/women/small-leather-goods/makeup-toiletry-bags",
+            link: "/Women/Small Leather Goods/Makeup & Toiletry bags",
           },
           {
             name: "Phone cases",
-            link: "/categories/women/small-leather-goods/phone-cases",
+            link: "/Women/Small Leather Goods/Phone Cases",
           },
         ],
       },
       {
         category: "Accessories",
-        link: "/categories/women/accessories",
+        link: "/Women/Accessories",
         items: [
-          { name: "Belts", link: "/categories/women/accessories/belts" },
+          { name: "Belts", link: "/Women/Accessories/Belts" },
           {
             name: "Key rings",
-            link: "/categories/women/accessories/key-rings",
+            link: "/Women/Accessories/Key rings",
           },
           {
             name: "Bracelets",
-            link: "/categories/women/accessories/bracelets",
+            link: "/Women/Accessories/Bracelets",
           },
-          { name: "Gloves", link: "/categories/women/accessories/gloves" },
+          { name: "Gloves", link: "/Women/Accessories/Gloves" },
           {
             name: "Sunglasses cases",
-            link: "/categories/women/accessories/sunglasses-cases",
+            link: "/Women/Accessories/Sunglasses cases",
           },
           {
             name: "Home accessories",
-            link: "/categories/women/accessories/home-accessories",
+            link: "/Women/Accessories/Home accessories",
           },
         ],
       },
@@ -66,72 +66,72 @@ export const categories = [
   },
   {
     name: "Men",
-    link: "/categories/men",
+    link: "/Men",
     items: [
       {
         category: "Bags",
-        link: "/categories/men/bags",
+        link: "/Men/Bags",
         items: [
-          { name: "All", link: "/categories/men/bags/all" },
-          { name: "Brief cases", link: "/categories/men/bags/brief-cases" },
-          { name: "Laptop", link: "/categories/men/bags/laptop-bags" },
-          { name: "Backpacks", link: "/categories/men/bags/backpacks" },
+          { name: "All", link: "/Men/Bags/All" },
+          { name: "Brief cases", link: "/Men/Bags/Brief cases" },
+          { name: "Laptop", link: "/Men/Bags/Laptop" },
+          { name: "Backpacks", link: "/Men/Bags/Backpacks" },
           {
             name: "Laptop Cases & Folios",
-            link: "/categories/men/bags/laptop-cases-folios",
+            link: "/Men/Bags/Laptop Cases & Folios",
           },
           {
             name: "Document Cases",
-            link: "/categories/men/bags/document-cases",
+            link: "/Men/Bags/Document Cases",
           },
           {
             name: "Messenger",
-            link: "/categories/men/bags/messenger-bags",
+            link: "/Men/Bags/Messenger",
           },
-          { name: "Travel", link: "/categories/men/bags/travel-bags" },
+          { name: "Travel", link: "/Men/Bags/Travel" },
           {
             name: "Crossbody",
-            link: "/categories/men/bags/crossbody-bags",
+            link: "/Men/Bags/Crossbody",
           },
         ],
       },
       {
         category: "Small Leather Goods",
-        link: "/categories/men/small-leather-goods",
+        link: "/Men/Small Leather Goods",
         items: [
           {
             name: "Wallets",
-            link: "/categories/men/small-leather-goods/wallets",
+            link: "/Men/Small Leather Goods/Wallets",
           },
           {
             name: "Card holders",
-            link: "/categories/men/small-leather-goods/card-holders",
+            link: "/Men/Small Leather Goods/Card holders",
           },
           {
             name: "ID & Travel card holders",
-            link: "/categories/men/small-leather-goods/id-travel-card-holders",
+            link: "/Men/Small Leather Goods/ID & Travel card holders",
           },
           {
             name: "Travel wallets",
-            link: "/categories/men/small-leather-goods/travel-wallets",
+            link: "/Men/Small Leather Goods/Travel wallets",
           },
           {
             name: "Passport cases",
-            link: "/categories/men/small-leather-goods/passport-cases",
+            link: "/Men/Small Leather Goods/Passport cases",
           },
         ],
       },
       {
         category: "Accessories",
-        link: "/categories/men/accessories",
+        link: "/Men/Accessories",
         items: [
-          { name: "Belts", link: "/categories/men/accessories/belts" },
-          { name: "Key rings", link: "/categories/men/accessories/key-rings" },
-          { name: "Bracelets", link: "/categories/men/accessories/bracelets" },
-          { name: "Gloves", link: "/categories/men/accessories/gloves" },
+          { name: "Belts", link: "/Men/Accessories/Belts" },
+          { name: "Key rings", link: "/Men/Accessories/Key rings" },
+          { name: "Bracelets", link: "/Men/Accessories/Bracelets" },
+          { name: "Gloves", link: "/Men/Accessories/Gloves" },
           {
             name: "Sunglasses cases",
-            link: "/categories/men/accessories/sunglasses-cases",
+            link: "/Men/Accessories/Sunglasses cases",
           },
         ],
       },
@@ -139,44 +139,44 @@ export const categories = [
   },
   {
     name: "Kid",
-    link: "/categories/kid",
+    link: "/Kid",
     items: [
       {
         category: "Bags",
-        link: "/categories/kid/bags",
+        link: "/Kid/Bags",
         items: [
-          { name: "All", link: "/categories/kid/bags/all" },
-          { name: "Shoulder", link: "/categories/kid/bags/shoulder" },
-          { name: "Crossbody", link: "/categories/kid/bags/crossbody" },
-          { name: "Backpacks", link: "/categories/kid/bags/backpacks" },
+          { name: "All", link: "/Kid/Bags/All" },
+          { name: "Shoulder", link: "/Kid/Bags/Shoulder" },
+          { name: "Crossbody", link: "/Kid/Bags/Crossbody" },
+          { name: "Backpacks", link: "/Kid/Bags/Backpacks" },
         ],
       },
       {
         category: "Small Leather Goods",
-        link: "/categories/kid/small-leather-goods",
+        link: "/Kid/Small Leather Goods",
         items: [
-          { name: "Goods", link: "/categories/kid/small-leather-goods/goods" },
+          { name: "Goods", link: "/Kid/Small Leather Goods/Goods" },
           {
             name: "Wallets",
-            link: "/categories/kid/small-leather-goods/wallets",
+            link: "/Kid/Small Leather Goods/Wallets",
           },
           {
             name: "Small",
-            link: "/categories/kid/small-leather-goods/small-bags",
+            link: "/Kid/Small Leather Goods/Small-bags",
           },
         ],
       },
       {
         category: "Accessories",
-        link: "/categories/kid/accessories",
+        link: "/Kid/Accessories",
         items: [
-          { name: "Belts", link: "/categories/kid/accessories/belts" },
-          { name: "Key rings", link: "/categories/kid/accessories/key-rings" },
-          { name: "Gloves", link: "/categories/kid/accessories/gloves" },
-          { name: "Bracelets", link: "/categories/kid/accessories/bracelets" },
+          { name: "Belts", link: "/Kid/Accessories/Belts" },
+          { name: "Key rings", link: "/Kid/Accessories/Key rings" },
+          { name: "Gloves", link: "/Kid/Accessories/Gloves" },
+          { name: "Bracelets", link: "/Kid/Accessories/Bracelets" },
           {
             name: "Sunglasses cases",
-            link: "/categories/kid/accessories/sunglasses-cases",
+            link: "/Kid/Accessories/Sunglasses cases",
           },
         ],
       },

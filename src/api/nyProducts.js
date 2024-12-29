@@ -8,26 +8,32 @@
 //   }
 // };
 
-export const fetchProducts = async (filterParams) => {
+export const fetchProducts = async (filterParams = {}) => {
   try {
     const queryParams = new URLSearchParams();
 
-    if (filterParams.availability.length) {
+    if (
+      Array.isArray(filterParams.availability) &&
+      filterParams.availability.length
+    ) {
       queryParams.append("availability", filterParams.availability.join(","));
     }
-    if (filterParams.color.length) {
+    if (Array.isArray(filterParams.color) && filterParams.color.length) {
       queryParams.append("color", filterParams.color.join(","));
     }
-    if (filterParams.price) {
+    if (filterParams.price && Array.isArray(filterParams.price)) {
       queryParams.append(
         "price",
         `${filterParams.price[0]}-${filterParams.price[1]}`
       );
     }
-    if (filterParams.size.length) {
+    if (Array.isArray(filterParams.size) && filterParams.size.length) {
       queryParams.append("size", filterParams.size.join(","));
     }
-    if (Object.keys(filterParams.typeOfProducts).length) {
+    if (
+      filterParams.typeOfProducts &&
+      Object.keys(filterParams.typeOfProducts).length
+    ) {
       queryParams.append(
         "typeOfProducts",
         JSON.stringify(filterParams.typeOfProducts)

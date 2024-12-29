@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { CgClose } from "react-icons/cg";
 import Button3 from "../Button3/Button3";
+import Link from "next/link";
 
 function CartDrawer({
   isDrawerOpen,
@@ -88,7 +89,7 @@ function CartDrawer({
 
   const handleChange = (e, productId) => {
     const value = parseInt(e.target.value, 10);
-    const maxQuantity = 50;
+    const maxQuantity = pageDataI?.utility?.numberOfProducts;
 
     if (!isNaN(value) && value >= 1 && value <= maxQuantity) {
       const newQuantities = { ...quantities, [productId]: value };
@@ -156,7 +157,7 @@ function CartDrawer({
           <hr className="my-2" />
           <div className="overflow-auto max-h-[60vh]">
             <div className="flex flex-col gap-5 items-start  justify-center">
-              {productDetails.length > 0 ? (
+              {productDetails.length > 0 &&
                 productDetails.map((product) => (
                   <div
                     className="flex justify-evenly gap-5 items-center"
@@ -249,12 +250,14 @@ function CartDrawer({
                       </div>
                     </div>
                   </div>
-                ))
-              ) : (
-                <p>NO DATA FOUND</p>
-              )}
+                ))}
             </div>
           </div>
+          {productDetails.length === 0 && (
+            <div className="text-center flex justify-center mt-[50%] items-center align-middle justify-items-center h">
+              <p className="text-xl">No items in cart</p>
+            </div>
+          )}
         </div>
 
         <div className="absolute bottom-20 lg:bottom-0 left-0 w-full p-4 bg-white border-t z-40">
@@ -267,12 +270,14 @@ function CartDrawer({
           <p className="text-gray-700 text-[0.8rem] pb-3">
             Taxes and Shipping calculated at checkout
           </p>
-          <Button3
-            text="PROCEED TO CHECKOUT"
-            backgroundColor="#f5db8b"
-            borderColor="#f5db8b"
-            textColor="black"
-          ></Button3>
+          <Link onClick={toggleDrawer} href="/checkout">
+            <Button3
+              text="PROCEED TO CHECKOUT"
+              backgroundColor="#f5db8b"
+              borderColor="#f5db8b"
+              textColor="black"
+            ></Button3>
+          </Link>
         </div>
 
         <div
