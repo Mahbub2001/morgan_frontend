@@ -25,12 +25,14 @@ function AllProducts() {
   const sortRef = useRef(null);
 
   const [isOpenSort, setIsOpenSort] = useState(false);
+  const [sortParams, setSortParams] = useState("");
   const [isOpenSidebar, setIsOpenSidebar] = useState(false);
   const [layout, setLayout] = useState("list");
   const [products, setProducts] = useState([]);
   const [reset, setReset] = useState(false);
   const taking = searchParams.get("take");
   const [filterParams, setFilterParams] = useState({
+    sortPar: "",
     availability: [],
     color: [],
     price: null,
@@ -61,7 +63,6 @@ function AllProducts() {
     setReset((prev) => !prev);
   }, []);
 
-  
   const fetchFilteredProducts = async () => {
     console.log("filterParams", filterParams);
     const filteredProducts = await fetchProducts(filterParams);
@@ -73,6 +74,7 @@ function AllProducts() {
       if (taking && taking.startsWith("/")) {
         const [gender, category, subCategory] = taking.slice(1).split("/");
         const newFilterParams = {
+          sortPar: "",
           availability: [],
           color: [],
           price: null,
@@ -85,20 +87,20 @@ function AllProducts() {
             },
           },
         };
-  
+
         setFilterParams(newFilterParams);
-  
+
         const filteredProducts = await fetchProducts(newFilterParams);
-        setProducts(filteredProducts); 
+        setProducts(filteredProducts);
       } else {
         const allProducts = await fetchProducts({});
         setProducts(allProducts);
       }
     };
-  
+
     fetchInitialProducts();
   }, [taking]);
-  
+
   useEffect(() => {
     const fetchFilteredProducts = async () => {
       if (!taking) {
@@ -106,10 +108,12 @@ function AllProducts() {
         setProducts(filteredProducts);
       }
     };
-  
+
     fetchFilteredProducts();
   }, [filterParams]);
-  
+
+  // console.log(filterParams);
+
   useEffect(() => {
     if (!isOpenSidebar && !isOpenSort) return;
 
@@ -156,7 +160,6 @@ function AllProducts() {
       </h1>
       <div className="mt-8 container mx-auto">
         <div className="grid grid-cols-2 md:grid-cols-3 items-center border-b border-t border-gray-300 p-1 font-extralight">
-          {/* Layout Controls */}
           <div className="flex items-center space-x-1 mb-4">
             {["grid", "menu", "list"].map((type) => (
               <button
@@ -190,7 +193,7 @@ function AllProducts() {
             <div className="relative">
               <button
                 className="inline-flex justify-center px-4 py-2 text-xs leading-5 transition font-thin rounded-sm text-gray-500 hover:text-black"
-                ref={sortRef}
+                // ref={sortRef}
                 onClick={toggleSortDropdown}
               >
                 SORT BY
@@ -207,8 +210,8 @@ function AllProducts() {
                 </svg>
               </button>
               {isOpenSort && (
-                <div className="absolute top-full mt-1 z-30 w-40">
-                  <SortByDrawer setSortingParams={setFilterParams} />
+                <div className="absolute top-full mt-1 z-50 w-40">
+                  <SortByDrawer setFilterParams={setFilterParams} setSortParams={setSortParams} />
                 </div>
               )}
             </div>

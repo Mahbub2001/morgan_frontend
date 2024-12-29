@@ -11,7 +11,6 @@
 export const fetchProducts = async (filterParams = {}) => {
   try {
     const queryParams = new URLSearchParams();
-
     if (
       Array.isArray(filterParams.availability) &&
       filterParams.availability.length
@@ -39,6 +38,12 @@ export const fetchProducts = async (filterParams = {}) => {
         JSON.stringify(filterParams.typeOfProducts)
       );
     }
+    if(filterParams.sortPar){
+      queryParams.append("sortPar", filterParams.sortPar);
+    }
+
+    console.log("queryParams", queryParams.toString());
+    
 
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/products?${queryParams.toString()}`

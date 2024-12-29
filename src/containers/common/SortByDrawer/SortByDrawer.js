@@ -1,14 +1,20 @@
 import React, { useState } from "react";
 
-function SortByDrawer({setSortingParams}) {
+function SortByDrawer({setFilterParams,setSortParams}) {
 
   const handleSortOption = (sortOption) => {
-    setSortingParams(sortOption);
+    setSortParams(sortOption);
+    // console.log(sortOption);
+    setFilterParams((prev) => ({
+      ...prev,
+      sortPar: sortOption,
+    }));
+    
   };
 
   return (
     <div
-      className="absolute right-0 w-40 mt-2 origin-top-right bg-white border border-gray-200 divide-y divide-gray-100 rounded-md shadow-lg outline-none"
+      className="z-50 absolute right-0 w-40 mt-2 origin-top-right bg-white border border-gray-200 divide-y divide-gray-100 rounded-md shadow-lg outline-none"
       role="menu"
     >
       <div className="!text-xs">
