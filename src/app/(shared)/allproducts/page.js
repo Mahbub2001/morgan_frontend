@@ -71,7 +71,6 @@ function AllProducts() {
   useEffect(() => {
     const fetchInitialProducts = async () => {
       if (taking && taking.startsWith("/")) {
-        // Parse the `taking` parameter to extract filters
         const [gender, category, subCategory] = taking.slice(1).split("/");
         const newFilterParams = {
           availability: [],
@@ -87,26 +86,21 @@ function AllProducts() {
           },
         };
   
-        // Update the filter parameters
         setFilterParams(newFilterParams);
   
-        // Fetch products based on the extracted filters
         const filteredProducts = await fetchProducts(newFilterParams);
-        setProducts(filteredProducts); // Update product list
+        setProducts(filteredProducts); 
       } else {
-        // If no specific `taking` parameter, fetch all products
         const allProducts = await fetchProducts({});
         setProducts(allProducts);
       }
     };
   
-    // Call the async function
     fetchInitialProducts();
   }, [taking]);
   
   useEffect(() => {
     const fetchFilteredProducts = async () => {
-      // Ensure this doesn't overwrite the initial fetch
       if (!taking) {
         const filteredProducts = await fetchProducts(filterParams);
         setProducts(filteredProducts);

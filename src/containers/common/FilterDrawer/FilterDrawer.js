@@ -83,19 +83,19 @@ function FilterDrawer({ setFilterParams, filterParams, resetFilter }) {
     }));
   };
 
-  // useEffect(() => {
-  //   if (resetFilter) {
-  //     setExpandedSections({});
-  //     setSelectedGender(null);
-  //     setFilterParams({
-  //       availability: [],
-  //       color: [],
-  //       price: null,
-  //       size: [],
-  //       typeOfProducts: {},
-  //     });
-  //   }
-  // }, [resetFilter, setFilterParams]);
+  useEffect(() => {
+    if (resetFilter) {
+      setExpandedSections({});
+      setSelectedGender(null);
+      setFilterParams({
+        availability: [],
+        color: [],
+        price: null,
+        size: [],
+        typeOfProducts: {},
+      });
+    }
+  }, [resetFilter, setFilterParams]);
 
   return (
     <div className="pt-1 text-xs mt-8">

@@ -24,6 +24,7 @@ const Dropdown = ({ title, items, isVisible, closeDropdown, dropdownRef }) => {
           <ul className="space-y-2 mt-2">
             {items.map((item, index) => (
               <Link 
+               onClick={closeDropdown}
                 href={item?.link}
                 key={index}
                 className="block text-sm font-light cursor-pointer hover:bg-gray-200"

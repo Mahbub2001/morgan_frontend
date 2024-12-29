@@ -37,10 +37,6 @@ module.exports = {
         },
       },
     },
-    fontFamily: {
-      // body: ["Lato"],
-      // sans: ["Lato"],
-    },
   },
   plugins: [
     flowbite.plugin(),

@@ -226,6 +226,7 @@ function Navbar() {
                                     className="text-sm font-light cursor-pointe"
                                   >
                                     <Link
+                                      onClick={() => setActiveDropdown(null)}
                                       className="!font-futara-sans !text-xs text-gray-800 hover:text-blue-900"
                                       href={{
                                         pathname: "/allproducts",
@@ -266,6 +267,7 @@ function Navbar() {
                                   className="text-sm font-light cursor-pointer"
                                 >
                                   <Link
+                                    onClick={() => setActiveDropdown(null)}
                                     className="!font-futara-sans !text-xs text-gray-800 hover:text-blue-900"
                                     href={{
                                       pathname: "/allproducts",
@@ -306,6 +308,7 @@ function Navbar() {
                                   className="text-sm font-light cursor-pointer"
                                 >
                                   <Link
+                                    onClick={() => setActiveDropdown(null)}
                                     className="!font-futara-sans !text-xs text-gray-800 hover:text-blue-900"
                                     href={{
                                       pathname: "/allproducts",
@@ -346,6 +349,7 @@ function Navbar() {
                                   className="text-sm font-light cursor-pointer"
                                 >
                                   <Link
+                                    onClick={() => setActiveDropdown(null)}
                                     className="!font-futara-sans !text-xs text-gray-800 hover:text-blue-900"
                                     href={{
                                       pathname: "/allproducts",
