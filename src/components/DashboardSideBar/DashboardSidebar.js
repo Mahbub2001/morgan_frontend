@@ -185,7 +185,7 @@ const DashboardSidebar = ({ role }) => {
                 icon="product_list"
                 label="Product List"
                 isOpen={isSidebarOpen}
-                href={"/product_list"}
+                href={"/adminproductlist"}
                 activeLink={activeLink}
                 setActiveLink={setActiveLink}
               />
