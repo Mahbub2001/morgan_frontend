@@ -50,7 +50,7 @@ function Products1({ products }) {
                           ? validUtility?.pictures[1]
                           : validUtility?.pictures?.[0]
                       }
-                      className="w-full h-[300px] object-cover rounded-md bg-gray-200 group-hover:opacity-75 transition-all duration-300 ease-in-out transform group-hover:scale-105"
+                      className="w-full h-[300px] object-cover rounded-md  group-hover:opacity-100 transition-all duration-300 ease-in-out transform group-hover:scale-105"
                     />
 
                     {isSoldOut && (
