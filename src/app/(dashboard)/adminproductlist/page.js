@@ -3,12 +3,15 @@
 import { adminGetProducts } from "@/api/adminfetching";
 import Button3 from "@/containers/common/Button3/Button3";
 import AdminRoute from "@/Wrapper/AdminRoute";
+import Cookies from "js-cookie";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
 function AdminProductList() {
   const [data, setData] = useState([]);
   const [np, setNp] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [productToDelete, setProductToDelete] = useState(null);
   const [pagination, setPagination] = useState({
     totalItems: 0,
     totalPages: 0,
@@ -69,15 +72,15 @@ function AdminProductList() {
   };
 
   const handleSave = async () => {
+    const token = Cookies.get("ny-token");
     const updatedProducts = data.filter((item) => item.isEdited);
-    // console.log(updatedProducts);
-    // return;
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/admin/update-products`,
       {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({ products: updatedProducts }),
       }
@@ -89,6 +92,41 @@ function AdminProductList() {
     } else {
       alert("Failed to save changes. Try again.");
     }
+  };
+
+  const handleDeleteClick = (productId) => {
+    setProductToDelete(productId);
+    setIsModalOpen(true);
+  };
+
+  const handleConfirmDelete = async () => {
+    const token = Cookies.get("ny-token");
+    if (productToDelete) {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/admin/delete-product`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ productId: productToDelete }),
+        }
+      );
+
+      const result = await response.json();
+      if (result.success) {
+        alert("Product deleted successfully!");
+        fetchData();
+      } else {
+        alert("Failed to delete product.");
+      }
+      setIsModalOpen(false);
+    }
+  };
+
+  const handleCancelDelete = () => {
+    setIsModalOpen(false);
   };
 
   return (
@@ -281,7 +319,10 @@ function AdminProductList() {
                       >
                         Edit
                       </a>
-                      <button className="text-red-600 hover:underline">
+                      <button
+                        onClick={() => handleDeleteClick(item._id)}
+                        className="text-red-600 hover:underline"
+                      >
                         Delete
                       </button>
                     </td>
@@ -290,7 +331,6 @@ function AdminProductList() {
               </tbody>
             </table>
           </div>
-
           {/* Pagination */}
           <div className="mt-4 flex justify-center gap-2">
             {Array.from({ length: pagination.totalPages }, (_, i) => (
@@ -319,6 +359,29 @@ function AdminProductList() {
           </div>
         </div>
       </div>
+      {isModalOpen && (
+        <div className="fixed z-50 inset-0 bg-gray-500 bg-opacity-75 flex justify-center items-center">
+          <div className="bg-white p-6 rounded-lg shadow-lg">
+            <h3 className="text-xl mb-4">
+              Are you sure you want to delete this product?
+            </h3>
+            <div className="flex justify-between">
+              <button
+                onClick={handleConfirmDelete}
+                className="bg-red-500 text-white px-4 py-2 rounded"
+              >
+                Yes
+              </button>
+              <button
+                onClick={handleCancelDelete}
+                className="bg-gray-500 text-white px-4 py-2 rounded"
+              >
+                No
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </AdminRoute>
   );
 }
