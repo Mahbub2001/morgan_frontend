@@ -56,6 +56,7 @@ export const fetchProducts = async (filterParams = {}) => {
   }
 };
 
+// get product by id
 export const fetchProduct = async (id) => {
   try {
     const response = await fetch(

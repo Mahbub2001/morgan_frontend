@@ -55,6 +55,9 @@ function AdminProductList() {
     setFilters({ ...filters, [key]: value });
   };
 
+  const handlePageChange = (newPage) => {
+    fetchData(newPage);
+  };
   const handleCheckboxChange = (id, key, value) => {
     setData((prevData) =>
       prevData.map((item) =>
