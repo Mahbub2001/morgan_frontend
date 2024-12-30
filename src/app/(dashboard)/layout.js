@@ -1,10 +1,10 @@
 "use client";
-import { Open_Sans } from "next/font/google";
 import "../globals.css";
 import DashboardSidebar from "@/components/DashboardSideBar/DashboardSidebar";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "@/hooks/AuthProvider";
 import { getUserRole } from "@/api/user";
+import withProtectedRoute from "@/Wrapper/protectedRoute";
 import Link from "next/link";
 import {
   useQuery,
@@ -14,7 +14,7 @@ import {
   QueryClientProvider,
 } from "@tanstack/react-query";
 
-export default function RootLayout({ children }) {
+function RootLayout({ children }) {
   const { user } = useContext(AuthContext);
   // console.log(user);
 
@@ -77,3 +77,5 @@ export default function RootLayout({ children }) {
     </>
   );
 }
+
+export default withProtectedRoute(RootLayout);
