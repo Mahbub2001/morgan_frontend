@@ -454,7 +454,7 @@ function AdminProductEdit() {
                         {utility.pictures.map((picture, pictureIndex) => (
                           <div
                             key={pictureIndex}
-                            className="flex items-center mb-2"
+                            className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-6 items-center gap-4 mb-2"
                           >
                             <img
                               src={
@@ -463,14 +463,14 @@ function AdminProductEdit() {
                                   : URL.createObjectURL(picture)
                               }
                               alt={`Preview ${pictureIndex + 1}`}
-                              className="w-12 h-12 object-cover rounded mr-4"
+                              className="w-12 h-12 object-cover rounded shadow-md"
                             />
                             <button
                               type="button"
                               onClick={() =>
                                 removePicture(utilityIndex, pictureIndex)
                               }
-                              className="ml-2 px-3 py-1 bg-red-500 text-white rounded-md shadow hover:bg-red-600"
+                              className="px-2 py-1 bg-red-500 text-sm text-white rounded shadow hover:bg-red-600"
                             >
                               Remove
                             </button>
