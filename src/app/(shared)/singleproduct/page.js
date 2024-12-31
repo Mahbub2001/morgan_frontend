@@ -1,11 +1,12 @@
+'use client'
 import ProductDetailspage from "@/components/ProductDetailsPage/ProductDetailspage";
+import { useSearchParams } from "next/navigation";
 import React from "react";
 
-async function ProductDetails({ params, searchParams }) {
-  const { id } = await params;
-
-  const { color } = await searchParams;
-  // console.log("ProductDetails", id, color);
+function ProductDetails() {
+  const searchParams = useSearchParams();
+  const id = searchParams.get("id");
+  const color = searchParams.get("color");
 
   return (
     <>

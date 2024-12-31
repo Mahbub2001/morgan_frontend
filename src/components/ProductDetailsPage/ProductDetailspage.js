@@ -285,8 +285,11 @@ function ProductDetailspage({ id, color }) {
                       {pageDataI?.allData?.utilities?.map((feature, index) => (
                         <Link
                           href={{
-                            pathname: `/allproducts/${pageDataI?.allData?._id}`,
-                            query: { color: feature?.color },
+                            pathname: `/singleproduct`,
+                            query: {
+                              color: feature?.color,
+                              id: pageDataI?.allData?._id,
+                            },
                           }}
                           className="text-gray-600 font-futura-sans rounded hover:text-gray-900 cursor-pointer py-1 text-sm border px-1"
                           key={index}

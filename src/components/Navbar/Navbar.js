@@ -217,9 +217,9 @@ function Navbar() {
                           {categories[0].items.map((category) => (
                             <div key={category.category}>
                               <p className="text-gray-700 text-sm font-semibold">
-                                {category?.category?.name}
+                                {category?.category}
                               </p>
-                              <ul className="space-y-2 mt-0">
+                              <ul className="space-y-2 mt-1">
                                 {category?.items.map((item, index) => (
                                   <li
                                     key={index}
@@ -258,9 +258,9 @@ function Navbar() {
                         {categories[0].items.map((category) => (
                           <div key={category.category}>
                             <p className="text-gray-700 text-sm font-semibold">
-                              {category?.category?.name}
+                              {category?.category}
                             </p>
-                            <ul className="space-y-2 mt-0">
+                            <ul className="space-y-2 mt-1">
                               {category.items.map((item, index) => (
                                 <li
                                   key={index}
@@ -299,9 +299,9 @@ function Navbar() {
                         {categories[1].items.map((category) => (
                           <div key={category.category}>
                             <p className="text-gray-700 text-sm font-semibold">
-                              {category.category?.name}
+                              {category.category}
                             </p>
-                            <ul className="space-y-2 mt-0">
+                            <ul className="space-y-2 mt-1">
                               {category.items.map((item, index) => (
                                 <li
                                   key={index}
@@ -340,9 +340,9 @@ function Navbar() {
                         {categories[2].items.map((category) => (
                           <div key={category.category}>
                             <p className="text-gray-700 text-sm font-semibold">
-                              {category?.category?.name}
+                              {category?.category}
                             </p>
-                            <ul className="space-y-2 mt-0">
+                            <ul className="space-y-2 mt-1">
                               {category.items.map((item, index) => (
                                 <li
                                   key={index}

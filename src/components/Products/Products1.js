@@ -30,8 +30,8 @@ function Products1({ products }) {
           return (
             <Link
               href={{
-                pathname: `/allproducts/${product._id}`,
-                query: { color: validUtility.color },
+                pathname: `/singleproduct`,
+                query: { color: validUtility.color, id: product._id },
               }}
               // key={product._id}
               key={index}

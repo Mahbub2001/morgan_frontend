@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { CgClose } from "react-icons/cg";
 import Button3 from "../Button3/Button3";
 import Link from "next/link";
+import { AuthContext } from "@/hooks/AuthProvider";
 
 function CartDrawer({
   isDrawerOpen,
@@ -17,6 +18,7 @@ function CartDrawer({
   const [productDetails, setProductDetails] = useState([]);
   const [quantities, setQuantities] = useState({});
   const [isNoteVisible, setIsNoteVisible] = useState(false);
+  const {user} = useContext(AuthContext);
 
   const toggleNote = () => {
     setIsNoteVisible(!isNoteVisible);
