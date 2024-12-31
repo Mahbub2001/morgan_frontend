@@ -4,11 +4,14 @@ import Button3 from "@/containers/common/Button3/Button3";
 import { categories } from "@/Data/Menu";
 import AdminRoute from "@/Wrapper/AdminRoute";
 import axios from "axios";
-import { useParams } from "next/navigation";
+import { useParams, useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 function AdminProductEdit() {
-  const { id } = useParams();
+//   const { id } = useParams();
+  const searchParams = useSearchParams();
+  const id = searchParams.get("id");
+
   const [product, setProduct] = useState(null);
   const [person, setPerson] = useState(product?.person || "");
   const [category, setCategory] = useState(product?.category || "");

@@ -316,12 +316,15 @@ function AdminProductList() {
                       />
                     </td>
                     <td className="px-6 py-4 space-x-2 flex items-center justify-start">
-                      <a
-                        href={`/adminproductlist/${item?._id}`}
+                      <Link
+                        href={{
+                          pathname: "/editaddprodetails",
+                          query: { id: item._id },
+                        }}
                         className="text-blue-600 hover:underline"
                       >
                         Edit
-                      </a>
+                      </Link>
                       <button
                         onClick={() => handleDeleteClick(item._id)}
                         className="text-red-600 hover:underline"
