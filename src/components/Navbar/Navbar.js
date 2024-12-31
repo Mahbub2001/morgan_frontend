@@ -10,7 +10,7 @@ import {
   journalItems,
   Inspiration,
 } from "@/Data/Menu";
-import { useSpring, animated } from "@react-spring/web";
+// import { useSpring, animated } from "@react-spring/web";
 import Dropdown from "@/containers/common/DropDown_About/DropDownAbout";
 import Dropdown2 from "@/containers/common/DropDown_Journal/DropDownJournal";
 import Sidebar from "../SideBar/SideBar";
@@ -209,7 +209,7 @@ function Navbar() {
                     Kids
                   </li>
                 </div>
-                <animated.div className="absolute left-0 right-0 mt-2 bg-white border-b-[1px] py-3">
+                <div className="absolute left-0 right-0 mt-2 bg-white border-b-[1px] py-3">
                   <div className="container mx-auto">
                     <div className="grid grid-cols-12 gap-5">
                       <div className="col-span-8">
@@ -246,11 +246,11 @@ function Navbar() {
                       <Latest />
                     </div>
                   </div>
-                </animated.div>
+                </div>
               </div>
             )}
             {activeDropdown === "women" && (
-              <animated.div className="absolute left-0 right-0 mt-2 bg-white border-b-[1px] py-3">
+              <div className="absolute left-0 right-0 mt-2 bg-white border-b-[1px] py-3">
                 <div className="container mx-auto">
                   <div className="grid grid-cols-12 gap-5">
                     <div className="col-span-8">
@@ -287,11 +287,11 @@ function Navbar() {
                     <Latest />
                   </div>
                 </div>
-              </animated.div>
+              </div>
             )}
 
             {activeDropdown === "men" && (
-              <animated.div className="absolute left-0 right-0 mt-2 bg-white border-b-[1px] py-3">
+              <div className="absolute left-0 right-0 mt-2 bg-white border-b-[1px] py-3">
                 <div className="container mx-auto">
                   <div className="grid grid-cols-12 gap-5">
                     <div className="col-span-8">
@@ -328,11 +328,11 @@ function Navbar() {
                     <Latest />
                   </div>
                 </div>
-              </animated.div>
+              </div>
             )}
 
             {activeDropdown === "kids" && (
-              <animated.div className="absolute left-0 right-0 mt-2 bg-white border-b-[1px] py-3">
+              <div className="absolute left-0 right-0 mt-2 bg-white border-b-[1px] py-3">
                 <div className="container mx-auto">
                   <div className="grid grid-cols-12 gap-5">
                     <div className="col-span-8">
@@ -369,7 +369,7 @@ function Navbar() {
                     <Latest />
                   </div>
                 </div>
-              </animated.div>
+              </div>
             )}
 
             {activeDropdown === "discover" && (

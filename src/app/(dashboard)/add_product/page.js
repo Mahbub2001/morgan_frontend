@@ -3,7 +3,6 @@
 import { categories } from "@/Data/Menu";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useMutation } from "@tanstack/react-query";
 import { imageUpload } from "@/api/imageUploadApi";
 import Cookies from "js-cookie";
 import AdminRoute from "@/Wrapper/AdminRoute";
@@ -13,6 +12,7 @@ function AddProduct() {
   const [selectedPerson, setSelectedPerson] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedSubCategory, setSelectedSubCategory] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handlePersonChange = (e) => {
     setSelectedPerson(e.target.value);
@@ -92,40 +92,12 @@ function AddProduct() {
 
   const token = Cookies.get("ny-token");
 
-  const mutation = useMutation({
-    mutationFn: async (productData) => {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/products`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify(productData),
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error("Failed to add product");
-      }
-
-      return response.json();
-    },
-    onSuccess: () => {
-      alert("Product added successfully!");
-    },
-    onError: (error) => {
-      console.error(error);
-      alert("Error adding product");
-    },
-  });
   const [utilities, setUtilities] = React.useState([]);
 
   const onSubmit = async (data) => {
     // console.log("Form data:", data);
-
     try {
+      setIsLoading(true);
       data.features = dataArray;
 
       const newUtilities = [];
@@ -163,10 +135,27 @@ function AddProduct() {
       data.utilities = newUtilities;
       data.date = new Date();
 
-      mutation.mutate(data);
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/products`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(data),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to add product");
+      }
+      alert("Product added successfully!");
+      setIsLoading(false);
     } catch (error) {
       console.error("Error in onSubmit:", error);
       alert("Something went wrong while submitting the form.");
+      setIsLoading(false);
     }
   };
 
@@ -175,7 +164,10 @@ function AddProduct() {
       <div className="container mx-auto min-h-screen ">
         <h1 className="text-lg font-bold mb-4">Add Product</h1>
         <div className="container mx-auto">
-          <form className="grid grid-cols-6 lg:gap-10 justify-between lg:grid-cols-12" onSubmit={handleSubmit(onSubmit)}>
+          <form
+            className="grid grid-cols-6 lg:gap-10 justify-between lg:grid-cols-12"
+            onSubmit={handleSubmit(onSubmit)}
+          >
             <div className="col-span-5">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
                 <div>
@@ -653,15 +645,13 @@ function AddProduct() {
               <button
                 type="submit"
                 className="w-full text-white rounded-md"
-                disabled={mutation.isLoading}
+                disabled={isLoading}
               >
                 {/* {mutation.isLoading ? "Adding Product..." : "Add Product"} */}
                 <Button3
                   backgroundColor="orange"
                   borderColor="orange"
-                  text={
-                    mutation.isLoading ? "Adding Product..." : "Add Product"
-                  }
+                  text={isLoading ? "Adding Product..." : "Add Product"}
                   textColor="white"
                 />
               </button>

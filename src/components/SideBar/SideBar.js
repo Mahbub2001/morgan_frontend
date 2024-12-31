@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useContext, useState } from "react";
-import { useSpring, animated, useTransition } from "@react-spring/web";
 import { categories, aboutNyItems, journalItems } from "@/Data/Menu";
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
 import { FiLogOut, FiSearch } from "react-icons/fi";
@@ -18,18 +17,6 @@ const Sidebar = () => {
   const [subsubmenuItems, setSubsubmenuItems] = useState([]);
 
   const { user, logout } = useContext(AuthContext);
-
-  const sidebarSpring = useSpring({
-    transform: isSidebarOpen ? "translateX(0%)" : "translateX(-100%)",
-    config: { tension: 280, friction: 30 },
-  });
-
-  const menuTransition = useTransition(menuHistory[menuHistory.length - 1], {
-    from: { opacity: 0, transform: "translateX(100%)" },
-    enter: { opacity: 1, transform: "translateX(0%)" },
-    leave: { opacity: 0, transform: "translateX(-100%)" },
-    config: { tension: 220, friction: 30 },
-  });
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -92,113 +79,113 @@ const Sidebar = () => {
         </button>
       </header>
 
-      <animated.div
-        style={sidebarSpring}
-        className="fixed top-16 left-0 h-[calc(100%-4rem)] w-72 bg-white shadow-lg z-40"
+      <div
+        className={`fixed top-16 left-0 h-[calc(100%-4rem)] w-72 bg-white shadow-lg z-40 transition-transform duration-300 ${
+          isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+        }`}
       >
-        {menuTransition((styles, currentMenu) => (
-          <animated.div
-            style={styles}
-            className="absolute top-0 left-0 w-full h-full p-6"
-          >
-            {currentMenu === "main" && (
+        <div className="absolute top-0 left-0 w-full h-full p-6">
+          {menuHistory[menuHistory.length - 1] === "main" && (
+            <ul className="space-y-4">
+              <p>Shop</p>
+              {categories.map((category, index) => (
+                <div key={index}>
+                  <div
+                    onClick={() => openSubmenu(category.items || [])}
+                    className="cursor-pointer hover:text-blue-600 flex justify-between items-center font-thin"
+                  >
+                    <li className="">{category.name}</li>
+                    <FaGreaterThan className="inline-block text-[0.6rem]" />
+                  </div>
+                  <hr className="my-3" />
+                </div>
+              ))}
+              <li
+                className="cursor-pointer hover:text-blue-600 font-medium text-sm"
+                onClick={() => openSubmenu(aboutNyItems)}
+              >
+                About Ny Morgen
+              </li>
+              <li
+                className="cursor-pointer hover:text-blue-600 font-medium text-sm"
+                onClick={() => openSubmenu(journalItems)}
+              >
+                Journal
+              </li>
+            </ul>
+          )}
+
+          {menuHistory[menuHistory.length - 1] === "submenu" && (
+            <>
+              <button
+                className="text-sm mb-5 hover:text-blue-600 flex items-center space-x-2"
+                onClick={goBack}
+                aria-label="Go Back"
+              >
+                <span>&larr; Back</span>
+              </button>
               <ul className="space-y-4">
-                <p>Shop</p>
-                {categories.map((category, index) => (
+                {submenuItems.map((item, index) => (
                   <div key={index}>
                     <div
-                      onClick={() => openSubmenu(category.items || [])}
-                      className="cursor-pointer hover:text-blue-600 flex justify-between items-center font-thin"
+                      className="flex items-center justify-between cursor-pointer hover:text-blue-600 font-thin text-sm"
+                      onClick={() =>
+                        Array.isArray(item.items) &&
+                        openSubsubmenu(item.items)
+                      }
                     >
-                      <li className="">{category.name}</li>
+                      {item.name ? (
+                        <Link onClick={toggleSidebar} href={item.link}>
+                          <li className="hover:underline">{item.name}</li>
+                        </Link>
+                      ) : (
+                        <li>{item.category}</li>
+                      )}
                       <FaGreaterThan className="inline-block text-[0.6rem]" />
                     </div>
-                    <hr className="my-3" />
+                    <hr className="my-2" />
                   </div>
                 ))}
-                <li
-                  className="cursor-pointer hover:text-blue-600 font-medium text-sm"
-                  onClick={() => openSubmenu(aboutNyItems)}
-                >
-                  About Ny Morgen
-                </li>
-                <li
-                  className="cursor-pointer hover:text-blue-600 font-medium text-sm"
-                  onClick={() => openSubmenu(journalItems)}
-                >
-                  Journal
-                </li>
               </ul>
-            )}
+            </>
+          )}
 
-            {currentMenu === "submenu" && (
-              <>
-                <button
-                  className="text-sm mb-5 hover:text-blue-600 flex items-center space-x-2"
-                  onClick={goBack}
-                  aria-label="Go Back"
-                >
-                  <span>&larr; Back</span>
-                </button>
-                <ul className="space-y-4">
-                  {submenuItems.map((item, index) => (
-                    <div key={index}>
-                      <div
-                        className="flex items-center justify-between cursor-pointer hover:text-blue-600 font-thin text-sm"
-                        onClick={() =>
-                          Array.isArray(item.items) &&
-                          openSubsubmenu(item.items)
-                        }
-                      >
-                        {item.name ? (
-                          <Link onClick={toggleSidebar} href={item.link}>
-                            <li className="hover:underline">{item.name}</li>
-                          </Link>
-                        ) : (
-                          <li>{item.category}</li>
-                        )}
-                        <FaGreaterThan className="inline-block text-[0.6rem]" />
-                      </div>
-                      <hr className="my-2" />
-                    </div>
-                  ))}
-                </ul>
-              </>
+          {menuHistory[menuHistory.length - 1] === "subsubmenu" && (
+            <>
+              <button
+                className="text-sm mb-5 hover:text-blue-600 flex items-center space-x-2"
+                onClick={goBack}
+                aria-label="Go Back"
+              >
+                <span>&larr; Back</span>
+              </button>
+              <ul className="space-y-4">
+                {subsubmenuItems.map((item, index) => (
+                  <li key={index} className="hover:text-blue-600 text-sm">
+                    <Link onClick={toggleSidebar} href={item.link}>
+                      {item.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </>
+          )}
+          <div className="flex gap-5 mt-10 ">
+            <CiSearch className="cursor-pointer" />
+            <FaShoppingBag className="cursor-pointer" />
+            <Link
+              onClick={toggleSidebar}
+              href="/login"
+              className="cursor-pointer"
+            >
+              <GoPerson />
+            </Link>
+            {user && (
+              <FiLogOut className="cursor-pointer" onClick={handleLogOut} />
             )}
-
-            {currentMenu === "subsubmenu" && (
-              <>
-                <button
-                  className="text-sm mb-5 hover:text-blue-600 flex items-center space-x-2"
-                  onClick={goBack}
-                  aria-label="Go Back"
-                >
-                  <span>&larr; Back</span>
-                </button>
-                <ul className="space-y-4">
-                  {subsubmenuItems.map((item, index) => (
-                    <li key={index} className="hover:text-blue-600 text-sm">
-                      <Link onClick={toggleSidebar} href={item.link}>
-                        {item.name}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </>
-            )}
-            <div className="flex gap-5 mt-10 ">
-              <CiSearch className="cursor-pointer" />
-              <FaShoppingBag className="cursor-pointer" />
-              <Link onClick={toggleSidebar} href="/login" className="cursor-pointer">
-                <GoPerson />
-              </Link>
-              {user && (
-                <FiLogOut className="cursor-pointer" onClick={handleLogOut} />
-              )}
-            </div>
-          </animated.div>
-        ))}
-      </animated.div>
+          </div>
+        </div>
+      </div>
 
       {isSidebarOpen && (
         <div

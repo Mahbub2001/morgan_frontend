@@ -1,12 +1,12 @@
 import React from "react";
-import { useSpring, animated } from "@react-spring/web";
+// import { useSpring, animated } from "@react-spring/web";
 
 const Dropdown2 = ({ title, items, isVisible, closeDropdown, dropdownRef }) => {
-  const animation = useSpring({
-    opacity: isVisible ? 1 : 0,
-    transform: isVisible ? "scaleY(1)" : "scaleY(0)",
-    config: { tension: 300, friction: 25 },
-  });
+  // const animation = useSpring({
+  //   opacity: isVisible ? 1 : 0,
+  //   transform: isVisible ? "scaleY(1)" : "scaleY(0)",
+  //   config: { tension: 300, friction: 25 },
+  // });
 
   if (!isVisible) return null;
 
@@ -14,7 +14,7 @@ const Dropdown2 = ({ title, items, isVisible, closeDropdown, dropdownRef }) => {
     <div>
       <animated.div
         ref={dropdownRef}
-        style={animation}
+        // style={animation}
         className="absolute left-0 right-0 mt-2 bg-white border-b-[1px] py-5 origin-top"
       >
         <div className="container mx-auto flex justify-between">
