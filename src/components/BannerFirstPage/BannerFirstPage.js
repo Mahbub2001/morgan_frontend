@@ -4,7 +4,7 @@ import React from "react";
 
 function BannerFirstPage() {
   return (
-    <div className="relative bg-gray-800 h-[30rem] flex items-center z-0 ">
+    <div className="relative bg-gray-800 h-[30rem] flex items-center z-0">
       <div
         className="absolute inset-0 bg-cover bg-center"
         style={{
@@ -21,7 +21,7 @@ function BannerFirstPage() {
         <p className="text-lg md:text-2xl mt-2 italic mb-3">
           EXPLORE ALL OUR NEWS
         </p>
-        <Link href="/allproducts">
+        <Link className="!z-50" href="/allproducts">
           <Button1 text="Shop Now" />
         </Link>
       </div>

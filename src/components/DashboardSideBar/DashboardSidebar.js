@@ -11,6 +11,7 @@ import { IoSettingsOutline } from "react-icons/io5";
 import Link from "next/link";
 import { BsFillBookmarkHeartFill } from "react-icons/bs";
 import { useRouter } from "next/navigation";
+import { CgProfile } from "react-icons/cg";
 
 const DashboardSidebar = ({ role }) => {
   console.log(role);
@@ -129,7 +130,7 @@ const DashboardSidebar = ({ role }) => {
                 icon="order"
                 label="Order Management"
                 isOpen={isSidebarOpen}
-                href={"/orders"}
+                href={"/adordermanage"}
                 activeLink={activeLink}
                 setActiveLink={setActiveLink}
               />
@@ -145,7 +146,7 @@ const DashboardSidebar = ({ role }) => {
                 icon="coupon"
                 label="Coupon Code"
                 isOpen={isSidebarOpen}
-                href={"/coupon"}
+                href={"/admincoupon"}
                 activeLink={activeLink}
                 setActiveLink={setActiveLink}
               />
@@ -153,7 +154,7 @@ const DashboardSidebar = ({ role }) => {
                 icon="categories"
                 label="Categories"
                 isOpen={isSidebarOpen}
-                href={"/categories"}
+                href={"/admincategories"}
                 activeLink={activeLink}
                 setActiveLink={setActiveLink}
               />
@@ -189,14 +190,14 @@ const DashboardSidebar = ({ role }) => {
                 activeLink={activeLink}
                 setActiveLink={setActiveLink}
               />
-              <SidebarItem
+              {/* <SidebarItem
                 icon="manage_admins"
                 label="Manage Admin"
                 isOpen={isSidebarOpen}
                 href={"/manage_admins"}
                 activeLink={activeLink}
                 setActiveLink={setActiveLink}
-              />
+              /> */}
               <SidebarItem
                 icon="admin_roles"
                 label="Admin Roles"
@@ -209,6 +210,14 @@ const DashboardSidebar = ({ role }) => {
           )}
           {role === "user" && (
             <>
+              <SidebarItem
+                icon="user_profile"
+                label="Profile"
+                isOpen={isSidebarOpen}
+                href={"/user_profile"}
+                activeLink={activeLink}
+                setActiveLink={setActiveLink}
+              />
               <SidebarItem
                 icon="order"
                 label="Check Orders"
@@ -266,6 +275,7 @@ const SidebarItem = ({
       {icon === "manage_admins" && <IoPersonCircleOutline />}
       {icon === "admin_roles" && <IoSettingsOutline />}
       {icon === "wishlist" && <BsFillBookmarkHeartFill />}
+      {icon === "user_profile" && <CgProfile />}
       {isOpen && <div>{label}</div>}
     </Link>
   );

@@ -25,7 +25,7 @@ module.exports = {
       },
       {
         protocol: "https",
-        hostname: "morgan-backend.vercel.app", // Correctly added your backend's domain
+        hostname: "morgan-backend.vercel.app",
       },
     ],
   },

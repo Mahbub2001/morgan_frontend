@@ -10,6 +10,8 @@
     border: 2px solid var(--dynamic-border-color, #333);
     letter-spacing: 2px;
     text-align: center;
+    padding-left: 4px;
+    padding-right: 4px;
     position: relative;
     background: var(--dynamic-bg-color, #ff003b); 
     transition: all 0.35s;
