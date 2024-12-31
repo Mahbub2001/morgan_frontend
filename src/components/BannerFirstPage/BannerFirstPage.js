@@ -4,7 +4,7 @@ import React from "react";
 
 function BannerFirstPage() {
   return (
-    <div className="relative bg-gray-800 h-[30rem] flex items-center z-0">
+    <div className="relative bg-gray-800 h-[30rem] flex items-center z-40">
       <div
         className="absolute inset-0 bg-cover bg-center"
         style={{
