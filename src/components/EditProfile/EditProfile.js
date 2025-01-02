@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import Button3 from "@/containers/common/Button3/Button3";
+import Cookies from "js-cookie";
+import React, { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
-function EditProfile() {
+function EditProfile({ info, fetchProfile, user }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { register, handleSubmit, reset } = useForm();
 
@@ -9,59 +11,84 @@ function EditProfile() {
     setIsModalOpen(!isModalOpen);
   };
 
+  useEffect(() => {
+    fetchProfile();
+  }, [user]);
+
+  // console.log(info);
+
   const onSubmit = (data) => {
-    console.log("Form Data: ", data);
+    const token = Cookies.get("ny-token");
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/profile/${info?._id}`, {
+      method: "PUT",
+      headers: {
+        "content-type": "application/json",
+        authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(data),
+    }).then((response) => {
+      if (response.ok) {
+        alert("Profile updated successfully");
+        fetchProfile();
+      } else {
+        alert("Failed to update profile");
+      }
+    });
+
     toggleModal();
     reset();
   };
 
   return (
     <div className="">
-      <p className="text-xs font-thin mb-4">Profile</p>
+      <p className="text-sm md:text-xl font-thin mb-4">Profile</p>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-        <div className=" rounded-lg  bg-white">
-          <h1 className="font-thin text-xs md:text-sm text-gray-600">
-            Name
-          </h1>
-          <p className="text-xs md:text-sm font-semibold text-gray-800">
-            Username: <span>JohnDoe</span>
+        <div className=" bg-white">
+          <h1 className="font-thin text-xs md:text-sm text-gray-600">Name</h1>
+          <p className="text-xs md:text-sm  text-gray-800">
+            First Name: <span>{info?.firstName}</span>
+          </p>
+          <p className="text-xs md:text-sm  text-gray-800">
+            Last Name: <span>{info?.lastName}</span>
           </p>
         </div>
-        <div className=" rounded-lg  bg-white">
+        <div className=" bg-white">
           <h1 className="font-thin text-xs md:text-sm text-gray-600">
             Email Address
           </h1>
-          <p className="text-xs md:text-sm font-semibold text-gray-800">
-            mahbubturza@gmail.com
-          </p>
+          <p className="text-xs md:text-sm  text-gray-800">{info?.email}</p>
         </div>
-        <div className=" rounded-lg  bg-white">
+        <div className=" bg-white">
           <h1 className="font-thin text-xs md:text-sm text-gray-600">Mobile</h1>
-          <p className="text-xs md:text-sm font-semibold text-gray-800">
-            1661565
+          <p className="text-xs md:text-sm  text-gray-800">
+            {info?.phone_number ?? "Not Provided"}
           </p>
         </div>
-        <div className=" rounded-lg  bg-white">
+        <div className=" bg-white">
           <h1 className="font-thin text-xs md:text-sm text-gray-600">
             Birthday
           </h1>
           <p className="text-xs md:text-sm font-semibold text-gray-800">
-            1661565
+            {info?.birthday ?? "Not Provided"}
           </p>
         </div>
-        <div className=" rounded-lg  bg-white">
+        <div className=" bg-white">
           <h1 className="font-thin text-xs md:text-sm text-gray-600">Gender</h1>
-          <p className="text-xs md:text-sm font-semibold text-gray-800">Male</p>
+          <p className="text-xs md:text-sm font-semibold text-gray-800">
+            {info?.gender ?? "Not Provided"}
+          </p>
         </div>
       </div>
 
-      <div className="flex justify-start mt-5">
-        <button
-          onClick={toggleModal}
-          className="text-white bg-orange-500 hover:bg-orange-600 font-medium rounded-lg text-sm px-4 py-2"
-        >
-          Edit Profile
-        </button>
+      <div className="mt-5 w-full md:w-1/4 lg:w-1/6">
+        <div onClick={toggleModal} className="w-full">
+          <Button3
+            text="EDIT PROFILE"
+            borderColor="orange"
+            textColor="white"
+            backgroundColor="orange"
+          />
+        </div>
       </div>
 
       {isModalOpen && (
@@ -69,7 +96,7 @@ function EditProfile() {
           className="fixed px-3 inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
           aria-hidden="true"
         >
-          <div className="relative w-full max-w-md bg-white rounded-lg shadow-lg">
+          <div className="relative w-full max-w-sm md:max-w-md bg-white rounded-lg shadow-lg">
             <div className="flex items-center justify-between p-4 border-b">
               <h3 className="text-lg font-semibold">Edit Profile</h3>
               <button
@@ -97,18 +124,35 @@ function EditProfile() {
               <div className="grid gap-4 mx-3">
                 <div>
                   <label
-                    htmlFor="name"
+                    htmlFor="firstName"
                     className="block mb-2 text-xs lg:text-sm font-medium text-gray-700"
                   >
-                    Name
+                    First Name
                   </label>
                   <input
                     type="text"
-                    id="name"
-                    {...register("name", {
+                    id="firstName"
+                    {...register("firstName", {
                       required: "name is required",
                     })}
-                    defaultValue="JohnDoe"
+                    defaultValue={`${info?.firstName}`}
+                    className="text-xs w-full p-2 border rounded-lg"
+                  />
+                </div>
+                <div>
+                  <label
+                    htmlFor="lastName"
+                    className="block mb-2 text-xs lg:text-sm font-medium text-gray-700"
+                  >
+                    Last Name
+                  </label>
+                  <input
+                    type="text"
+                    id="lastName"
+                    {...register("lastName", {
+                      required: "last name is required",
+                    })}
+                    defaultValue={`${info?.lastName}`}
                     className="text-xs w-full p-2 border rounded-lg"
                   />
                 </div>
@@ -122,23 +166,24 @@ function EditProfile() {
                   <input
                     type="email"
                     id="email"
+                    disabled
                     {...register("email", { required: "Email is required" })}
-                    defaultValue="mahbubturza@gmail.com"
-                    className="text-xs w-full p-2 border rounded-lg"
+                    defaultValue={`${info?.email}`}
+                    className="text-xs w-full p-2 border rounded-lg bg-gray-100"
                   />
                 </div>
                 <div>
                   <label
-                    htmlFor="mobile"
+                    htmlFor="phone_number"
                     className="block mb-2 text-xs lg:text-sm font-medium text-gray-700"
                   >
-                    Mobile
+                    Phone Number
                   </label>
                   <input
                     type="text"
-                    id="mobile"
-                    {...register("mobile")}
-                    defaultValue="1661565"
+                    id="phone_number"
+                    {...register("phone_number")}
+                    defaultValue={`${info?.phone_number ?? ""}`}
                     className="text-xs w-full p-2 border rounded-lg"
                   />
                 </div>
@@ -153,7 +198,7 @@ function EditProfile() {
                     type="date"
                     id="birthday"
                     {...register("birthday")}
-                    defaultValue="2000-01-01"
+                    defaultValue={`${info?.birthday ?? ""}`}
                     className="text-xs w-full p-2 border rounded-lg"
                   />
                 </div>
@@ -167,7 +212,7 @@ function EditProfile() {
                   <select
                     id="gender"
                     {...register("gender")}
-                    defaultValue="Male"
+                    defaultValue={`${info?.gender ?? ""}`}
                     className="text-xs w-full p-2 border rounded-lg"
                   >
                     <option value="Male">Male</option>
