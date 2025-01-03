@@ -48,7 +48,7 @@ function CheckOut() {
       setCartItems(items);
 
       const total = items.reduce(
-        (sum, item) => sum + item.discountPrice * item.quantity,
+        (sum, item) => sum + item.discountPrice,
         0
       );
       setTotalPrice(total);
