@@ -10,6 +10,7 @@ import { RiSubtractFill } from "react-icons/ri";
 import RelatedProduct from "../RelatedProduct/RelatedProduct";
 import ProductDetailFooter from "../ProductDetailFooter/ProductDetailFooter";
 import CartDrawer from "@/containers/common/CartDrawer/CartDrawer";
+import ProductReviews from "../ProductReviews/ProductReviews";
 
 function ProductDetailspage({ id, color }) {
   const [data, setData] = useState(null);
@@ -431,6 +432,15 @@ function ProductDetailspage({ id, color }) {
       <hr className="mt-16" />
       <div className="mt-10">
         <p className="font-extralight tracking-widest mb-6 text-center text-2xl md:text-3xl">
+          REVIEWS
+        </p>
+        <div>
+          <div className="mt-10">
+            <ProductReviews />
+          </div>
+        </div>
+        <hr className="mt-16" />
+        <p className="mt-10 font-extralight tracking-widest mb-6 text-center text-2xl md:text-3xl">
           RELATED PRODUCTS
         </p>
         <div>
