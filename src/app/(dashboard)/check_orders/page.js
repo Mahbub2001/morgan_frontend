@@ -2,6 +2,7 @@
 import { getUserProfile } from "@/api/user";
 import CheckOrderUserPagination from "@/components/CheckUserOrderFilter/CheckOrderUserPagin";
 import CheckUserOrderFilter from "@/components/CheckUserOrderFilter/CheckUserOrderFil";
+import MyCards from "@/containers/dashboard/MyCards/MyCards";
 import { AuthContext } from "@/hooks/AuthProvider";
 import Cookies from "js-cookie";
 import React, { useContext, useEffect, useState } from "react";
@@ -123,12 +124,21 @@ function CheckOrders() {
     }
     closeCancelModal();
   };
+
   // console.log(myorders);
 
   return (
     <section className="container mx-auto px-4">
-      <div className="md:grid md:grid-cols-12 md:gap-4">
-        <div className="md:col-span-8">
+      <div className="md:grid md:grid-cols-12 md:gap-10">
+        <div className="md:sticky md:top-0 md:h-screen md:col-span-6 lg:col-span-5 border-gray-200 dark:border-gray-700">
+          <h2 className="pl-2 py-8 md:py-16 text-sm md:text-xl text-gray-900 dark:text-white">
+            My Cards
+          </h2>
+          <div className=" relative">
+            <MyCards />
+          </div>
+        </div>
+        <div className="md:col-span-6  md:border-l md:pl-2 lg:col-span-7">
           <div className="bg-white py-8 antialiased dark:bg-gray-900 md:py-16">
             <div className="">
               <div className="gap-4 sm:flex sm:items-center sm:justify-between">
@@ -313,7 +323,7 @@ function CheckOrders() {
                             </dd>
                           </dl>
                         )}
-                        <div className="w-full grid sm:grid-cols-2 lg:flex lg:w-64 lg:items-center lg:justify-end gap-4">
+                        <div className="w-full grid sm:grid-cols-2 lg:flex lg:w-44 lg:items-center lg:justify-end gap-4">
                           {order?.status === "received" && (
                             <button
                               type="button"
@@ -481,9 +491,6 @@ function CheckOrders() {
               </div>
             </div>
           )}
-        </div>
-        <div className="md:col-span-8">
-          
         </div>
       </div>
     </section>
