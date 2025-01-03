@@ -15,9 +15,13 @@ function CheckOrders() {
   const [currentPage, setCurrentPage] = useState(1);
   const [limit, setLimit] = useState(10);
   const [totalPages, setTotalPages] = useState(1);
+  const [ft, setFt] = useState(false);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState(null);
+
+  const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
+  const [selectedCancelOrder, setSelectedCancelOrder] = useState(null);
 
   const handleViewDetails = (order) => {
     setSelectedOrder(order);
@@ -29,32 +33,37 @@ function CheckOrders() {
     setSelectedOrder(null);
   };
 
+  const fetchOrders = async (me, token) => {
+    if (me?._id) {
+      const ordersResponse = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/orders/${me._id}?page=${currentPage}&limit=${limit}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (!ordersResponse.ok) {
+        throw new Error("Failed to fetch orders");
+      }
+
+      const { data, pagination } = await ordersResponse.json();
+      setMyorders(data);
+      setTotalPages(pagination.totalPages);
+    }
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         const token = Cookies.get("ny-token");
-        const userProfile = await getUserProfile(user?.email);
-        setMe(userProfile);
-
-        if (userProfile?._id) {
-          const ordersResponse = await fetch(
-            `${process.env.NEXT_PUBLIC_API_URL}/orders/${userProfile._id}?page=${currentPage}&limit=${limit}`,
-            {
-              method: "GET",
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          );
-
-          if (!ordersResponse.ok) {
-            throw new Error("Failed to fetch orders");
-          }
-
-          const { data, pagination } = await ordersResponse.json();
-          setMyorders(data);
-          setTotalPages(pagination.totalPages);
+        if (user?.email) {
+          const userData = await getUserProfile(user.email);
+          setMe(userData);
+          await fetchOrders(userData, token);
         }
       } catch (error) {
         alert(error.message);
@@ -62,7 +71,58 @@ function CheckOrders() {
     };
 
     fetchData();
-  }, [user?.email, , currentPage, limit]);
+  }, [user?.email, currentPage, limit, ft]);
+
+  const handleCancelOrder = async (order) => {
+    setSelectedCancelOrder(order);
+    setIsCancelModalOpen(true);
+  };
+  const closeCancelModal = () => {
+    setIsCancelModalOpen(false);
+    setSelectedCancelOrder(null);
+  };
+  const confirmCancel = async () => {
+    if (!selectedCancelOrder) {
+      return;
+    }
+    console.log(selectedCancelOrder);
+    try {
+      const token = Cookies.get("ny-token");
+
+      setMyorders((prevOrders) =>
+        prevOrders.map((order) =>
+          order._id === selectedCancelOrder._id
+            ? { ...order, status: "cancelled" }
+            : order
+        )
+      );
+
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/orders/${selectedCancelOrder._id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            status: "cancelled",
+            products: selectedCancelOrder.products,
+          }),
+        }
+      );
+      if (!response.success) {
+        alert("Failed to cancel order");
+      } else {
+        alert("Order cancelled successfully");
+        setFt(!ft);
+        fetchOrders(me, token);
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+    closeCancelModal();
+  };
   // console.log(myorders);
 
   return (
@@ -261,8 +321,17 @@ function CheckOrders() {
                         </button>
                       )}
                       <button
+                        onClick={(e) => {
+                          e.preventDefault();
+                          handleCancelOrder(order);
+                        }}
+                        disabled={order?.status === "cancelled"}
                         type="button"
-                        className="w-full rounded-lg bg-primary-700 px-3 py-2 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 lg:w-auto"
+                        className={`${
+                          order?.status === "cancelled"
+                            ? "bg-gray-200 text-gray-400"
+                            : "bg-red-600 text-white hover:bg-red-700 focus:ring-4 focus:ring-red-300 dark:bg-red-700 dark:hover:bg-red-800 dark:focus:ring-red-800"
+                        } w-full rounded-lg px-3 py-2 text-sm font-medium focus:outline-none  lg:w-auto`}
                       >
                         Cancel
                       </button>
@@ -378,6 +447,29 @@ function CheckOrders() {
                 className="px-4 py-2 text-sm font-medium text-white bg-primary-600 rounded-lg hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
               >
                 Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      {isCancelModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-900 bg-opacity-50">
+          <div className="bg-white rounded-lg p-6 w-96">
+            <h3 className="text-lg font-medium text-gray-900 mb-4">
+              Are you sure you want to cancel the order?
+            </h3>
+            <div className="flex justify-end space-x-4">
+              <button
+                onClick={closeCancelModal}
+                className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-200 rounded-lg hover:bg-gray-300"
+              >
+                No
+              </button>
+              <button
+                onClick={confirmCancel}
+                className="px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-lg hover:bg-red-700"
+              >
+                Yes
               </button>
             </div>
           </div>
