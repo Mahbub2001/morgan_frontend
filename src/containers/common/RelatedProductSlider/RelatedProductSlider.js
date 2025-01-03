@@ -47,8 +47,11 @@ const RelatedProductSlider = ({ productInfo, pictures }) => {
             <div>
               <Link
                 href={{
-                  pathname: `/allproducts/${productInfo[index]?._id}`,
-                  query: { color: productInfo[index]?.color },
+                  pathname: `/singleproduct`,
+                  query: {
+                    color: productInfo[index]?.color,
+                    id: productInfo[index]?._id,
+                  },
                 }}
                 className="flex justify-center cursor-pointer relative"
                 onMouseEnter={() => setHoveredIndex(index)}
