@@ -16,6 +16,7 @@ export const getUserRole = async (email) => {
   const user = await response.json();
   return user?.role;
 };
+
 export const getUserProfile = async (email) => {
   const token = Cookies.get("ny-token");
 

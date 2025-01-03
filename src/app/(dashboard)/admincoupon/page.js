@@ -1,4 +1,5 @@
 "use client";
+import AdminRoute from "@/Wrapper/AdminRoute";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 
@@ -55,65 +56,67 @@ function Add_Coupon() {
   };
 
   return (
-    <div className="container mx-auto p-4">
-      <div className="">
-        <h1 className="text-2xl font-bold mb-4">Manage Coupons</h1>
+    <AdminRoute>
+      <div className="container mx-auto p-4">
+        <div className="">
+          <h1 className="text-2xl font-bold mb-4">Manage Coupons</h1>
 
-        <div className="flex flex-col gap-4 md:flex-row md:items-center mb-4">
-          <input
-            type="text"
-            value={couponCode}
-            onChange={(e) => setCouponCode(e.target.value)}
-            placeholder="Enter coupon code"
-            className="border border-gray-300 rounded-lg p-2 flex-1"
-          />
-          <input
-            type="number"
-            value={percentageDiscount}
-            onChange={(e) => setPercentageDiscount(e.target.value)}
-            placeholder="Enter percentage discount"
-            className="border border-gray-300 rounded-lg p-2 flex-1"
-          />
-          <input
-            type="number"
-            value={amountDiscount}
-            onChange={(e) => setAmountDiscount(e.target.value)}
-            placeholder="Enter discount amount"
-            className="border border-gray-300 rounded-lg p-2 flex-1"
-          />
-          <button
-            onClick={addCoupon}
-            className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
-          >
-            Add Coupon
-          </button>
-        </div>
-
-        <ul className="space-y-2">
-          {coupons.map((coupon) => (
-            <li
-              key={coupon.code}
-              className="flex justify-between items-center border-b py-2"
+          <div className="flex flex-col gap-4 md:flex-row md:items-center mb-4">
+            <input
+              type="text"
+              value={couponCode}
+              onChange={(e) => setCouponCode(e.target.value)}
+              placeholder="Enter coupon code"
+              className="border border-gray-300 rounded-lg p-2 flex-1"
+            />
+            <input
+              type="number"
+              value={percentageDiscount}
+              onChange={(e) => setPercentageDiscount(e.target.value)}
+              placeholder="Enter percentage discount"
+              className="border border-gray-300 rounded-lg p-2 flex-1"
+            />
+            <input
+              type="number"
+              value={amountDiscount}
+              onChange={(e) => setAmountDiscount(e.target.value)}
+              placeholder="Enter discount amount"
+              className="border border-gray-300 rounded-lg p-2 flex-1"
+            />
+            <button
+              onClick={addCoupon}
+              className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
             >
-              <div className="flex flex-col md:flex-row md:items-center md:gap-4">
-                <span className="font-semibold">{coupon.code}</span>
-                <span>
-                  {coupon.percentageDiscount > 0
-                    ? `Percentage: ${coupon.percentageDiscount}%`
-                    : `Amount: $${coupon.amountDiscount}`}
-                </span>
-              </div>
-              <button
-                onClick={() => removeCoupon(coupon.code)}
-                className="bg-red-500 text-white px-3 py-1 rounded-lg hover:bg-red-600"
+              Add Coupon
+            </button>
+          </div>
+
+          <ul className="space-y-2">
+            {coupons.map((coupon) => (
+              <li
+                key={coupon.code}
+                className="flex justify-between items-center border-b py-2"
               >
-                Remove
-              </button>
-            </li>
-          ))}
-        </ul>
+                <div className="flex flex-col md:flex-row md:items-center md:gap-4">
+                  <span className="font-semibold">{coupon.code}</span>
+                  <span>
+                    {coupon.percentageDiscount > 0
+                      ? `Percentage: ${coupon.percentageDiscount}%`
+                      : `Amount: $${coupon.amountDiscount}`}
+                  </span>
+                </div>
+                <button
+                  onClick={() => removeCoupon(coupon.code)}
+                  className="bg-red-500 text-white px-3 py-1 rounded-lg hover:bg-red-600"
+                >
+                  Remove
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
-    </div>
+    </AdminRoute>
   );
 }
 

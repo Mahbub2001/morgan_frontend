@@ -222,7 +222,7 @@ const DashboardSidebar = ({ role }) => {
                 icon="order"
                 label="Check Orders"
                 isOpen={isSidebarOpen}
-                href={"/userorders"}
+                href={"/check_orders"}
                 activeLink={activeLink}
                 setActiveLink={setActiveLink}
               />
