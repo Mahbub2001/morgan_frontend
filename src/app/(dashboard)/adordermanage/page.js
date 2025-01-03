@@ -1,7 +1,8 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Dropdown } from "flowbite-react";
+import { Button, Dropdown } from "flowbite-react";
 import Cookies from "js-cookie";
+import Button3 from "@/containers/common/Button3/Button3";
 
 function AdminOrderManagement() {
   const [open, setOpen] = useState(false);
@@ -12,6 +13,7 @@ function AdminOrderManagement() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(false);
+  const [editedOrders, setEditedOrders] = useState({});
 
   const fetchOrders = async (page = 1) => {
     setLoading(true);
@@ -66,6 +68,45 @@ function AdminOrderManagement() {
       setSelectedOrders(orders.map((order) => order.id));
     } else {
       setSelectedOrders([]);
+    }
+  };
+  const handleStatusChange = (orderId, newStatus) => {
+    setEditedOrders((prev) => ({
+      ...prev,
+      [orderId]: newStatus,
+    }));
+  };
+  const saveChanges = async () => {
+    const updates = Object.keys(editedOrders).map((id) => ({
+      id,
+      status: editedOrders[id],
+      tran_id: orders.find((order) => order._id === id).tran_id,
+      products: orders.find((order) => order._id === id).products,
+    }));
+
+    console.log("updates", updates);
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/admin/orders/bulk-update`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${Cookies.get("ny-token")}`,
+          },
+          body: JSON.stringify({ updates }),
+        }
+      );
+
+      if (response.ok) {
+        alert("Statuses updated successfully!");
+        setEditedOrders({});
+        fetchOrders();
+      } else {
+        alert("Failed to update statuses.");
+      }
+    } catch (error) {
+      console.error("Error saving changes:", error);
     }
   };
 
@@ -219,9 +260,9 @@ function AdminOrderManagement() {
                   </td>
                   <td className="px-6 py-4">
                     <select
-                      value={order?.status || "pending"}
+                      value={editedOrders[order._id] || order.status}
                       onChange={(e) =>
-                        updateOrderStatus(order._id, e.target.value)
+                        handleStatusChange(order._id, e.target.value)
                       }
                       className="border text-xs border-gray-300 rounded px-2 py-1"
                     >
@@ -256,6 +297,16 @@ function AdminOrderManagement() {
             </button>
           </div>
         </div>
+        {Object.keys(editedOrders).length > 0 && (
+          <div onClick={saveChanges} className="flex justify-end mt-4">
+            <Button3
+              text="SAVE CHANGE"
+              textColor="white"
+              backgroundColor="orange"
+              borderColor="orange"
+            />
+          </div>
+        )}
       </div>
     </div>
   );
