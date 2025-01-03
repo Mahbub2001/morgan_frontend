@@ -18,7 +18,7 @@ function CartDrawer({
   const [productDetails, setProductDetails] = useState([]);
   const [quantities, setQuantities] = useState({});
   const [isNoteVisible, setIsNoteVisible] = useState(false);
-  const {user} = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
 
   const toggleNote = () => {
     setIsNoteVisible(!isNoteVisible);
@@ -272,13 +272,20 @@ function CartDrawer({
           <p className="text-gray-700 text-[0.8rem] pb-3">
             Taxes and Shipping calculated at checkout
           </p>
-          <Link onClick={toggleDrawer} href="/checkout">
+          <Link
+            onClick={toggleDrawer}
+            href={productDetails < 1 ? "#" : "/checkout"}
+          >
             <Button3
-              text="PROCEED TO CHECKOUT"
-              backgroundColor="#f5db8b"
-              borderColor="#f5db8b"
-              textColor="black"
-            ></Button3>
+              text={
+                productDetails < 1
+                  ? "Add products to checkout"
+                  : "PROCEED TO CHECKOUT"
+              }
+              backgroundColor={productDetails < 1 ? "#d3d3d3" : "#f5db8b"}
+              borderColor={productDetails < 1 ? "#d3d3d3" : "#f5db8b"}
+              textColor={productDetails < 1 ? "#a9a9a9" : "black"}
+            />
           </Link>
         </div>
 

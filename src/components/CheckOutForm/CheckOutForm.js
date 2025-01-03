@@ -17,8 +17,8 @@ function CheckOutForm({
       setInfo(data);
       setValue("email", data?.email);
       setValue("userid", data?._id);
-      setValue("first-name", data?.firstName);
-      setValue("last-name", data?.lastName);
+      setValue("firstName", data?.firstName);
+      setValue("lastName", data?.lastName);
       const defaultAddress = data?.address?.find(
         (element) => element.default === true
       );
@@ -33,7 +33,7 @@ function CheckOutForm({
 
   if (!info) return <p>Loading...</p>;
 
-  // console.log(info);
+  console.log(info);
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
@@ -101,30 +101,30 @@ function CheckOutForm({
             <div className="grid grid-cols-2 gap-4 mt-4">
               <div>
                 <label
-                  htmlFor="first-name"
+                  htmlFor="firstName"
                   className="text-sm font-extralight text-gray-600"
                 >
                   First name
                 </label>
                 <input
                   type="text"
-                  id="first-name"
-                  {...register("first-name")}
+                  id="firstName"
+                  {...register("firstName")}
                   placeholder="First name"
                   className="mt-2 block w-full rounded-md border border-gray-300 py-3 px-4 text-base placeholder:text-sm focus:outline-none focus:ring-0 focus:border-2 focus:border-[#be834f]"
                 />
               </div>
               <div>
                 <label
-                  htmlFor="last-name"
+                  htmlFor="lastName"
                   className="text-sm font-extralight text-gray-600"
                 >
                   Last name
                 </label>
                 <input
                   type="text"
-                  id="last-name"
-                  {...register("last-name")}
+                  id="lastName"
+                  {...register("lastName")}
                   placeholder="Last name"
                   className="mt-2 block w-full rounded-md border border-gray-300 py-3 px-4 text-base placeholder:text-sm focus:outline-none focus:ring-0 focus:border-2 focus:border-[#be834f]"
                 />

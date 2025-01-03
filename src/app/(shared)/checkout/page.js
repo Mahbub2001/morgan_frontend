@@ -1,6 +1,5 @@
 "use client";
 import CheckOutForm from "@/components/CheckOutForm/CheckOutForm";
-import Button3 from "@/containers/common/Button3/Button3";
 import { AuthContext } from "@/hooks/AuthProvider";
 import withProtectedRoute from "@/Wrapper/protectedRoute";
 import axios from "axios";
@@ -14,8 +13,8 @@ function CheckOut() {
       email: "",
       "news-offers": false,
       country: "Bangladesh",
-      "first-name": "",
-      "last-name": "",
+      firstName: "",
+      lastName: "",
       address: "",
       phone_number: "",
       city: "",
@@ -62,8 +61,6 @@ function CheckOut() {
     let percentageDiscount = 0,
       amountDiscount = 0;
     validCoupons.forEach((coup) => {
-      // console.log(coupon);
-      // console.log(coup.code);
       if (coup.code === coupon) {
         if (coup.percentageDiscount) {
           percentageDiscount = coup.percentageDiscount;
@@ -99,8 +96,7 @@ function CheckOut() {
         data.coupon = coupon;
       }
       data.products = cartItems;
-      console.log(data);
-      // return;
+      data.totalPrice = totalPrice - discount + vat;
       fetch(`${process.env.NEXT_PUBLIC_API_URL}/orders`, {
         method: "POST",
         headers: {
@@ -111,13 +107,13 @@ function CheckOut() {
       })
         .then((res) => res.json())
         .then((res) => {
-          // console.log(res);
           if (res.success) {
             alert("Order placed successfully!");
             localStorage.removeItem("cartItems");
             // window.location.replace("/order-confirmation");
+          } else {
+            alert(res.message);
           }
-          // console.log(res);
         });
     }
   };
@@ -219,7 +215,7 @@ function CheckOut() {
 
               <div className="space-y-2 mt-5">
                 <p className="flex justify-between text-lg font-light text-white">
-                  <span>Total price:</span>
+                  <span>Subtotal price:</span>
                   <span>${(totalPrice - discount).toFixed(2)}</span>
                 </p>
                 <p className="flex justify-between text-sm font-medium text-white">
@@ -232,6 +228,10 @@ function CheckOut() {
                     <span>-${discount.toFixed(2)}</span>
                   </p>
                 )}
+                <p className="flex justify-between text-lg font-light text-white">
+                  <span>Total price:</span>
+                  <span>${(totalPrice - discount + vat).toFixed(2)}</span>
+                </p>
               </div>
             </div>
             <div className="relative mt-10 text-white">
