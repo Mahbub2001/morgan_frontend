@@ -1,8 +1,16 @@
 import React from "react";
 
-function ProductReviewStar() {
+function ProductReviewStar({ reviews }) {
+  const { totalRatings, fiveStar, fourStar, threeStar, twoStar, oneStar } =
+    reviews;
+  const calculatePercentage = (starCount) => {
+    if (totalRatings === 0) return "0%";
+    return `${(starCount / totalRatings) * 100}%`;
+  };
+
   return (
     <div className="mt-6 min-w-0 flex-1 space-y-3 sm:mt-0">
+      {/* Five-Star Rating */}
       <div className="flex items-center gap-2">
         <p className="w-2 shrink-0 text-start text-sm font-medium leading-none text-gray-900 dark:text-white">
           5
@@ -11,8 +19,6 @@ function ProductReviewStar() {
           className="h-4 w-4 shrink-0 text-yellow-300"
           aria-hidden="true"
           xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
           fill="currentColor"
           viewBox="0 0 24 24"
         >
@@ -21,17 +27,18 @@ function ProductReviewStar() {
         <div className="h-1.5 w-80 rounded-full bg-gray-200 dark:bg-gray-700">
           <div
             className="h-1.5 rounded-full bg-yellow-300"
-            style={{ width: "20%" }}
+            style={{ width: calculatePercentage(fiveStar) }}
           ></div>
         </div>
         <a
           href="#"
           className="w-8 shrink-0 text-right text-sm font-medium leading-none text-primary-700 hover:underline dark:text-primary-500 sm:w-auto sm:text-left"
         >
-          239 <span className="hidden sm:inline">reviews</span>
+          {fiveStar} <span className="hidden sm:inline">reviews</span>
         </a>
       </div>
 
+      {/* Four-Star Rating */}
       <div className="flex items-center gap-2">
         <p className="w-2 shrink-0 text-start text-sm font-medium leading-none text-gray-900 dark:text-white">
           4
@@ -40,8 +47,6 @@ function ProductReviewStar() {
           className="h-4 w-4 shrink-0 text-yellow-300"
           aria-hidden="true"
           xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
           fill="currentColor"
           viewBox="0 0 24 24"
         >
@@ -50,17 +55,18 @@ function ProductReviewStar() {
         <div className="h-1.5 w-80 rounded-full bg-gray-200 dark:bg-gray-700">
           <div
             className="h-1.5 rounded-full bg-yellow-300"
-            style={{ width: "60%" }}
+            style={{ width: calculatePercentage(fourStar) }}
           ></div>
         </div>
         <a
           href="#"
           className="w-8 shrink-0 text-right text-sm font-medium leading-none text-primary-700 hover:underline dark:text-primary-500 sm:w-auto sm:text-left"
         >
-          432 <span className="hidden sm:inline">reviews</span>
+          {fourStar} <span className="hidden sm:inline">reviews</span>
         </a>
       </div>
 
+      {/* Three-Star Rating */}
       <div className="flex items-center gap-2">
         <p className="w-2 shrink-0 text-start text-sm font-medium leading-none text-gray-900 dark:text-white">
           3
@@ -69,8 +75,6 @@ function ProductReviewStar() {
           className="h-4 w-4 shrink-0 text-yellow-300"
           aria-hidden="true"
           xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
           fill="currentColor"
           viewBox="0 0 24 24"
         >
@@ -79,17 +83,17 @@ function ProductReviewStar() {
         <div className="h-1.5 w-80 rounded-full bg-gray-200 dark:bg-gray-700">
           <div
             className="h-1.5 rounded-full bg-yellow-300"
-            style={{ width: "15%" }}
+            style={{ width: calculatePercentage(threeStar) }}
           ></div>
         </div>
         <a
           href="#"
           className="w-8 shrink-0 text-right text-sm font-medium leading-none text-primary-700 hover:underline dark:text-primary-500 sm:w-auto sm:text-left"
         >
-          53 <span className="hidden sm:inline">reviews</span>
+          {threeStar} <span className="hidden sm:inline">reviews</span>
         </a>
       </div>
-
+      {/* Two-Star Rating */}
       <div className="flex items-center gap-2">
         <p className="w-2 shrink-0 text-start text-sm font-medium leading-none text-gray-900 dark:text-white">
           2
@@ -98,8 +102,6 @@ function ProductReviewStar() {
           className="h-4 w-4 shrink-0 text-yellow-300"
           aria-hidden="true"
           xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
           fill="currentColor"
           viewBox="0 0 24 24"
         >
@@ -108,17 +110,17 @@ function ProductReviewStar() {
         <div className="h-1.5 w-80 rounded-full bg-gray-200 dark:bg-gray-700">
           <div
             className="h-1.5 rounded-full bg-yellow-300"
-            style={{ width: "5%" }}
+            style={{ width: calculatePercentage(twoStar) }}
           ></div>
         </div>
         <a
           href="#"
           className="w-8 shrink-0 text-right text-sm font-medium leading-none text-primary-700 hover:underline dark:text-primary-500 sm:w-auto sm:text-left"
         >
-          32 <span className="hidden sm:inline">reviews</span>
+          {twoStar} <span className="hidden sm:inline">reviews</span>
         </a>
       </div>
-
+      {/* One-Star Rating */}
       <div className="flex items-center gap-2">
         <p className="w-2 shrink-0 text-start text-sm font-medium leading-none text-gray-900 dark:text-white">
           1
@@ -127,8 +129,6 @@ function ProductReviewStar() {
           className="h-4 w-4 shrink-0 text-yellow-300"
           aria-hidden="true"
           xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
           fill="currentColor"
           viewBox="0 0 24 24"
         >
@@ -137,14 +137,14 @@ function ProductReviewStar() {
         <div className="h-1.5 w-80 rounded-full bg-gray-200 dark:bg-gray-700">
           <div
             className="h-1.5 rounded-full bg-yellow-300"
-            style={{ width: "0%" }}
+            style={{ width: calculatePercentage(oneStar) }}
           ></div>
         </div>
         <a
           href="#"
           className="w-8 shrink-0 text-right text-sm font-medium leading-none text-primary-700 hover:underline dark:text-primary-500 sm:w-auto sm:text-left"
         >
-          13 <span className="hidden sm:inline">reviews</span>
+          {oneStar} <span className="hidden sm:inline">reviews</span>
         </a>
       </div>
     </div>

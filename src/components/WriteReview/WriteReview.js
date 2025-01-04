@@ -1,12 +1,13 @@
 "ues client";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { toast } from "react-toastify";
 import Cookies from "js-cookie";
+import { AuthContext } from "@/hooks/AuthProvider";
 
 function WriteReview({ pageDataI }) {
   // console.log("WriteReview pageDataI", pageDataI);
-
+  const { user } = useContext(AuthContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [rating, setRating] = useState(5);
   const [comment, setComment] = useState("");
@@ -14,7 +15,6 @@ function WriteReview({ pageDataI }) {
   const handleStarClick = (index) => {
     setRating(index);
   };
-
   const handleSubmit = () => {
     const token = Cookies.get("ny-token");
     const reviewData = {
@@ -22,6 +22,12 @@ function WriteReview({ pageDataI }) {
       comment,
       productId: pageDataI.allData._id,
       color: pageDataI.utility.color,
+      user_name: user.displayName,
+      user_email: user.email,
+      helpful: {
+        yes: 0,
+        no: 0,
+      },
     };
 
     console.log("reviewData", reviewData);

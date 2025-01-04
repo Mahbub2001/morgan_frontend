@@ -1,5 +1,5 @@
 "use client";
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import SingleProductReview from "../SingleProductReview/SingleProductReview";
 import ProductReviewStar from "../ProductReviewStar/ProductReviewStar";
 import WriteReview from "../WriteReview/WriteReview";
@@ -7,6 +7,27 @@ import WriteReview from "../WriteReview/WriteReview";
 function ProductReviews({ pageDataI, eligibleDat }) {
   // console.log("ProductReviews pageDataI", pageDataI);
   // console.log("ProductReviews eligibleData", eligibleDat);
+  const [reviews, setReviews] = useState([]);
+  useEffect(() => {
+    if (pageDataI && eligibleDat) {
+      const productId = pageDataI?.allData?._id;
+      const productColor = pageDataI?.utility?.color;
+      if (productId && productColor) {
+        fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/reviews/${productId}?color=${productColor}`
+        )
+          .then((response) => response.json())
+          .then((data) => {
+            setReviews(data);
+          })
+          .catch((error) => {
+            console.error("Error fetching reviews:", error);
+          });
+      }
+    }
+  }, [pageDataI, eligibleDat]);
+
+  console.log("ProductReviews reviews", reviews);
 
   return (
     <section>
@@ -75,13 +96,13 @@ function ProductReviews({ pageDataI, eligibleDat }) {
                 </svg>
               </div>
               <p className="text-sm font-medium leading-none text-gray-500 dark:text-gray-400">
-                (4.6)
+                ({reviews?.averageRating})
               </p>
               <a
                 href="#"
                 className="text-sm font-medium leading-none text-gray-900 underline hover:no-underline dark:text-white"
               >
-                645 Reviews
+                {reviews?.totalRatings} Reviews
               </a>
             </div>
           </div>
@@ -89,12 +110,12 @@ function ProductReviews({ pageDataI, eligibleDat }) {
           <div className="my-6 gap-8 sm:flex sm:items-start md:my-8">
             <div className="shrink-0 space-y-4">
               <p className="text-2xl font-semibold leading-none text-gray-900 dark:text-white">
-                4.65 out of 5
+                {reviews?.averageRating} out of 5
               </p>
               {eligibleDat?.eligible && <WriteReview pageDataI={pageDataI} />}
             </div>
 
-            <ProductReviewStar />
+            <ProductReviewStar reviews={reviews} />
           </div>
 
           <div className="mt-6 divide-y divide-gray-200 dark:divide-gray-700">
