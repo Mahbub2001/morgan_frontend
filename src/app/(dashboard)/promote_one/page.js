@@ -5,6 +5,7 @@ import AdminRoute from "@/Wrapper/AdminRoute";
 import { adminGetProducts } from "@/api/adminfetching";
 import Button3 from "@/containers/common/Button3/Button3";
 import Cookies from "js-cookie";
+import { toast } from "react-toastify";
 function Promote1() {
   const [data, setData] = useState([]);
   const [np, setNp] = useState(false);
@@ -62,11 +63,61 @@ function Promote1() {
     );
   };
 
-  const handleSave = async () => {
-    const token = Cookies.get("ny-token");
+  const [cat, setCat] = useState({
+    subCategory1: "",
+    subCategory2: "",
+  });
+
+  const handleSelectChange = (e) => {
+    const { name, value } = e.target;
+    setCat((prevFilters) => ({
+      ...prevFilters,
+      [name]: value,
+    }));
   };
 
-  console.log(data);
+  const handleSave = async () => {
+    const token = Cookies.get("ny-token");
+
+    const settings = {
+      promote1: {
+        subCategory1: cat.subCategory1,
+        subCategory2: cat.subCategory2,
+        checkedId: data.filter((item) => item.promote).map((item) => item._id),
+      },
+    };
+    if (!settings.promote1.subCategory1 || !settings.promote1.subCategory2) {
+      toast.error("Please select the categories/sub-categories for promotion.");
+      return;
+    }
+    if (
+      settings.promote1.checkedId.length < 4 ||
+      settings.promote1.checkedId.length > 4
+    ) {
+      toast.error("Please select exactly 4 products for promotion.");
+      return;
+    }
+    try {
+      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/settings`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(settings),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+        });
+      toast.success("Settings saved successfully!");
+    } catch (error) {
+    //   console.error("Error saving settings:", error);
+      toast.error("Failed to save settings.");
+    }
+  };
+
+  //   console.log(data);
 
   return (
     <AdminRoute>
@@ -117,6 +168,45 @@ function Promote1() {
                   handleFilterChange("subCategory", e.target.value)
                 }
                 value={filters.subCategory}
+              >
+                <option value="">All Subcategories</option>
+                {Array.from(new Set(data.map((item) => item.subCategory))).map(
+                  (subCategory) => (
+                    <option key={subCategory} value={subCategory}>
+                      {subCategory}
+                    </option>
+                  )
+                )}
+              </select>
+            </div>
+          </div>
+          <p className="my-5">
+            Selection the Category & subCategory For Promote Section 1
+          </p>
+          <div className="flex gap-5 w-full md:w-auto mt-2 md:mt-0 mb-10">
+            <div className="w-full md:w-auto mt-2 md:mt-0">
+              <select
+                name="subCategory1"
+                className="border px-2 py-1 rounded text-xs w-full"
+                value={cat.subCategory1}
+                onChange={handleSelectChange}
+              >
+                <option value="">All Categories</option>
+                {Array.from(new Set(data.map((item) => item.category))).map(
+                  (subCategory) => (
+                    <option key={subCategory} value={subCategory}>
+                      {subCategory}
+                    </option>
+                  )
+                )}
+              </select>
+            </div>
+            <div className="w-full md:w-auto mt-2 md:mt-0">
+              <select
+                name="subCategory2"
+                className="border px-2 py-1 rounded text-xs w-full"
+                value={cat.subCategory2}
+                onChange={handleSelectChange}
               >
                 <option value="">All Subcategories</option>
                 {Array.from(new Set(data.map((item) => item.subCategory))).map(
