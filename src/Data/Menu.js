@@ -14,6 +14,7 @@ export const categories = [
           { name: "Shoulder", link: "/Women/Bags/Shoulder" },
           { name: "Work", link: "/Women/Bags/Work" },
           { name: "Shoppers", link: "/Women/Bags/Shoppers" },
+          { name: "Suede", link: "/Women/Bags/Suede" },
         ],
       },
       {

@@ -2,6 +2,7 @@
 
 import Button2 from "@/containers/common/Button2/Button2";
 import { productData } from "@/Data/ProductData";
+import Link from "next/link";
 import React, { useState } from "react";
 
 function SelectedFavor() {
@@ -66,7 +67,14 @@ function SelectedFavor() {
         </div>
       </div>
       <div className="mt-6 text-center flex justify-center items-center">
-        <Button2 text="See More" />
+        <Link
+          href={{
+            pathname: "/allproducts",
+            query:{take:"/Women/Bags/All"},
+          }}
+        >
+          <Button2 text="See More" />
+        </Link>
       </div>
     </div>
   );

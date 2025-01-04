@@ -1,4 +1,5 @@
 import Button2 from "@/containers/common/Button2/Button2";
+import Link from "next/link";
 import React from "react";
 
 function CrossbodyBags() {
@@ -14,7 +15,14 @@ function CrossbodyBags() {
             With their practical design, they give you the freedom to have your
             hands free and will accompany you effortlessly throughout the day.
           </p>
-        <Button2 text=" See them all here →" />
+          <Link
+            href={{
+              pathname: "/allproducts",
+              query: { take: "/Women/Bags/Crossbody" },
+            }}
+          >
+            <Button2 text="See More" />
+          </Link>
         </div>
         <div className="">
           <img

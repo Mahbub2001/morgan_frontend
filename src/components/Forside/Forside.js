@@ -1,4 +1,5 @@
 import Button2 from "@/containers/common/Button2/Button2";
+import Link from "next/link";
 import React from "react";
 
 function Forside() {
@@ -21,7 +22,14 @@ function Forside() {
             meets uncompromising quality. Perfect for your everyday life with
             space for all your necessities and a laptop.
           </p>
-          <Button2 text=" See them all here →" />
+          <Link
+          href={{
+            pathname: "/allproducts",
+            query:{take:"/Women/Bags/Work"},
+          }}
+        >
+          <Button2 text="See More" />
+        </Link>
         </div>
       </div>
     </div>

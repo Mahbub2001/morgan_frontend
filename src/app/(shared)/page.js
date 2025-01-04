@@ -7,7 +7,6 @@ import LandingInsta from "@/components/Instagram/LandingInsta";
 import SecondBanner from "@/components/SecondBanner/SecondBanner";
 import SelectedFavor from "@/components/SelectedFavor/SelectedFavor";
 import SelectedSuede from "@/components/SelectedSuede/SelectedSuede";
-import Image from "next/image";
 export default function Home() {
   return (
     <div className="min-h-screen container mx-auto -mt-20 md:mt-40 z-0 mb-20">
