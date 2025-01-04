@@ -10,8 +10,9 @@ import { CiSearch } from "react-icons/ci";
 import { AuthContext } from "@/hooks/AuthProvider";
 import { GoPerson } from "react-icons/go";
 import { useRouter } from "next/navigation";
+import { motion } from "motion/react";
 
-const Sidebar = ({handleCartclick}) => {
+const Sidebar = ({ handleCartclick }) => {
   const { user, logout } = useContext(AuthContext);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [menuHistory, setMenuHistory] = useState(["main"]);
@@ -57,13 +58,10 @@ const Sidebar = ({handleCartclick}) => {
     toggleSidebar();
     logout()
       .then((result) => {})
-      .catch((error) => {
-        // console.log(error);
-      });
+      .catch((error) => {});
   };
 
   const handleProfileClick = async () => {
-    // console.log("user", user);
     if (!user) {
       router.push("/login");
       toggleSidebar();
@@ -76,6 +74,26 @@ const Sidebar = ({handleCartclick}) => {
   const Cartclick = () => {
     handleCartclick();
     toggleSidebar();
+  };
+
+  const sidebarVariants = {
+    hidden: {
+      x: "-100%",
+      transition: {
+        duration: 0.2, 
+      },
+    },
+    visible: {
+      x: "0%",
+      transition: {
+        duration: 0.2, 
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0 },
   };
 
   return (
@@ -96,17 +114,20 @@ const Sidebar = ({handleCartclick}) => {
         </button>
       </header>
 
-      <div
+      <motion.div
         className={`fixed top-16 left-0 h-[calc(100%-4rem)] w-72 bg-white shadow-lg z-40 transition-transform duration-300 ${
           isSidebarOpen ? "translate-x-0" : "-translate-x-full"
         }`}
+        variants={sidebarVariants}
+        initial="hidden"
+        animate={isSidebarOpen ? "visible" : "hidden"}
       >
         <div className="absolute top-0 left-0 w-full h-full p-6">
           {menuHistory[menuHistory.length - 1] === "main" && (
-            <ul className="space-y-4">
+            <motion.ul initial="hidden" animate="visible" className="space-y-4">
               <p>Shop</p>
               {categories.map((category, index) => (
-                <div key={index}>
+                <motion.div key={index}>
                   <div
                     onClick={() => openSubmenu(category.items || [])}
                     className="cursor-pointer hover:text-blue-600 flex justify-between items-center font-thin"
@@ -115,21 +136,25 @@ const Sidebar = ({handleCartclick}) => {
                     <FaGreaterThan className="inline-block text-[0.6rem]" />
                   </div>
                   <hr className="my-3" />
-                </div>
+                </motion.div>
               ))}
-              <li
+              <motion.li
                 className="cursor-pointer hover:text-blue-600 font-medium text-sm"
                 onClick={() => openSubmenu(aboutNyItems)}
+                variants={itemVariants}
+                transition={{ delay: categories.length * 0.05 }}
               >
                 About Ny Morgen
-              </li>
-              <li
+              </motion.li>
+              <motion.li
                 className="cursor-pointer hover:text-blue-600 font-medium text-sm"
                 onClick={() => openSubmenu(journalItems)}
+                variants={itemVariants}
+                transition={{ delay: (categories.length + 1) * 0.05 }}
               >
                 Journal
-              </li>
-            </ul>
+              </motion.li>
+            </motion.ul>
           )}
 
           {menuHistory[menuHistory.length - 1] === "submenu" && (
@@ -141,9 +166,17 @@ const Sidebar = ({handleCartclick}) => {
               >
                 <span>&larr; Back</span>
               </button>
-              <ul className="space-y-4">
+              <motion.ul
+                initial="hidden"
+                animate="visible"
+                className="space-y-4"
+              >
                 {submenuItems.map((item, index) => (
-                  <div key={index}>
+                  <motion.div
+                    variants={itemVariants}
+                    transition={{ delay: index * 0.05 }}
+                    key={index}
+                  >
                     <div
                       className="flex items-center justify-between cursor-pointer hover:text-blue-600 font-thin text-sm"
                       onClick={() =>
@@ -160,9 +193,9 @@ const Sidebar = ({handleCartclick}) => {
                       <FaGreaterThan className="inline-block text-[0.6rem]" />
                     </div>
                     <hr className="my-2" />
-                  </div>
+                  </motion.div>
                 ))}
-              </ul>
+              </motion.ul>
             </>
           )}
 
@@ -175,9 +208,18 @@ const Sidebar = ({handleCartclick}) => {
               >
                 <span>&larr; Back</span>
               </button>
-              <ul className="space-y-4">
+              <motion.ul
+                initial="hidden"
+                animate="visible"
+                className="space-y-4"
+              >
                 {subsubmenuItems.map((item, index) => (
-                  <li key={index} className="hover:text-blue-600 text-sm">
+                  <motion.li
+                    variants={itemVariants}
+                    transition={{ delay: index * 0.05 }}
+                    key={index}
+                    className="hover:text-blue-600 text-sm"
+                  >
                     <Link
                       onClick={toggleSidebar}
                       href={{
@@ -187,18 +229,15 @@ const Sidebar = ({handleCartclick}) => {
                     >
                       {item.name}
                     </Link>
-                  </li>
+                  </motion.li>
                 ))}
-              </ul>
+              </motion.ul>
             </>
           )}
           <div className="flex gap-5 mt-10 ">
             <CiSearch className="cursor-pointer" />
             <FaShoppingBag onClick={Cartclick} className="cursor-pointer" />
-            <button
-              onClick={handleProfileClick}
-              className="cursor-pointer"
-            >
+            <button onClick={handleProfileClick} className="cursor-pointer">
               <GoPerson />
             </button>
             {user && (
@@ -206,7 +245,7 @@ const Sidebar = ({handleCartclick}) => {
             )}
           </div>
         </div>
-      </div>
+      </motion.div>
 
       {isSidebarOpen && (
         <div
