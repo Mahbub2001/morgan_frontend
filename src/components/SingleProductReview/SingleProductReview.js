@@ -1,11 +1,11 @@
 import React from "react";
 
 function SingleProductReview({ reviews }) {
-  console.log("SingleProductReview reviews", reviews);
+  // console.log("SingleProductReview reviews", reviews);
 
   return (
     <div className="mt-6 divide-y divide-gray-200 dark:divide-gray-700">
-      {reviews.map((review, index) => (
+      {reviews?.map((review, index) => (
         <div key={index} className="gap-3 pb-6 sm:flex sm:items-start">
           <div className="shrink-0 space-y-2 sm:w-48 md:w-72">
             <div className="flex items-center gap-0.5">
@@ -69,7 +69,6 @@ function SingleProductReview({ reviews }) {
                 <path d="M13.849 4.22c-.684-1.626-3.014-1.626-3.698 0L8.397 8.387l-4.552.361c-1.775.14-2.495 2.331-1.142 3.477l3.468 2.937-1.06 4.392c-.413 1.713 1.472 3.067 2.992 2.149L12 19.35l3.897 2.354c1.52.918 3.405-.436 2.992-2.15l-1.06-4.39 3.468-2.938c1.353-1.146.633-3.336-1.142-3.477l-4.552-.36-1.754-4.17Z" />
               </svg>
             </div>
-
             <div className="space-y-0.5">
               <p className="text-base font-semibold text-gray-900 dark:text-white">
                 {review?.user_name}
@@ -86,7 +85,6 @@ function SingleProductReview({ reviews }) {
               </p>
             </div>
           </div>
-
           <div className="mt-4 min-w-0 flex-1 space-y-4 sm:mt-0">
             <p className="text-base font-normal text-gray-500 dark:text-gray-400">
               {review?.comment}
@@ -108,7 +106,7 @@ function SingleProductReview({ reviews }) {
                   htmlFor="reviews-radio-1"
                   className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                 >
-                  Yes: 3
+                  Yes
                 </label>
               </div>
               <div className="flex items-center">
@@ -123,7 +121,7 @@ function SingleProductReview({ reviews }) {
                   htmlFor="reviews-radio-2"
                   className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                 >
-                  No: 0
+                  No
                 </label>
               </div>
             </div>

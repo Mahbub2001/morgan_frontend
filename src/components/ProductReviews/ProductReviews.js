@@ -35,14 +35,16 @@ function ProductReviews({ pageDataI, eligibleDat }) {
       }
 
       setReviews((prevReviews) => {
-        const newReviewIds = new Set(data.reviews.map((review) => review._id));
-        const filteredPrevReviews = prevReviews.filter(
-          (review) => !newReviewIds.has(review._id)
+        const newReviewIds = new Set(
+          data?.reviews?.map((review) => review?._id)
         );
-        return [...filteredPrevReviews, ...data.reviews];
+        const filteredPrevReviews = prevReviews.filter(
+          (review) => !newReviewIds.has(review?._id)
+        );
+        return [...filteredPrevReviews, ...data?.reviews];
       });
 
-      if (data.reviews.length < currentLimit) {
+      if (data?.reviews?.length < currentLimit) {
         setHasMore(false);
       } else {
         setHasMore(true);
@@ -64,8 +66,8 @@ function ProductReviews({ pageDataI, eligibleDat }) {
 
   const loadMoreReviews = () => {
     const newOffset = offset + loadMoreLimit;
-    setOffset(newOffset); 
-    fetchReviews(newOffset, loadMoreLimit); 
+    setOffset(newOffset);
+    fetchReviews(newOffset, loadMoreLimit);
   };
 
   // console.log(reviewStats);
@@ -83,7 +85,7 @@ function ProductReviews({ pageDataI, eligibleDat }) {
   //     </div>
   //   );
   // }
-  console.log("ProductReviews reviews", reviews);
+  // console.log("ProductReviews reviews", reviews);
 
   return (
     <section>
