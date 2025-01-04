@@ -20,8 +20,7 @@ import Link from "next/link";
 import { AuthContext } from "@/hooks/AuthProvider";
 import { FiLogOut } from "react-icons/fi";
 import { useRouter } from "next/navigation";
-import Cookies from "js-cookie";
-import { getUserRole } from "@/api/user";
+import { motion, AnimatePresence } from "motion/react";
 import CartDrawer from "@/containers/common/CartDrawer/CartDrawer";
 
 function Navbar() {
@@ -73,6 +72,16 @@ function Navbar() {
 
   const handleCartclick = () => {
     setCartDrawer(!cartDrawer);
+  };
+
+  const dropdownVariants = {
+    hidden: { opacity: 0, y: -10 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.3 } },
+    exit: { opacity: 0, y: -10, transition: { duration: 0.3 } },
+  };
+
+  const iconVariants = {
+    hover: { scale: 1.2, transition: { duration: 0.2 } },
   };
 
   return (
@@ -148,8 +157,41 @@ function Navbar() {
                 </Link>
 
                 <div className="flex gap-5">
-                  <CiSearch className="cursor-pointer" />
-                  <button className="cursor-pointer" onClick={handleCartclick}>
+                  <motion.div
+                    className="cursor-pointer"
+                    variants={iconVariants}
+                    whileHover="hover"
+                  >
+                    <CiSearch />
+                  </motion.div>
+                  <motion.button
+                    className="cursor-pointer"
+                    onClick={handleCartclick}
+                    variants={iconVariants}
+                    whileHover="hover"
+                  >
+                    <FaShoppingBag />
+                  </motion.button>
+                  <motion.button
+                    onClick={handleProfileClick}
+                    className="cursor-pointer"
+                    variants={iconVariants}
+                    whileHover="hover"
+                  >
+                    <GoPerson />
+                  </motion.button>
+                  {user && (
+                    <motion.div
+                      className="cursor-pointer"
+                      onClick={handleLogOut}
+                      variants={iconVariants}
+                      whileHover="hover"
+                    >
+                      <FiLogOut />
+                    </motion.div>
+                  )}
+                  {/* <CiSearch className="cursor-pointer" /> */}
+                  {/* <button className="cursor-pointer" onClick={handleCartclick}>
                     <FaShoppingBag />
                   </button>
                   <button
@@ -163,88 +205,95 @@ function Navbar() {
                       className="cursor-pointer"
                       onClick={handleLogOut}
                     />
-                  )}
+                  )} */}
                 </div>
               </div>
             </div>
-
-            {(activeDropdown === "Shop" ||
-              activeDropdown === "women" ||
-              activeDropdown === "men" ||
-              activeDropdown === "kids") && (
-              <div className="container mx-auto">
-                <div className="flex gap-10 mt-5 font-thin text-sm">
-                  <li
-                    onClick={() => toggleDropdown("women")}
-                    className={`list-none cursor-pointer border-b-2 ${
-                      activeDropdown === "women"
-                        ? "border-black"
-                        : "border-transparent"
-                    } hover:border-black`}
-                  >
-                    Women
-                  </li>
-                  <li
-                    onClick={() => toggleDropdown("men")}
-                    className={`list-none cursor-pointer border-b-2 ${
-                      activeDropdown === "men"
-                        ? "border-black"
-                        : "border-transparent"
-                    } hover:border-black`}
-                  >
-                    Men
-                  </li>
-                  <li
-                    onClick={() => toggleDropdown("kids")}
-                    className={`list-none cursor-pointer border-b-2 ${
-                      activeDropdown === "kids"
-                        ? "border-black"
-                        : "border-transparent"
-                    } hover:border-black`}
-                  >
-                    Kids
-                  </li>
-                </div>
-                <div className="absolute left-0 right-0 mt-2 bg-white border-b-[1px] py-3">
-                  <div className="container mx-auto">
-                    <div className="grid grid-cols-12 gap-5">
-                      <div className="col-span-8">
-                        <div className="grid grid-cols-3 gap-5">
-                          {categories[0].items.map((category) => (
-                            <div key={category.category}>
-                              <p className="text-gray-700 text-sm font-semibold">
-                                {category?.category}
-                              </p>
-                              <ul className="space-y-2 mt-1">
-                                {category?.items.map((item, index) => (
-                                  <li
-                                    key={index}
-                                    className="text-sm font-light cursor-pointe"
-                                  >
-                                    <Link
-                                      onClick={() => setActiveDropdown(null)}
-                                      className="!font-futara-sans !text-xs text-gray-800 hover:text-blue-900"
-                                      href={{
-                                        pathname: "/allproducts",
-                                        query: { take: item?.link },
-                                      }}
-                                    >
-                                      {item?.name}
-                                    </Link>
-                                  </li>
-                                ))}
-                              </ul>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                      <News />
-                      <Latest />
-                    </div>
+            <AnimatePresence>
+              {(activeDropdown === "Shop" ||
+                activeDropdown === "women" ||
+                activeDropdown === "men" ||
+                activeDropdown === "kids") && (
+                <motion.div
+                  variants={dropdownVariants}
+                  initial="hidden"
+                  animate="visible"
+                  exit="hidden"
+                  className="container mx-auto"
+                >
+                  <div className="flex gap-10 mt-5 font-thin text-sm">
+                    <li
+                      onClick={() => toggleDropdown("women")}
+                      className={`list-none cursor-pointer border-b-2 ${
+                        activeDropdown === "women"
+                          ? "border-black"
+                          : "border-transparent"
+                      } hover:border-black`}
+                    >
+                      Women
+                    </li>
+                    <li
+                      onClick={() => toggleDropdown("men")}
+                      className={`list-none cursor-pointer border-b-2 ${
+                        activeDropdown === "men"
+                          ? "border-black"
+                          : "border-transparent"
+                      } hover:border-black`}
+                    >
+                      Men
+                    </li>
+                    <li
+                      onClick={() => toggleDropdown("kids")}
+                      className={`list-none cursor-pointer border-b-2 ${
+                        activeDropdown === "kids"
+                          ? "border-black"
+                          : "border-transparent"
+                      } hover:border-black`}
+                    >
+                      Kids
+                    </li>
                   </div>
-                </div>
-              </div>
-            )}
+                  <motion.div className="absolute left-0 right-0 mt-2 bg-white border-b-[1px] py-3">
+                    <div className="container mx-auto">
+                      <div className="grid grid-cols-12 gap-5">
+                        <div className="col-span-8">
+                          <div className="grid grid-cols-3 gap-5">
+                            {categories[0].items.map((category) => (
+                              <div key={category.category}>
+                                <p className="text-gray-700 text-sm font-semibold">
+                                  {category?.category}
+                                </p>
+                                <ul className="space-y-2 mt-1">
+                                  {category?.items.map((item, index) => (
+                                    <li
+                                      key={index}
+                                      className="text-sm font-light cursor-pointe"
+                                    >
+                                      <Link
+                                        onClick={() => setActiveDropdown(null)}
+                                        className="!font-futara-sans !text-xs text-gray-800 hover:text-blue-900"
+                                        href={{
+                                          pathname: "/allproducts",
+                                          query: { take: item?.link },
+                                        }}
+                                      >
+                                        {item?.name}
+                                      </Link>
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                        <News />
+                        <Latest />
+                      </div>
+                    </div>
+                  </motion.div>
+                </motion.div>
+              )}
+            </AnimatePresence>
             {activeDropdown === "women" && (
               <div className="absolute left-0 right-0 mt-2 bg-white border-b-[1px] py-3">
                 <div className="container mx-auto">
