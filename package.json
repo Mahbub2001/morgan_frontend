@@ -9,10 +9,12 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emailjs/browser": "^4.4.1",
     "@splidejs/react-splide": "^0.7.12",
     "@splidejs/splide": "^4.1.4",
     "apexcharts": "^4.3.0",
     "axios": "^1.7.9",
+    "emailjs": "^4.0.3",
     "firebase": "^11.1.0",
     "flowbite-react": "^0.10.2",
     "install": "^0.13.0",

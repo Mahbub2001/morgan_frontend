@@ -44,7 +44,7 @@ function ProductReviews({ pageDataI, eligibleDat }) {
         return [...filteredPrevReviews, ...data?.reviews];
       });
 
-      if (data?.reviews?.length < currentLimit) {
+      if (!data?.reviews || data.reviews.length < currentLimit) {
         setHasMore(false);
       } else {
         setHasMore(true);

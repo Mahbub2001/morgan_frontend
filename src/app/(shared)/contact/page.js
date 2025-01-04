@@ -1,7 +1,58 @@
+"use client";
 import Button3 from "@/containers/common/Button3/Button3";
-import React from "react";
-
+import React, { useState } from "react";
+import emailjs from "@emailjs/browser";
 function Contact() {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
+
+  const [status, setStatus] = useState("");
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const { name, email, message } = formData;
+
+    if (!name || !email || !message) {
+      setStatus("Please fill out all fields.");
+      return;
+    }
+
+    const templateParams = {
+      from_name: name,
+      from_email: email,
+      message: message,
+    };
+
+    emailjs
+      .send(
+        process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID,
+        process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID,
+        templateParams,
+        process.env.NEXT_PUBLIC_PUBLIC_KEY
+      )
+      .then(
+        (response) => {
+          setStatus("Message sent successfully!");
+          setFormData({ name: "", email: "", message: "" });
+        },
+        (error) => {
+          setStatus("Error sending message, please try again.");
+          console.error(error.text);
+        }
+      );
+  };
   return (
     <section className="body-font relative -mt-20 lg:mt-24 xl:mt-20">
       <div className="container mx-auto px-5 py-24">
@@ -26,6 +77,8 @@ function Contact() {
                   type="text"
                   id="name"
                   name="name"
+                  value={formData.name}
+                  onChange={handleChange}
                   className="peer w-full rounded border border-gray-700  bg-opacity-40 py-1 px-3 text-base leading-8 text-black placeholder-transparent outline-none transition-colors duration-200 ease-in-out focus:border-none focus:ring-2 focus:ring-indigo-900"
                   placeholder="Name"
                 />
@@ -43,6 +96,8 @@ function Contact() {
                   type="email"
                   id="email"
                   name="email"
+                  value={formData.email}
+                  onChange={handleChange}
                   className="peer w-full rounded border border-gray-700  bg-opacity-40 py-1 px-3 text-base leading-8 text-black placeholder-transparent outline-none transition-colors duration-200 ease-in-out focus:border-none focus:ring-2 focus:ring-indigo-900"
                   placeholder="Email"
                 />
@@ -59,6 +114,8 @@ function Contact() {
                 <textarea
                   id="message"
                   name="message"
+                  value={formData.message}
+                  onChange={handleChange}
                   className="peer h-32 w-full resize-none rounded border border-gray-700  bg-opacity-40 py-1 px-3 text-base leading-6 text-black placeholder-transparent outline-none transition-colors duration-200 ease-in-out focus:border-none focus:ring-2 focus:ring-indigo-900"
                   placeholder="Message"
                 ></textarea>
@@ -70,7 +127,7 @@ function Contact() {
                 </label>
               </div>
             </div>
-            <div className="w-full p-2">
+            <div onClick={handleSubmit} className="w-full p-2">
               <Button3
                 text="SEND MESSAGE"
                 backgroundColor="orange"
