@@ -9,14 +9,15 @@ import Link from "next/link";
 import { CiSearch } from "react-icons/ci";
 import { AuthContext } from "@/hooks/AuthProvider";
 import { GoPerson } from "react-icons/go";
+import { useRouter } from "next/navigation";
 
-const Sidebar = () => {
+const Sidebar = ({handleCartclick}) => {
+  const { user, logout } = useContext(AuthContext);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [menuHistory, setMenuHistory] = useState(["main"]);
   const [submenuItems, setSubmenuItems] = useState([]);
   const [subsubmenuItems, setSubsubmenuItems] = useState([]);
-
-  const { user, logout } = useContext(AuthContext);
+  const router = useRouter();
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -59,6 +60,22 @@ const Sidebar = () => {
       .catch((error) => {
         // console.log(error);
       });
+  };
+
+  const handleProfileClick = async () => {
+    // console.log("user", user);
+    if (!user) {
+      router.push("/login");
+      toggleSidebar();
+      return;
+    }
+    router.push("/dash");
+    toggleSidebar();
+  };
+
+  const Cartclick = () => {
+    handleCartclick();
+    toggleSidebar();
   };
 
   return (
@@ -130,8 +147,7 @@ const Sidebar = () => {
                     <div
                       className="flex items-center justify-between cursor-pointer hover:text-blue-600 font-thin text-sm"
                       onClick={() =>
-                        Array.isArray(item.items) &&
-                        openSubsubmenu(item.items)
+                        Array.isArray(item.items) && openSubsubmenu(item.items)
                       }
                     >
                       {item.name ? (
@@ -162,7 +178,13 @@ const Sidebar = () => {
               <ul className="space-y-4">
                 {subsubmenuItems.map((item, index) => (
                   <li key={index} className="hover:text-blue-600 text-sm">
-                    <Link onClick={toggleSidebar} href={item.link}>
+                    <Link
+                      onClick={toggleSidebar}
+                      href={{
+                        pathname: "/allproducts",
+                        query: { take: item?.link },
+                      }}
+                    >
                       {item.name}
                     </Link>
                   </li>
@@ -172,14 +194,13 @@ const Sidebar = () => {
           )}
           <div className="flex gap-5 mt-10 ">
             <CiSearch className="cursor-pointer" />
-            <FaShoppingBag className="cursor-pointer" />
-            <Link
-              onClick={toggleSidebar}
-              href="/login"
+            <FaShoppingBag onClick={Cartclick} className="cursor-pointer" />
+            <button
+              onClick={handleProfileClick}
               className="cursor-pointer"
             >
               <GoPerson />
-            </Link>
+            </button>
             {user && (
               <FiLogOut className="cursor-pointer" onClick={handleLogOut} />
             )}

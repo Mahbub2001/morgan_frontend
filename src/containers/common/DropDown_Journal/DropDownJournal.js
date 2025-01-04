@@ -12,7 +12,7 @@ const Dropdown2 = ({ title, items, isVisible, closeDropdown, dropdownRef }) => {
 
   return (
     <div>
-      <animated.div
+      <div
         ref={dropdownRef}
         // style={animation}
         className="absolute left-0 right-0 mt-2 bg-white border-b-[1px] py-5 origin-top"
@@ -63,7 +63,7 @@ const Dropdown2 = ({ title, items, isVisible, closeDropdown, dropdownRef }) => {
             </ul>
           </div>
         </div>
-      </animated.div>
+      </div>
     </div>
   );
 };

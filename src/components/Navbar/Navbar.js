@@ -10,7 +10,6 @@ import {
   journalItems,
   Inspiration,
 } from "@/Data/Menu";
-// import { useSpring, animated } from "@react-spring/web";
 import Dropdown from "@/containers/common/DropDown_About/DropDownAbout";
 import Dropdown2 from "@/containers/common/DropDown_Journal/DropDownJournal";
 import Sidebar from "../SideBar/SideBar";
@@ -159,9 +158,6 @@ function Navbar() {
                   >
                     <GoPerson />
                   </button>
-                  {/* <Link href="/login" className="cursor-pointer">
-                  <GoPerson />
-                </Link> */}
                   {user && (
                     <FiLogOut
                       className="cursor-pointer"
@@ -400,7 +396,7 @@ function Navbar() {
           </div>
         </div>
         <div className="mobile-sidebar">
-          <Sidebar />
+          <Sidebar handleCartclick={handleCartclick} />
         </div>
       </div>
 
