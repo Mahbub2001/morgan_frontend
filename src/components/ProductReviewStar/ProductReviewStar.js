@@ -1,8 +1,11 @@
 import React from "react";
 
-function ProductReviewStar({ reviews }) {
+function ProductReviewStar( {reviewStats} ) {
+
+  // console.log("ProductReviewStar reviewStats", reviewStats);
+  
   const { totalRatings, fiveStar, fourStar, threeStar, twoStar, oneStar } =
-    reviews;
+  reviewStats;
   const calculatePercentage = (starCount) => {
     if (totalRatings === 0) return "0%";
     return `${(starCount / totalRatings) * 100}%`;
