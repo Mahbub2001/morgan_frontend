@@ -150,14 +150,14 @@ const DashboardSidebar = ({ role }) => {
                 activeLink={activeLink}
                 setActiveLink={setActiveLink}
               />
-              <SidebarItem
+              {/* <SidebarItem
                 icon="categories"
                 label="Categories"
                 isOpen={isSidebarOpen}
                 href={"/admincategories"}
                 activeLink={activeLink}
                 setActiveLink={setActiveLink}
-              />
+              /> */}
               <SidebarItem
                 icon="transactions"
                 label="Transaction"
@@ -167,13 +167,29 @@ const DashboardSidebar = ({ role }) => {
                 setActiveLink={setActiveLink}
               />
               <SidebarItem
+                icon="promote1"
+                label="Promote Section 1"
+                isOpen={isSidebarOpen}
+                href={"/promote_one"}
+                activeLink={activeLink}
+                setActiveLink={setActiveLink}
+              />
+              <SidebarItem
+                icon="promote2"
+                label="Promote Section 2"
+                isOpen={isSidebarOpen}
+                href={"/promote_two"}
+                activeLink={activeLink}
+                setActiveLink={setActiveLink}
+              />
+              {/* <SidebarItem
                 icon="brand"
                 label="Brand"
                 isOpen={isSidebarOpen}
                 href={"/brand"}
                 activeLink={activeLink}
                 setActiveLink={setActiveLink}
-              />
+              /> */}
               <SidebarItem
                 icon="add_products"
                 label="Add Product"
