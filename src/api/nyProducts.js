@@ -8,6 +8,8 @@
 //   }
 // };
 
+import Cookies from "js-cookie";
+
 export const fetchProducts = async (filterParams = {}) => {
   try {
     const queryParams = new URLSearchParams();
@@ -38,12 +40,11 @@ export const fetchProducts = async (filterParams = {}) => {
         JSON.stringify(filterParams.typeOfProducts)
       );
     }
-    if(filterParams.sortPar){
+    if (filterParams.sortPar) {
       queryParams.append("sortPar", filterParams.sortPar);
     }
 
-    console.log("queryParams", queryParams.toString());
-    
+    // console.log("queryParams", queryParams.toString());
 
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/products?${queryParams.toString()}`
@@ -84,5 +85,39 @@ export const fetchRelatedProducts = async (
     return data;
   } catch (error) {
     console.error("Error fetching related products:", error);
+  }
+};
+
+// get elibility of review of a product
+export const fetchReviewEligibility = async (user,pageDataI) => {
+  const token = Cookies.get("ny-token");
+  // console.log(pageDataI);
+  
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/eligible_reviews`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          email: user.email,
+          pageData: pageDataI,
+        }),
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch eligibility");
+    }
+
+    const data = await response.json();
+
+    return data;
+    console.log(data);
+  } catch (error) {
+    console.error("Error checking eligibility:", error.message);
   }
 };

@@ -1,16 +1,21 @@
 "use client";
 
-import { fetchProduct, fetchRelatedProducts } from "@/api/nyProducts";
+import {
+  fetchProduct,
+  fetchRelatedProducts,
+  fetchReviewEligibility,
+} from "@/api/nyProducts";
 import Button3 from "@/containers/common/Button3/Button3";
 import SliderComponent from "@/containers/common/SliderProductPage/SliderComponent";
 import Link from "next/link";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { IoMdAdd } from "react-icons/io";
 import { RiSubtractFill } from "react-icons/ri";
 import RelatedProduct from "../RelatedProduct/RelatedProduct";
 import ProductDetailFooter from "../ProductDetailFooter/ProductDetailFooter";
 import CartDrawer from "@/containers/common/CartDrawer/CartDrawer";
 import ProductReviews from "../ProductReviews/ProductReviews";
+import { AuthContext } from "@/hooks/AuthProvider";
 
 function ProductDetailspage({ id, color }) {
   const [data, setData] = useState(null);
@@ -23,19 +28,24 @@ function ProductDetailspage({ id, color }) {
   const [expandedSections, setExpandedSections] = useState({});
   const [quantity, setQuantity] = useState(0);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const { user } = useContext(AuthContext);
+  const [eligibleData, setEligibleData] = useState({
+    eligible: false,
+    message: "Failed to load review eligibility",
+  });
 
   const toggleDrawer = () => {
     setIsDrawerOpen(!isDrawerOpen);
   };
-
   useEffect(() => {
-    if (!id) {
-      setError("Product ID is required");
-      return;
-    }
+    const loadProductData = async () => {
+      if (!id) {
+        setError("Product ID is required");
+        return;
+      }
 
-    fetchProduct(id)
-      .then((productData) => {
+      try {
+        const productData = await fetchProduct(id);
         setData(productData);
 
         if (productData?.utilities) {
@@ -47,35 +57,120 @@ function ProductDetailspage({ id, color }) {
             setPageDataI({ allData: productData, utility: matchedUtility });
 
             if (productData?.productDescription) {
-              const lines = productData.productDescription.split("\\n");
-              setDescriptionLines(lines);
+              setDescriptionLines(productData.productDescription.split("\\n"));
             }
             if (productData?.leatherCare) {
-              const lines = productData.leatherCare.split("\\n");
-              setLeatherCare(lines);
+              setLeatherCare(productData.leatherCare.split("\\n"));
             }
           } else {
             setError("No matching color found in utilities");
           }
         }
+      } catch (error) {
+        console.error("Error fetching product:", error);
+        setError("Failed to load product data");
+      }
+    };
 
-        return fetchRelatedProducts(
-          productData.productName,
-          productData.category,
-          productData.subCategory,
+    loadProductData();
+  }, [id, color]);
+
+  useEffect(() => {
+    const loadAdditionalData = async () => {
+      if (!pageDataI) return;
+      try {
+        const relatedProductsData = await fetchRelatedProducts(
+          pageDataI.allData.productName,
+          pageDataI.allData.category,
+          pageDataI.allData.subCategory,
           8
         );
-      })
-      .then((relatedProductsData) => {
         if (relatedProductsData) {
           setRelatedProducts(relatedProductsData);
         }
-      })
-      .catch((error) => {
-        console.error("Error fetching product or related products:", error);
-        setError("Failed to load product or related product data");
-      });
-  }, [id, color]);
+      } catch (error) {
+        console.error(
+          "Error fetching related products or review eligibility:",
+          error
+        );
+        setError("Failed to load related products or review data");
+      }
+    };
+
+    loadAdditionalData();
+  }, [pageDataI]);
+  useEffect(() => {
+    const loadReviewEligibility = async () => {
+      if (!pageDataI || !user) {
+        return;
+      }
+
+      try {
+        const reviewEligibility = await fetchReviewEligibility(user, pageDataI);
+        // console.log("Review eligibility fetched:", reviewEligibility);
+        setEligibleData(reviewEligibility);
+      } catch (error) {
+        console.error("Error fetching review eligibility:", error);
+        setEligibleData({
+          eligible: false,
+          message: "Failed to load review eligibility",
+        });
+      }
+    };
+
+    loadReviewEligibility();
+  }, [pageDataI, user]);
+
+  // console.log(eligibleData);
+
+  // useEffect(() => {
+  //   if (!id) {
+  //     setError("Product ID is required");
+  //     return;
+  //   }
+
+  //   fetchProduct(id)
+  //     .then((productData) => {
+  //       setData(productData);
+
+  //       if (productData?.utilities) {
+  //         const matchedUtility = productData.utilities.find(
+  //           (utility) => utility.color === color
+  //         );
+
+  //         if (matchedUtility) {
+  //           setPageDataI({ allData: productData, utility: matchedUtility });
+
+  //           if (productData?.productDescription) {
+  //             const lines = productData.productDescription.split("\\n");
+  //             setDescriptionLines(lines);
+  //           }
+  //           if (productData?.leatherCare) {
+  //             const lines = productData.leatherCare.split("\\n");
+  //             setLeatherCare(lines);
+  //           }
+  //         } else {
+  //           setError("No matching color found in utilities");
+  //         }
+  //       }
+
+  //       return fetchRelatedProducts(
+  //         productData.productName,
+  //         productData.category,
+  //         productData.subCategory,
+  //         8
+  //       );
+  //     })
+  //     .then((relatedProductsData) => {
+  //       if (relatedProductsData) {
+  //         setRelatedProducts(relatedProductsData);
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error fetching product or related products:", error);
+  //       setError("Failed to load product or related product data");
+  //     });
+  // }, [id, color]);
   useEffect(() => {
     const imageElements = document.querySelectorAll(".middle-image");
     const observer = new IntersectionObserver(
@@ -100,7 +195,7 @@ function ProductDetailspage({ id, color }) {
     };
   }, [pageDataI]);
 
-  console.log(pageDataI?.utility?.numberOfProducts);
+  // console.log(pageDataI?.utility?.numberOfProducts);
 
   const handleChange = (e) => {
     const value = parseInt(e.target.value, 10);
@@ -436,7 +531,7 @@ function ProductDetailspage({ id, color }) {
         </p>
         <div>
           <div className="mt-10">
-            <ProductReviews />
+            <ProductReviews pageDataI={pageDataI} eligibleDat={eligibleData} />
           </div>
         </div>
         <hr className="mt-16" />

@@ -2,6 +2,7 @@ import localFont from "next/font/local";
 import { Open_Sans } from "next/font/google";
 import "./globals.css";
 import AuthProvider from "@/hooks/AuthProvider";
+import { ToastContainer, toast } from 'react-toastify';
 
 const openSans = Open_Sans({
   subsets: ["latin"],
@@ -39,6 +40,7 @@ export default function RootLayout({ children }) {
           <div>{children}</div>
         </AuthProvider>
         {/* <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script> */}
+      <ToastContainer />
       </body>
     </html>
   );

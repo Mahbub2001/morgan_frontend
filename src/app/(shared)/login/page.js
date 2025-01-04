@@ -7,9 +7,10 @@ import { useForm } from "react-hook-form";
 import { AuthContext } from "@/hooks/AuthProvider";
 import { setAuthToken } from "@/api/auth";
 import { useRouter } from "next/navigation";
+import { toast } from 'react-toastify';
 
 function Login() {
-  const { signin, setLoading } = useContext(AuthContext);
+  const { signin } = useContext(AuthContext);
   const router = useRouter();
 
   const {
@@ -19,11 +20,16 @@ function Login() {
   } = useForm();
 
   const onSubmit = (data) => {
-    // console.log(data);
-    signin(data?.email, data?.password)
+    const promise = signin(data?.email, data?.password);
+    toast.promise(promise, {
+      pending: "Logging in...",
+      success: "Login Successful! 🎉",
+      error: "Login Failed. Please check your credentials.",
+    });
+    promise
       .then((result) => {
         // toast.success("Login Successful.....!");
-        setLoading(false);
+        // setLoading(false);
         setAuthToken(result.user);
         router.push("/");
         // navigate(from, { replace: true });
@@ -31,7 +37,7 @@ function Login() {
       .catch((err) => {
         // toast.error(err.message);
         // console.log(err);
-        setLoading(false);
+        // setLoading(false);
       });
   };
 

@@ -121,8 +121,7 @@ const AuthProvider = ({ children }) => {
   // Login with Password
   const signin = async (email, password) => {
     try {
-      setLoading(true);
-
+      // setLoading(true);
       const userCredential = await signInWithEmailAndPassword(
         auth,
         email,
@@ -135,17 +134,15 @@ const AuthProvider = ({ children }) => {
         alert(
           "Email not verified. Please check your inbox to verify your email."
         );
-        // throw new Error("Email not verified");
       }
       const token = await user.getIdToken();
       setCookie("ny-token", token, { expires: 7 });
 
       return userCredential;
     } catch (error) {
-      console.error("Error signing in:", error);
       throw error;
     } finally {
-      setLoading(false);
+      // setLoading(false);
     }
   };
 
