@@ -6,19 +6,17 @@ import WriteReview from "../WriteReview/WriteReview";
 import AvgRating from "../AvgRating/AvgRating";
 
 function ProductReviews({ pageDataI, eligibleDat }) {
-  // console.log("ProductReviews pageDataI", pageDataI);
-  // console.log("ProductReviews eligibleData", eligibleDat);
   const [reviews, setReviews] = useState([]);
   const [offset, setOffset] = useState(0);
   const [hasMore, setHasMore] = useState(true);
   const [reviewStats, setReviewStats] = useState(null);
   const [loading, setLoading] = useState(true);
-  const limit = 5; 
-  const loadMoreLimit = 3; 
+  const limit = 3;
+  const loadMoreLimit = 2;
 
   const fetchReviews = async (currentOffset, currentLimit) => {
     try {
-      setLoading(true); 
+      setLoading(true);
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/reviews/${pageDataI?.allData?._id}?color=${pageDataI?.utility?.color}&limit=${currentLimit}&offset=${currentOffset}`
       );
@@ -36,14 +34,22 @@ function ProductReviews({ pageDataI, eligibleDat }) {
         });
       }
 
-      if (data.reviews.length < currentLimit) {
-        setHasMore(false); 
-      }
+      setReviews((prevReviews) => {
+        const newReviewIds = new Set(data.reviews.map((review) => review._id));
+        const filteredPrevReviews = prevReviews.filter(
+          (review) => !newReviewIds.has(review._id)
+        );
+        return [...filteredPrevReviews, ...data.reviews];
+      });
 
-      setReviews((prevReviews) => [...prevReviews, ...data.reviews]);
+      if (data.reviews.length < currentLimit) {
+        setHasMore(false);
+      } else {
+        setHasMore(true);
+      }
     } catch (error) {
       console.error("Error fetching reviews:", error);
-    }finally{
+    } finally {
       setLoading(false);
     }
   };
@@ -52,34 +58,32 @@ function ProductReviews({ pageDataI, eligibleDat }) {
     const productId = pageDataI?.allData?._id;
     const productColor = pageDataI?.utility?.color;
     if (productId && productColor) {
-      fetchReviews(0, limit); 
+      fetchReviews(0, limit);
     }
   }, [pageDataI?.allData?._id, pageDataI?.utility?.color]);
 
   const loadMoreReviews = () => {
     const newOffset = offset + loadMoreLimit;
-    fetchReviews(newOffset, loadMoreLimit);
-    setOffset(newOffset);
+    setOffset(newOffset); 
+    fetchReviews(newOffset, loadMoreLimit); 
   };
 
   // console.log(reviewStats);
-    // Conditional rendering to handle loading and data availability
-    if (loading) {
-      return (
-        <div className="flex justify-center items-center h-screen">
-          <p>Loading reviews...</p>
-        </div>
-      );
-    }
-  
-    // if (!reviewStats) {
-    //   return (
-    //     <div className="flex justify-center items-center h-screen">
-    //       <p>No reviews found.</p>
-    //     </div>
-    //   );
-    // }
-  
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <p>Loading reviews...</p>
+      </div>
+    );
+  }
+  // if (!reviewStats) {
+  //   return (
+  //     <div className="flex justify-center items-center h-screen">
+  //       <p>No reviews found.</p>
+  //     </div>
+  //   );
+  // }
+  console.log("ProductReviews reviews", reviews);
 
   return (
     <section>
@@ -112,17 +116,18 @@ function ProductReviews({ pageDataI, eligibleDat }) {
             </div>
             <ProductReviewStar reviewStats={reviewStats} />
           </div>
-          <div className="mt-6 divide-y divide-gray-200 dark:divide-gray-700">
-            <SingleProductReview />
-          </div>
-          <div className="mt-6 text-center">
-            <button
-              type="button"
-              className="mb-2 me-2 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700"
-            >
-              View more reviews
-            </button>
-          </div>
+          <SingleProductReview reviews={reviews} />
+          {hasMore && (
+            <div className="mt-6 text-center">
+              <button
+                type="button"
+                onClick={loadMoreReviews}
+                className="mb-2 me-2 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700"
+              >
+                View more reviews
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </section>
