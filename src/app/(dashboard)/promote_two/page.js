@@ -64,8 +64,8 @@ function Promote2() {
   };
 
   const [cat, setCat] = useState({
-    subCategory1: "",
-    subCategory2: "",
+    category: "",
+    subCategory: "",
   });
 
   const handleSelectChange = (e) => {
@@ -81,13 +81,15 @@ function Promote2() {
 
     const settings = {
       promote2: {
-        subCategory1: cat.subCategory1,
-        subCategory2: cat.subCategory2,
+        category: cat.category,
+        subCategory: cat.subCategory,
         checkedId: data.filter((item) => item.promote).map((item) => item._id),
       },
     };
-    if (!settings.promote2.subCategory1 || !settings.promote2.subCategory2) {
-      toast.error("Please select the categories/sub-categories for promotion.");
+    if (!settings.promote2.category || !settings.promote2.subCategory) {
+      toast.error(
+        "Please select the person/categories/sub-categories for promotion."
+      );
       return;
     }
     if (
@@ -181,14 +183,31 @@ function Promote2() {
             </div>
           </div>
           <p className="my-5">
-            Selection the Category & subCategory For Promote Section 1
+            Select the Person & Category & subCategory For Promote Section 1
           </p>
-          <div className="flex gap-5 w-full md:w-auto mt-2 md:mt-0 mb-10">
-            <div className="w-full md:w-auto mt-2 md:mt-0">
+          <div className="flex flex-col md:flex-row gap-5 w-full mt-2 md:mt-0 mb-10">
+            <div className="w-full md:w-auto">
               <select
-                name="subCategory1"
+                name="person"
                 className="border px-2 py-1 rounded text-xs w-full"
-                value={cat.subCategory1}
+                value={cat.person}
+                onChange={handleSelectChange}
+              >
+                <option value="">All Persons</option>
+                {Array.from(new Set(data.map((item) => item.person))).map(
+                  (person) => (
+                    <option key={person} value={person}>
+                      {person}
+                    </option>
+                  )
+                )}
+              </select>
+            </div>
+            <div className="w-full md:w-auto">
+              <select
+                name="category"
+                className="border px-2 py-1 rounded text-xs w-full"
+                value={cat.category}
                 onChange={handleSelectChange}
               >
                 <option value="">All Categories</option>
@@ -201,11 +220,11 @@ function Promote2() {
                 )}
               </select>
             </div>
-            <div className="w-full md:w-auto mt-2 md:mt-0">
+            <div className="w-full md:w-auto">
               <select
-                name="subCategory2"
+                name="subCategory"
                 className="border px-2 py-1 rounded text-xs w-full"
-                value={cat.subCategory2}
+                value={cat.subCategory}
                 onChange={handleSelectChange}
               >
                 <option value="">All Subcategories</option>
@@ -219,6 +238,7 @@ function Promote2() {
               </select>
             </div>
           </div>
+
           {/* Table */}
           <div className="overflow-x-auto shadow-md sm:rounded-lg">
             <table className="w-full text-sm text-left text-gray-500">
