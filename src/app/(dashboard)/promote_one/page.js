@@ -64,8 +64,9 @@ function Promote1() {
   };
 
   const [cat, setCat] = useState({
-    subCategory1: "",
-    subCategory2: "",
+    category: "",
+    subCategory: "",
+    person: "",
   });
 
   const handleSelectChange = (e) => {
@@ -75,18 +76,19 @@ function Promote1() {
       [name]: value,
     }));
   };
-
+  0;
   const handleSave = async () => {
     const token = Cookies.get("ny-token");
 
     const settings = {
       promote1: {
-        subCategory1: cat.subCategory1,
-        subCategory2: cat.subCategory2,
+        person: cat.person,
+        category: cat.category,
+        subCategory: cat.subCategory,
         checkedId: data.filter((item) => item.promote).map((item) => item._id),
       },
     };
-    if (!settings.promote1.subCategory1 || !settings.promote1.subCategory2) {
+    if (!settings.promote1.category || !settings.promote1.subCategory) {
       toast.error("Please select the categories/sub-categories for promotion.");
       return;
     }
@@ -112,7 +114,7 @@ function Promote1() {
         });
       toast.success("Settings saved successfully!");
     } catch (error) {
-    //   console.error("Error saving settings:", error);
+      //   console.error("Error saving settings:", error);
       toast.error("Failed to save settings.");
     }
   };
@@ -181,31 +183,48 @@ function Promote1() {
             </div>
           </div>
           <p className="my-5">
-            Selection the Category & subCategory For Promote Section 1
+            Select Your Person & Category & subCategory For Promote Section 1
           </p>
-          <div className="flex gap-5 w-full md:w-auto mt-2 md:mt-0 mb-10">
-            <div className="w-full md:w-auto mt-2 md:mt-0">
+          <div className="flex flex-col md:flex-row gap-5 w-full mt-2 md:mt-0 mb-10">
+            <div className="w-full md:w-auto">
               <select
-                name="subCategory1"
+                name="person"
                 className="border px-2 py-1 rounded text-xs w-full"
-                value={cat.subCategory1}
+                value={cat.person}
                 onChange={handleSelectChange}
               >
-                <option value="">All Categories</option>
-                {Array.from(new Set(data.map((item) => item.category))).map(
-                  (subCategory) => (
-                    <option key={subCategory} value={subCategory}>
-                      {subCategory}
+                <option value="">All Persons</option>
+                {Array.from(new Set(data.map((item) => item.person))).map(
+                  (person) => (
+                    <option key={person} value={person}>
+                      {person}
                     </option>
                   )
                 )}
               </select>
             </div>
-            <div className="w-full md:w-auto mt-2 md:mt-0">
+            <div className="w-full md:w-auto">
               <select
-                name="subCategory2"
+                name="category"
                 className="border px-2 py-1 rounded text-xs w-full"
-                value={cat.subCategory2}
+                value={cat.category}
+                onChange={handleSelectChange}
+              >
+                <option value="">All Categories</option>
+                {Array.from(new Set(data.map((item) => item.category))).map(
+                  (category) => (
+                    <option key={category} value={category}>
+                      {category}
+                    </option>
+                  )
+                )}
+              </select>
+            </div>
+            <div className="w-full md:w-auto">
+              <select
+                name="subCategory"
+                className="border px-2 py-1 rounded text-xs w-full"
+                value={cat.subCategory}
                 onChange={handleSelectChange}
               >
                 <option value="">All Subcategories</option>
@@ -219,6 +238,7 @@ function Promote1() {
               </select>
             </div>
           </div>
+
           {/* Table */}
           <div className="overflow-x-auto shadow-md sm:rounded-lg">
             <table className="w-full text-sm text-left text-gray-500">
