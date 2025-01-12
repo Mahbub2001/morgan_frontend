@@ -15,7 +15,7 @@ function Forside() {
         </div>
         <div className="md:w-1/2 mb-8 md:mb-0">
           <h2 className="text-3xl font-thin font-serif italic mb-4">
-            Decadent work bags
+            Morgen work bags
           </h2>
           <p className="font-sans mb-6">
             Our work bags combine the best of Danish design, where functionality
@@ -23,13 +23,13 @@ function Forside() {
             space for all your necessities and a laptop.
           </p>
           <Link
-          href={{
-            pathname: "/allproducts",
-            query:{take:"/Women/Bags/Work"},
-          }}
-        >
-          <Button2 text="See More" />
-        </Link>
+            href={{
+              pathname: "/allproducts",
+              query: { take: "/Women/Bags/Work" },
+            }}
+          >
+            <Button2 text="See More" />
+          </Link>
         </div>
       </div>
     </div>

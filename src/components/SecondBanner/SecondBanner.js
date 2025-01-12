@@ -1,4 +1,5 @@
 import Button1 from "@/containers/common/Button1/Button1";
+import Link from "next/link";
 import React from "react";
 
 function SecondBanner() {
@@ -20,7 +21,14 @@ function SecondBanner() {
         <p className="text-lg md:text-2xl mt-2 italic mb-3">
           EXPLORE OUR Suede Collection
         </p>
-        <Button1 text="Shop Now" />
+        <Link
+          href={{
+            pathname: "/allproducts",
+            query: { take: "/Women/Bags/Suede" },
+          }}
+        >
+          <Button1 text="Shop Now" />
+        </Link>
       </div>
     </div>
   );

@@ -8,7 +8,7 @@ function CrossbodyBags() {
       <div className="flex flex-col md:flex-row items-center place-items-center justify-between px-6 md:px-12 py-12 bg-white">
         <div className="md:w-1/2 mb-8 md:mb-0">
           <h2 className="text-3xl font-thin font-serif italic mb-4">
-            Decadent crossbody bags
+            Morgen crossbody bags
           </h2>
           <p className="font-sans mb-6">
             Our crossbody bags are the perfect mix of style and functionality.

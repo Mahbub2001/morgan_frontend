@@ -17,7 +17,7 @@ function Compromising() {
         </video>
         <div className="px-5">
           <h3 className="text-1xl md:text-2xl">
-            Decadent - Classic, refined, uncompromising.
+            Morgen - Classic, refined, uncompromising.
           </h3>
           <p className="font-sans text-sm md:text-xl mt-2 font-light text-justify">
             The woman who chooses a Decadent bag uncompromisingly goes for a <br/>
