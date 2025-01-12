@@ -16,7 +16,6 @@ import ProductDetailFooter from "../ProductDetailFooter/ProductDetailFooter";
 import CartDrawer from "@/containers/common/CartDrawer/CartDrawer";
 import ProductReviews from "../ProductReviews/ProductReviews";
 import { AuthContext } from "@/hooks/AuthProvider";
-
 function ProductDetailspage({ id, color }) {
   const [data, setData] = useState(null);
   const [pageDataI, setPageDataI] = useState(null);

@@ -15,17 +15,34 @@ const openSans = Open_Sans({
 const futuraSans = localFont({
   src: [
     {
-      path: "/fonts/FuturaLT.woff",
+      path: "/fonts/FuturaLT-Book.woff",
       weight: "400",
       style: "normal",
     },
     {
+      path: "/fonts/FuturaLT-BookOblique.woff",
+      weight: "400",
+      style: "italic",
+    },
+    {
+      path: "/fonts/FuturaLT-Light.woff",
+      weight: "300",
+      style: "normal",
+    },
+    {
+      path: "/fonts/FuturaLT-LightOblique.woff",
+      weight: "300",
+      style: "italic",
+    },
+    {
       path: "/fonts/FuturaLT.woff",
+      weight: "400",
       style: "normal",
     },
   ],
   variable: "--font-futura-sans",
 });
+
 
 export const metadata = {
   title: "Ny Morgan",

@@ -56,7 +56,9 @@ function ChartsComponent() {
         </div>
         <div>
           <div>
-            <h3 className="my-8 text-center text-2xl">Products Sales Distribution</h3>
+            <h3 className="my-8 text-center text-2xl">
+              Products Sales Distribution
+            </h3>
             <div className="grid grid-cols-1 lg:grid-cols-2">
               <PieChart title="Persons Distribution" data={data2.personData} />
               <PieChart
