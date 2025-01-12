@@ -7,7 +7,7 @@ import React, { useState } from "react";
 
 function SelectedFavor({ best }) {
   const [hoveredIndex, setHoveredIndex] = useState(null);
-  console.log(best);
+  // console.log(best);
 
   return (
     <div className="px-2 py-8 container mx-auto">

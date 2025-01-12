@@ -88,10 +88,10 @@ export default function Home() {
         <SelectedFavor best={best} />
         <Compromising />
         <SecondBanner />
-        <SelectedSuede promote1={promote1} />
+        <SelectedSuede promote1={promote1} settings={settings} />
         <CrossbodyBags />
         <Forside />
-        <Accessories promote2={promote2} />
+        <Accessories promote2={promote2} settings={settings}/>
         <LandingInsta />
       </>
     )}
