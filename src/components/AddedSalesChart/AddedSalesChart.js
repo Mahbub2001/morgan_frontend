@@ -118,14 +118,23 @@ const AddedSalesChart = () => {
         />
       </div>
       <div id="html-dist"></div>
-      <div style={{ marginTop: "20px" }}>
-        <button onClick={() => handleTimeframeChange("7days")}>
+      <div className="flex flex-wrap justify-center gap-4 mt-6">
+        <button
+          onClick={() => handleTimeframeChange("7days")}
+          className="px-6 py-2 bg-blue-500 text-white font-thin rounded-lg shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300 transition-all duration-300"
+        >
           Last 7 Days
         </button>
-        <button onClick={() => handleTimeframeChange("1month")}>
+        <button
+          onClick={() => handleTimeframeChange("1month")}
+          className="px-6 py-2 bg-green-500 text-white font-thin rounded-lg shadow-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-300 transition-all duration-300"
+        >
           Last 1 Month
         </button>
-        <button onClick={() => handleTimeframeChange("6months")}>
+        <button
+          onClick={() => handleTimeframeChange("6months")}
+          className="px-6 py-2 bg-purple-500 text-white font-thin rounded-lg shadow-md hover:bg-purple-600 focus:outline-none focus:ring-2 focus:ring-purple-300 transition-all duration-300"
+        >
           Last 6 Months
         </button>
       </div>
