@@ -133,7 +133,7 @@ function AddProduct() {
       alert("All images uploaded and data stored!");
 
       data.utilities = newUtilities;
-      data.date = new Date();
+      // data.date = new Date();
 
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/products`,

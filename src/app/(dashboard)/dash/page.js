@@ -1,14 +1,8 @@
 "use client";
 
 import { getUserRole } from "@/api/user";
-import ChartBox from "@/components/ChartBox/ChartBox";
+import AddedSalesChart from "@/components/AddedSalesChart/AddedSalesChart";
 import LastTransaction from "@/components/LastTransaction/LastTransaction";
-import {
-  chartBoxProduct,
-  chartBoxRevenue,
-  chartBoxUser,
-  chartOrder,
-} from "@/Data/chart";
 import { AuthContext } from "@/hooks/AuthProvider";
 import React, { useContext, useEffect, useState } from "react";
 
@@ -33,9 +27,11 @@ function Dash() {
       ) : role === "admin" ? (
         <div className="">
           <div className="">
-            <div className="">{/* <ChartBox {...chartBoxUser} /> */}</div>
+            <div className="">
+            <AddedSalesChart/>
+            </div>
           </div>
-          <LastTransaction />
+          {/* <LastTransaction /> */}
         </div>
       ) : (
         <div className="">

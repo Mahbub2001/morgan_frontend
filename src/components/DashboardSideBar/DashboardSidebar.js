@@ -12,6 +12,7 @@ import Link from "next/link";
 import { BsFillBookmarkHeartFill } from "react-icons/bs";
 import { useRouter } from "next/navigation";
 import { CgProfile } from "react-icons/cg";
+import { TbLabelImportantFilled } from "react-icons/tb";
 
 const DashboardSidebar = ({ role }) => {
   console.log(role);
@@ -288,6 +289,8 @@ const SidebarItem = ({
       {icon === "categories" && <MdCategory />}
       {icon === "add_products" && <MdOutlineAddBox />}
       {icon === "product_list" && <LuBox />}
+      {icon === "promote1" && <TbLabelImportantFilled />}
+      {icon === "promote2" && <TbLabelImportantFilled />}
       {icon === "manage_admins" && <IoPersonCircleOutline />}
       {icon === "admin_roles" && <IoSettingsOutline />}
       {icon === "wishlist" && <BsFillBookmarkHeartFill />}
