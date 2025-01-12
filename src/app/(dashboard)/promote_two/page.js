@@ -64,6 +64,7 @@ function Promote2() {
   };
 
   const [cat, setCat] = useState({
+    person: "",
     category: "",
     subCategory: "",
   });
@@ -81,6 +82,7 @@ function Promote2() {
 
     const settings = {
       promote2: {
+        person: cat.person,
         category: cat.category,
         subCategory: cat.subCategory,
         checkedId: data.filter((item) => item.promote).map((item) => item._id),

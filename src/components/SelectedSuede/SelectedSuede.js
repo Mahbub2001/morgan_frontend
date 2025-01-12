@@ -8,7 +8,7 @@ import React, { useState } from "react";
 function SelectedSuede({ promote1, settings }) {
   const [hoveredIndex, setHoveredIndex] = useState(null);
 
-  console.log(promote1, settings);
+  // console.log(promote1, settings);
 
   return (
     <div className="px-6 py-8 container mx-auto mt-20">
