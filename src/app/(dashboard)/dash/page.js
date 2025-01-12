@@ -2,6 +2,7 @@
 
 import { getUserRole } from "@/api/user";
 import AddedSalesChart from "@/components/AddedSalesChart/AddedSalesChart";
+import ChartsComponent from "@/components/ChartsComponent/ChartsComponent";
 import LastTransaction from "@/components/LastTransaction/LastTransaction";
 import { AuthContext } from "@/hooks/AuthProvider";
 import React, { useContext, useEffect, useState } from "react";
@@ -28,8 +29,11 @@ function Dash() {
         <div className="">
           <div className="">
             <div className="">
-            <AddedSalesChart/>
+              <AddedSalesChart />
             </div>
+          </div>
+          <div>
+            <ChartsComponent />
           </div>
           {/* <LastTransaction /> */}
         </div>
