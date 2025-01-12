@@ -19,7 +19,32 @@ const PieChart = ({ title, data }) => {
           breakpoint: 480,
           options: {
             chart: {
-              width: 200,
+              width: "100%",
+              height: 250,
+            },
+            legend: {
+              position: "bottom",
+            },
+          },
+        },
+        {
+          breakpoint: 768,
+          options: {
+            chart: {
+              width: "75%",
+              height: 350,
+            },
+            legend: {
+              position: "bottom",
+            },
+          },
+        },
+        {
+          breakpoint: 1024,
+          options: {
+            chart: {
+              width: "90%",
+              height: 400,
             },
             legend: {
               position: "bottom",
@@ -48,7 +73,7 @@ const PieChart = ({ title, data }) => {
         options={chartState.options}
         series={chartState.series}
         type="pie"
-        width={380}
+        width="80%"
         height={400}
       />
     </div>

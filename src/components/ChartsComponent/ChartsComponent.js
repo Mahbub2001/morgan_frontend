@@ -21,15 +21,25 @@ function ChartsComponent() {
   }, []);
 
   return (
-    <div className="mt-10 container mx-auto">
-      <h3 className="my-8 text-center text-2xl">Products Distribution</h3>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-        <PieChart title="Persons Distribution" data={data.personData} />
-        <PieChart title="Categories Distribution" data={data.categoryData} />
-        <PieChart
-          title="Subcategories Distribution"
-          data={data.subCategoryData}
-        />
+    <div className="mt-10">
+      <div className="grid grid-cols-1 md:grid-cols-2">
+        <div>
+          <h3 className="my-8 text-center text-2xl">Products Distribution</h3>
+          <div className="grid grid-cols-1 lg:grid-cols-2">
+            <PieChart title="Persons Distribution" data={data.personData} />
+            <PieChart
+              title="Categories Distribution"
+              data={data.categoryData}
+            />
+            <PieChart
+              title="Subcategories Distribution"
+              data={data.subCategoryData}
+            />
+          </div>
+        </div>
+        <div>
+          
+        </div>
       </div>
     </div>
   );
