@@ -17,15 +17,13 @@ function LastFiveOrders() {
 
   return (
     <div className="shadow-lg p-6 bg-white rounded-lg max-w-full overflow-x-auto">
-      <h2 className="font-semibold text-xl mb-4 text-center text-gray-700">
-        Last 5 Orders
-      </h2>
+      <h2 className="font-medium text-xl mb-4 text-center">Last 5 Orders</h2>
       <div className="overflow-x-auto">
-        <div className="grid grid-cols-4 gap-4 text-sm text-gray-600 border-b-2 pb-3 mb-4 min-w-[600px]">
-          <p className="font-semibold text-gray-800">User ID</p>
-          <p className="font-semibold text-gray-800">Order ID</p>
-          <p className="font-semibold text-gray-800">Status</p>
-          <p className="font-semibold text-gray-800">Price</p>
+        <div className="grid grid-cols-4 gap-4 text-sm border-b-2 pb-3 mb-4 min-w-[600px]">
+          <p className="font-thin">User ID</p>
+          <p className="font-thin">Order ID</p>
+          <p className="font-thin">Status</p>
+          <p className="font-thin">Price</p>
         </div>
         <div className="">
           {data.map((item, index) => (
