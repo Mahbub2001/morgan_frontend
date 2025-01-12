@@ -2,7 +2,7 @@ import localFont from "next/font/local";
 import { Open_Sans } from "next/font/google";
 import "./globals.css";
 import AuthProvider from "@/hooks/AuthProvider";
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer, toast } from "react-toastify";
 
 const openSans = Open_Sans({
   subsets: ["latin"],
@@ -20,11 +20,11 @@ const futuraSans = localFont({
       style: "normal",
     },
     {
-      path: "/fonts/FuturaLT.woff", 
+      path: "/fonts/FuturaLT.woff",
       style: "normal",
     },
   ],
-  variable: "--font-futura-sans", 
+  variable: "--font-futura-sans",
 });
 
 export const metadata = {
@@ -35,13 +35,18 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${openSans.variable} ${futuraSans.variable} antialiased`}>
+      <body
+        suppressHydrationWarning={true}
+        className={`${openSans.variable} ${futuraSans.variable} antialiased`}
+      >
         <AuthProvider>
-          <div>{children}</div>
+          <main>{children}</main>
         </AuthProvider>
-        {/* <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script> */}
-      <ToastContainer />
+        <ToastContainer />
       </body>
     </html>
   );
+}
+{
+  /* <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script> */
 }

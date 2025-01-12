@@ -4,7 +4,7 @@ export default function NotFound() {
   return (
     <div
       className="-mt-24 md:mt-0 relative flex size-full min-h-screen flex-col bg-white group/design-root overflow-x-hidden"
-      style={{ fontFamily: '"Plus Jakarta Sans", "Noto Sans", sans-serif' }}
+      // style={{ fontFamily: 'sans-serif' }}
     >
       <div className="layout-container flex h-full grow flex-col">
         <div className="flex flex-1 justify-center py-5">
