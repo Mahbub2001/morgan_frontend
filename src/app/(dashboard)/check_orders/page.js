@@ -4,6 +4,7 @@ import CheckOrderUserPagination from "@/components/CheckUserOrderFilter/CheckOrd
 import CheckUserOrderFilter from "@/components/CheckUserOrderFilter/CheckUserOrderFil";
 import MyCards from "@/containers/dashboard/MyCards/MyCards";
 import { AuthContext } from "@/hooks/AuthProvider";
+import withProtectedRoute from "@/Wrapper/protectedRoute";
 import Cookies from "js-cookie";
 import React, { useContext, useEffect, useState } from "react";
 
@@ -497,4 +498,4 @@ function CheckOrders() {
   );
 }
 
-export default CheckOrders;
+export default withProtectedRoute(CheckOrders);

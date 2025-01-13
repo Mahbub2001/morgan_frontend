@@ -33,7 +33,7 @@ function CheckOutForm({
 
   if (!info) return <p>Loading...</p>;
 
-  console.log(info);
+  // console.log(info);
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">

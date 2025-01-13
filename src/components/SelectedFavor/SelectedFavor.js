@@ -22,7 +22,7 @@ function SelectedFavor({ best }) {
             if (isSoldOut) {
               validUtility = product?.utilities[0];
             }
-            console.log(validUtility);
+            // console.log(validUtility);
 
             return (
               <Link

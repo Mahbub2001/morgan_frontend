@@ -4,8 +4,10 @@ import { AuthContext } from "@/hooks/AuthProvider";
 import withProtectedRoute from "@/Wrapper/protectedRoute";
 import axios from "axios";
 import Cookies from "js-cookie";
+import { useRouter } from "next/navigation";
 import React, { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 
 function CheckOut() {
   const { register, handleSubmit, watch, setValue } = useForm({
@@ -33,14 +35,13 @@ function CheckOut() {
   const [message, setMessage] = useState("");
   const { user } = useContext(AuthContext);
   let token = Cookies.get("ny-token");
+  const router = useRouter();
 
   useEffect(() => {
     fetch(`${process.env.NEXT_PUBLIC_API_URL}/coupons`)
       .then((res) => res.json())
       .then((data) => setValidCoupons(data));
   }, []);
-
-  // console.log(validCoupons);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -55,7 +56,6 @@ function CheckOut() {
       setVat(total * 0.1);
     }
   }, []);
-  console.log(token);
 
   const applyCoupon = () => {
     let percentageDiscount = 0,
@@ -96,6 +96,7 @@ function CheckOut() {
         data.coupon = coupon;
       }
       data.products = cartItems;
+      data.totalPriceWithOutDiscount = totalPrice;
       data.totalPrice = totalPrice - discount + vat;
       fetch(`${process.env.NEXT_PUBLIC_API_URL}/orders`, {
         method: "POST",
@@ -108,11 +109,13 @@ function CheckOut() {
         .then((res) => res.json())
         .then((res) => {
           if (res.success) {
-            alert("Order placed successfully!");
+            toast.success("Order placed successfully!");
             localStorage.removeItem("cartItems");
+            router
             // window.location.replace("/order-confirmation");
+            router.push("/check_orders");
           } else {
-            alert(res.message);
+            toast.error(res.message);
           }
         });
     }

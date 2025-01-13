@@ -17,6 +17,7 @@ function CartDrawer({
 }) {
   const [productDetails, setProductDetails] = useState([]);
   const [quantities, setQuantities] = useState({});
+  const [maxQuantity, setMaxQuantity] = useState({});
   const [isNoteVisible, setIsNoteVisible] = useState(false);
   const { user } = useContext(AuthContext);
 
@@ -40,7 +41,9 @@ function CartDrawer({
           image: pageDataI?.utility?.pictures[0],
           price: pageDataI?.allData?.price,
           color: pageDataI?.utility?.color,
+          maxQuantity: pageDataI?.utility?.numberOfProducts,
           quantity: quantity,
+          askingPrice: pageDataI?.allData?.askingPrice,
           discountPrice: afterDiscount,
         };
 
@@ -67,16 +70,27 @@ function CartDrawer({
           return acc;
         }, {});
         setQuantities(initialQuantities);
+
+        const initialMaxQuantities = storedCartItems.reduce((acc, product) => {
+          acc[product.id] = product.maxQuantity || 1;
+          return acc;
+        }, {});
+        setMaxQuantity(initialMaxQuantities);
       } else {
         const storedCartItems =
           JSON.parse(localStorage.getItem("cartItems")) || [];
-        console.log("Fetching cart items from localStorage:", storedCartItems);
+        // console.log("Fetching cart items from localStorage:", storedCartItems);
         setProductDetails(storedCartItems);
         const initialQuantities = storedCartItems.reduce((acc, product) => {
           acc[product.id] = product.quantity || 1;
           return acc;
         }, {});
         setQuantities(initialQuantities);
+        const initialMaxQuantities = storedCartItems.reduce((acc, product) => {
+          acc[product.id] = product.maxQuantity || 1;
+          return acc;
+        }, {});
+        setMaxQuantity(initialMaxQuantities);
       }
     }
   }, [isDrawerOpen, pageDataI, quantity, afterDiscount, setQuantity]);
@@ -106,7 +120,7 @@ function CartDrawer({
   const increment = (productId) => {
     const newQuantities = {
       ...quantities,
-      [productId]: Math.min((quantities[productId] || 1) + 1, 50),
+      [productId]: Math.min((quantities[productId] || 1) + 1, maxQuantity[productId]),
     };
     setQuantities(newQuantities);
     updateLocalStorage(newQuantities);

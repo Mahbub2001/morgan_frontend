@@ -25,7 +25,7 @@ function Accessories({ promote2, settings }) {
             if (isSoldOut) {
               validUtility = product?.utilities[0];
             }
-            console.log(validUtility);
+            // console.log(validUtility);
 
             return (
               <Link
