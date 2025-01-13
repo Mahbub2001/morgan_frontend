@@ -31,7 +31,7 @@ function Dash() {
       ) : role === "admin" ? (
         <div className="font-futura-sans font-thin">
           <div className="">
-            <AddedSalesChart />
+            {/* <AddedSalesChart /> */}
           </div>
           <div>
             <ChartsComponent />

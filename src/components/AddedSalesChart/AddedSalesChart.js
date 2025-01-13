@@ -47,7 +47,7 @@ const AddedSalesChart = () => {
           breakpoint: 1024,
           options: {
             chart: {
-              width: "100%",
+              // width: "100%",
               height: 300,
             },
           },
@@ -56,7 +56,7 @@ const AddedSalesChart = () => {
           breakpoint: 768,
           options: {
             chart: {
-              width: "100%",
+              // width: "100%",
               height: 250,
             },
           },
@@ -65,7 +65,7 @@ const AddedSalesChart = () => {
           breakpoint: 480,
           options: {
             chart: {
-              width: "100%",
+              // width: "100%",
               height: 200,
             },
           },
@@ -118,7 +118,7 @@ const AddedSalesChart = () => {
         />
       </div>
       <div id="html-dist"></div>
-      <div className="flex flex-wrap justify-center gap-4 mt-6">
+      {/* <div className="flex flex-wrap justify-center gap-4 mt-6">
         <button
           onClick={() => handleTimeframeChange("7days")}
           className="px-6 py-2 bg-blue-500 text-white font-thin rounded-lg shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300 transition-all duration-300"
@@ -137,7 +137,7 @@ const AddedSalesChart = () => {
         >
           Last 6 Months
         </button>
-      </div>
+      </div> */}
     </div>
   );
 };
