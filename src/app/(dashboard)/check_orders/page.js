@@ -8,6 +8,7 @@ import withProtectedRoute from "@/Wrapper/protectedRoute";
 import Cookies from "js-cookie";
 import { FaGetPocket } from "react-icons/fa6";
 import React, { useContext, useEffect, useState } from "react";
+import GiveReview from "@/components/GiveReview/GiveReview";
 
 function CheckOrders() {
   const [myorders, setMyorders] = useState([]);
@@ -16,7 +17,7 @@ function CheckOrders() {
   const [orderType, setOrderType] = useState("all-orders");
   const [duration, setDuration] = useState("this-week");
   const [currentPage, setCurrentPage] = useState(1);
-  const [limit, setLimit] = useState(10);
+  const [limit, setLimit] = useState(5);
   const [totalPages, setTotalPages] = useState(1);
   const [ft, setFt] = useState(false);
 
@@ -126,8 +127,6 @@ function CheckOrders() {
     }
     closeCancelModal();
   };
-
-  // console.log(myorders);
 
   return (
     <section className="container mx-auto px-4">
@@ -310,14 +309,7 @@ function CheckOrders() {
                           </dl>
                         )}
                         <div className="w-full grid sm:grid-cols-2 lg:flex lg:w-44 lg:items-center lg:justify-end gap-4">
-                          {order?.status === "received" && (
-                            <button
-                              type="button"
-                              className="w-full rounded-lg bg-primary-700 px-1 py-2 text-xs text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 lg:w-auto"
-                            >
-                              Give Review
-                            </button>
-                          )}
+                          {order?.status === "received" && <GiveReview order={order} />}
                           {order?.status !== "received" && (
                             <button
                               onClick={(e) => {
