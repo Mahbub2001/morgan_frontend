@@ -59,42 +59,41 @@ export default function Home() {
 
   // console.log({ best, promote1, promote2, settings });
 
-
   return (
     <div className="min-h-screen container mx-auto -mt-20 md:mt-40 z-0 mb-20">
-    {loading ? (
-      <div className="flex justify-center items-center min-h-screen">
-        <div className="text-center">
-          <div className="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full" role="status">
-            <span className="visually-hidden">Loading...</span>
+      {loading ? (
+        <div className="flex justify-center items-center min-h-screen">
+          <div className="flex flex-col items-center">
+            <div className="w-16 h-16 rounded-full animate-spin border-4 border-solid border-cyan-500 border-t-transparent shadow-lg"></div>
+            <p className="mt-4 text-lg font-semibold text-cyan-700">
+              Loading, please wait...
+            </p>
           </div>
-          <p className="mt-2">Loading, please wait...</p>
         </div>
-      </div>
-    ) : (
-      <>
-        <BannerFirstPage />
-        <div className="text-center mt-20">
-          <p className="font-semibold font-sans text-2xl">
-            Decadent Copenhagen, a name that stands for luxury, elegance and
-            versatility.
-          </p>
-          <p className="mt-5 font-sans">
-            Subtly sophisticated, not characterized by large logos, but by a
-            unified aesthetic consisting of quality leather <br /> and simple
-            design, intertwined with incredible functionality.
-          </p>
-        </div>
-        <SelectedFavor best={best} />
-        <Compromising />
-        <SecondBanner />
-        <SelectedSuede promote1={promote1} settings={settings} />
-        <CrossbodyBags />
-        <Forside />
-        <Accessories promote2={promote2} settings={settings}/>
-        <LandingInsta />
-      </>
-    )}
-  </div>
+      ) : (
+        <>
+          <BannerFirstPage />
+          <div className="text-center mt-20">
+            <p className="font-semibold font-sans text-2xl">
+              Decadent Copenhagen, a name that stands for luxury, elegance and
+              versatility.
+            </p>
+            <p className="mt-5 font-sans">
+              Subtly sophisticated, not characterized by large logos, but by a
+              unified aesthetic consisting of quality leather <br /> and simple
+              design, intertwined with incredible functionality.
+            </p>
+          </div>
+          <SelectedFavor best={best} />
+          <Compromising />
+          <SecondBanner />
+          <SelectedSuede promote1={promote1} settings={settings} />
+          <CrossbodyBags />
+          <Forside />
+          <Accessories promote2={promote2} settings={settings} />
+          <LandingInsta />
+        </>
+      )}
+    </div>
   );
 }
