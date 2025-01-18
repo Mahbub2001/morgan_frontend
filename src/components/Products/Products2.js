@@ -1,11 +1,13 @@
 "use client";
 
+import { SettingsContext } from "@/hooks/SettingsProvider";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { IoAdd } from "react-icons/io5";
 
 function Products2({ products }) {
   const [hoveredIndex, setHoveredIndex] = useState(null);
+  const { country,settings } = useContext(SettingsContext);
 
   const handleMouseEnter = (index) => {
     setHoveredIndex(index);
@@ -27,10 +29,10 @@ function Products2({ products }) {
 
           return (
             <Link
-            href={{
-              pathname: `/singleproduct`,
-              query: { color: validUtility.color, id: product._id },
-            }}
+              href={{
+                pathname: `/singleproduct`,
+                query: { color: validUtility.color, id: product._id },
+              }}
               key={index}
               // key={product._id}
               className="group relative cursor-pointer"
@@ -66,7 +68,19 @@ function Products2({ products }) {
                 {validUtility?.subName}
               </p>
               <p className="pt-1 text-center text-xs">
-                £ {product?.askingPrice}.00
+                {country == "Bangladesh" && (
+                  <span>
+                    BDT {product?.askingPrice * settings?.conversionRateBDT}
+                  </span>
+                )}
+                {country == "Denmark" && (
+                  <span>
+                    € {product?.askingPrice * settings?.conversionRateEuro}
+                  </span>
+                )}
+                {country !== "Bangladesh" && country !== "Denmark" && (
+                  <span>$ {product?.askingPrice}</span>
+                )}
               </p>
             </Link>
           );

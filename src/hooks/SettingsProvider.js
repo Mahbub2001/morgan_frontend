@@ -6,16 +6,20 @@ export const SettingsContext = createContext();
 const SettingsProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [country, setCountry] = useState("");
+  const [settings, setSettings] = useState([]);
   useEffect(() => {
     const fetchAllData = async () => {
       setLoading(true);
 
       try {
-        const [countryRes, bestRes, settingsRes] = await Promise.all([
+        const [countryRes, settingsRes] = await Promise.all([
           fetch("http://ip-api.com/json/"),
+          fetch(`${process.env.NEXT_PUBLIC_API_URL}/settings`),
         ]);
         const countryData = await countryRes.json();
+        const settingsData = await settingsRes.json();
         setCountry(countryData.country);
+        setSettings(settingsData);
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
@@ -30,7 +34,7 @@ const SettingsProvider = ({ children }) => {
     () => ({
       country,
       // best,
-      // settings,
+      settings,
       // promote1,
       // promote2,
     }),

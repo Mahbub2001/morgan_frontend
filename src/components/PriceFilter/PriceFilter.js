@@ -1,15 +1,22 @@
 // components/PriceFilter.js
 "use client";
-import React, { useEffect, useState } from "react";
+import { SettingsContext } from "@/hooks/SettingsProvider";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import { Range } from "react-range";
 
-const PriceFilter = ({
-  min = 0,
-  max = 500,
-  step = 1,
-  onChange,
-  resetFilter,
-}) => {
+const PriceFilter = ({ min = 0, step = 1, onChange, resetFilter }) => {
+  const { country, settings } = useContext(SettingsContext);
+
+  const max = useMemo(() => {
+    if (country === "Bangladesh") {
+      return 1000 * settings?.conversionRateBDT;
+    } else if (country === "Denmark") {
+      return 1000 * settings?.conversionRateEuro;
+    } else {
+      return 1000;
+    }
+  }, [country]);
+
   const [values, setValues] = useState([min, max]);
 
   useEffect(() => {
@@ -18,9 +25,27 @@ const PriceFilter = ({
     }
   }, [resetFilter, min, max]);
 
+  // const handleRangeChange = (newValues) => {
+  //   setValues(newValues);
+  //   if (onChange) onChange(newValues);
+  // };
   const handleRangeChange = (newValues) => {
+    let updatedValues = newValues;
+
+    if (country === "Bangladesh") {
+      updatedValues = [
+        newValues[0] / settings?.conversionRateBDT,
+        newValues[1] / settings?.conversionRateBDT,
+      ];
+    } else if (country === "Denmark") {
+      updatedValues = [
+        newValues[0] / settings?.conversionRateEuro,
+        newValues[1] / settings?.conversionRateEuro,
+      ];
+    }
+
     setValues(newValues);
-    if (onChange) onChange(newValues);
+    if (onChange) onChange(updatedValues);
   };
 
   return (
@@ -57,7 +82,7 @@ const PriceFilter = ({
       <div className="flex justify-between items-center mt-2">
         <div className="relative w-28">
           <span className="absolute inset-y-0 left-2 flex items-center text-gray-500 text-xs">
-            £
+            {country === "Bangladesh" ? "৳" : country === "Denmark" ? "€" : "$"}
           </span>
           <input
             type="number"
@@ -71,7 +96,7 @@ const PriceFilter = ({
         <span className="mx-2 font-medium">to</span>
         <div className="relative w-28">
           <span className="absolute inset-y-0 left-2 flex items-center text-gray-500 text-xs">
-            £
+            {country === "Bangladesh" ? "৳" : country === "Denmark" ? "€" : "$"}
           </span>
           <input
             type="number"
