@@ -2,11 +2,14 @@
 
 import Button2 from "@/containers/common/Button2/Button2";
 import { accessories } from "@/Data/ProductData";
+import { SettingsContext } from "@/hooks/SettingsProvider";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 
 function Accessories({ promote2, settings }) {
   const [hoveredIndex, setHoveredIndex] = useState(null);
+
+  const { country } = useContext(SettingsContext);
 
   return (
     <div className="px-6 py-8 container mx-auto mt-20">
@@ -77,7 +80,23 @@ function Accessories({ promote2, settings }) {
                     <h1 className="text-1xl font-thin text-gray-700">
                       {product?.productName}
                     </h1>
-                    <p className="text-xs">$ {product?.askingPrice}</p>
+                    <p className="text-xs">
+                      {country == "Bangladesh" && (
+                        <span>
+                          BDT{" "}
+                          {product?.askingPrice * settings?.conversionRateBDT}
+                        </span>
+                      )}
+                      {country == "Denmark" && (
+                        <span>
+                          €{" "}
+                          {product?.askingPrice * settings?.conversionRateEuro}
+                        </span>
+                      )}
+                      {country !== "Bangladesh" && country !== "Denmark" && (
+                        <span>$ {product?.askingPrice}</span>
+                      )}
+                    </p>
                   </div>
                   {product?.sales > 5 && (
                     <p className="text-xs mt-1 text-gray-700">

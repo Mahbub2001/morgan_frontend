@@ -87,7 +87,7 @@ export default function Home() {
               design, intertwined with incredible functionality.
             </p>
           </div>
-          <SelectedFavor best={best} />
+          <SelectedFavor best={best} settings={settings} />
           <Compromising />
           <SecondBanner />
           <SelectedSuede promote1={promote1} settings={settings} />

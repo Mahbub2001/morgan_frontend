@@ -3,6 +3,7 @@ import { Open_Sans } from "next/font/google";
 import "./globals.css";
 import AuthProvider from "@/hooks/AuthProvider";
 import { ToastContainer, toast } from "react-toastify";
+import SettingsProvider from "@/hooks/SettingsProvider";
 
 const openSans = Open_Sans({
   subsets: ["latin"],
@@ -43,7 +44,6 @@ const futuraSans = localFont({
   variable: "--font-futura-sans",
 });
 
-
 export const metadata = {
   title: "Ny Morgan",
   description: "Created by Mahbub Ahmed",
@@ -57,7 +57,9 @@ export default function RootLayout({ children }) {
         className={`${openSans.variable} ${futuraSans.variable} antialiased`}
       >
         <AuthProvider>
-          <main>{children}</main>
+          <SettingsProvider>
+            <main>{children}</main>
+          </SettingsProvider>
         </AuthProvider>
         <ToastContainer />
       </body>

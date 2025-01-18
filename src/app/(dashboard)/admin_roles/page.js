@@ -4,6 +4,7 @@ import Button3 from "@/containers/common/Button3/Button3";
 import Cookies from "js-cookie";
 import withProtectedRoute from "@/Wrapper/protectedRoute";
 import AdminRoute from "@/Wrapper/AdminRoute";
+import { toast } from "react-toastify";
 
 function AdminRoles() {
   const [settings, setSettings] = useState({
@@ -74,10 +75,10 @@ function AdminRoles() {
         .then((data) => {
           console.log(data);
         });
-      alert("Settings saved successfully!");
+      toast.success("Settings saved successfully!");
     } catch (error) {
-      console.error("Error saving settings:", error);
-      alert("Failed to save settings.");
+      // console.error("Error saving settings:", error);
+      toast.error("Failed to save settings.", error);
     }
   };
 
@@ -229,13 +230,15 @@ function AdminRoles() {
             </div>
           </div>
 
-          <div onClick={handleSave} className="flex justify-end mt-8">
-            <Button3
-              text="SAVE"
-              textColor="white"
-              backgroundColor="orange"
-              borderColor="orange"
-            />
+          <div className="flex justify-end mt-8">
+            <div onClick={handleSave}>
+              <Button3
+                text="SAVE"
+                textColor="white"
+                backgroundColor="orange"
+                borderColor="orange"
+              />
+            </div>
           </div>
         </div>
       </div>
