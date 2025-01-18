@@ -15,20 +15,23 @@ export default function Home() {
   const [promote1, setPromote1] = useState([]);
   const [promote2, setPromote2] = useState([]);
   const [settings, setSettings] = useState([]);
+  const [country, setCountry] = useState("");
 
   useEffect(() => {
     const fetchAllData = async () => {
       setLoading(true);
 
       try {
-        const [bestRes, settingsRes] = await Promise.all([
+        const [countryRes, bestRes, settingsRes] = await Promise.all([
+          fetch("http://ip-api.com/json/"),
           fetch(`${process.env.NEXT_PUBLIC_API_URL}/top-sales`),
           fetch(`${process.env.NEXT_PUBLIC_API_URL}/settings`),
         ]);
-
+        const countryData = await countryRes.json();
         const bestData = await bestRes.json();
         const settingsData = await settingsRes.json();
 
+        setCountry(countryData.country);
         setBest(bestData);
         setSettings(settingsData);
 
@@ -57,7 +60,7 @@ export default function Home() {
     fetchAllData();
   }, []);
 
-  // console.log({ best, promote1, promote2, settings });
+  // console.log("Country:", country);
 
   return (
     <div className="min-h-screen container mx-auto -mt-20 md:mt-40 z-0 mb-20">

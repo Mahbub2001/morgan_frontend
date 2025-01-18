@@ -15,7 +15,7 @@ import { CgProfile } from "react-icons/cg";
 import { TbLabelImportantFilled } from "react-icons/tb";
 
 const DashboardSidebar = ({ role }) => {
-  console.log(role);
+  // console.log(role);
 
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [activeLink, setActiveLink] = useState("/dash");
