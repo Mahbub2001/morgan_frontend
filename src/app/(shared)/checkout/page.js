@@ -98,8 +98,31 @@ function CheckOut() {
         data.coupon = coupon;
       }
       data.products = cartItems;
-      data.totalPriceWithOutDiscount = totalPrice;
-      data.totalPrice = totalPrice - discount + vat;
+      data.totalPriceWithOutDiscount = totalPrice.toFixed(2);
+      data.totalPrice = (totalPrice - discount + vat).toFixed(2);
+      data.currency =
+        country === "Bangladesh"
+          ? "BDT"
+          : country === "Denmark"
+          ? "DKK"
+          : "USD";
+      data.currencyRate =
+        country === "Bangladesh"
+          ? settings?.conversionRateBDT
+          : country === "Denmark"
+          ? settings?.conversionRateEuro
+          : 1;
+      data.total_with_payment_method =
+        country === "Bangladesh"
+          ? Number(
+              (totalPrice - discount + vat) * settings?.conversionRateBDT
+            ).toFixed(2)
+          : country === "Denmark"
+          ? Number(
+              (totalPrice - discount + vat) * settings?.conversionRateEuro
+            ).toFixed(2)
+          : (totalPrice - discount + vat).toFixed(2);
+          
       fetch(`${process.env.NEXT_PUBLIC_API_URL}/orders`, {
         method: "POST",
         headers: {
