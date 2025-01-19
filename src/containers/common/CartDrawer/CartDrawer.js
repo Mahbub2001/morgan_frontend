@@ -3,6 +3,7 @@ import { CgClose } from "react-icons/cg";
 import Button3 from "../Button3/Button3";
 import Link from "next/link";
 import { AuthContext } from "@/hooks/AuthProvider";
+import { SettingsContext } from "@/hooks/SettingsProvider";
 
 function CartDrawer({
   isDrawerOpen,
@@ -20,6 +21,7 @@ function CartDrawer({
   const [maxQuantity, setMaxQuantity] = useState({});
   const [isNoteVisible, setIsNoteVisible] = useState(false);
   const { user } = useContext(AuthContext);
+  const { country, settings } = useContext(SettingsContext);
 
   const toggleNote = () => {
     setIsNoteVisible(!isNoteVisible);
@@ -79,7 +81,6 @@ function CartDrawer({
       } else {
         const storedCartItems =
           JSON.parse(localStorage.getItem("cartItems")) || [];
-        // console.log("Fetching cart items from localStorage:", storedCartItems);
         setProductDetails(storedCartItems);
         const initialQuantities = storedCartItems.reduce((acc, product) => {
           acc[product.id] = product.quantity || 1;
@@ -120,7 +121,10 @@ function CartDrawer({
   const increment = (productId) => {
     const newQuantities = {
       ...quantities,
-      [productId]: Math.min((quantities[productId] || 1) + 1, maxQuantity[productId]),
+      [productId]: Math.min(
+        (quantities[productId] || 1) + 1,
+        maxQuantity[productId]
+      ),
     };
     setQuantities(newQuantities);
     updateLocalStorage(newQuantities);
@@ -192,7 +196,32 @@ function CartDrawer({
                           {product.name}
                         </p>
                         <p className="font-futura-sans text-xs pt-1">
-                          $ {Number(product.discountPrice).toFixed(2)}
+                          {country === "Bangladesh"
+                            ? "BDT "
+                            : country === "Denmark"
+                            ? "DKK "
+                            : "USD "}
+
+                          {country === "Bangladesh" ? (
+                            <span>
+                              {Number(
+                                product.discountPrice *
+                                  settings?.conversionRateBDT
+                              ).toFixed(2)}
+                            </span>
+                          ) : country === "Denmark" ? (
+                            <span>
+                              {Number(
+                                product.discountPrice *
+                                  settings?.conversionRateEuro
+                              ).toFixed(2)}
+                            </span>
+                          ) : (
+                            <span>
+                              {Number(product.discountPrice).toFixed(2)}
+                            </span>
+                          )}
+                          {/* {Number(product.discountPrice).toFixed(2)} */}
                         </p>
                       </div>
                       <div className="flex items-center gap-2">

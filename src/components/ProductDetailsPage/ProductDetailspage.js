@@ -16,7 +16,9 @@ import ProductDetailFooter from "../ProductDetailFooter/ProductDetailFooter";
 import CartDrawer from "@/containers/common/CartDrawer/CartDrawer";
 import ProductReviews from "../ProductReviews/ProductReviews";
 import { AuthContext } from "@/hooks/AuthProvider";
+import { SettingsContext } from "@/hooks/SettingsProvider";
 function ProductDetailspage({ id, color }) {
+  const { country, settings } = useContext(SettingsContext);
   const [data, setData] = useState(null);
   const [pageDataI, setPageDataI] = useState(null);
   const [error, setError] = useState(null);
@@ -236,6 +238,17 @@ function ProductDetailspage({ id, color }) {
   if (!pageDataI) {
     return <div>Loading...</div>;
   }
+  let showafterDiscount = afterDiscount;
+  let showaskingPrice = pageDataI?.allData?.askingPrice;
+  if (country === "Bangladesh") {
+    showafterDiscount = afterDiscount * settings?.conversionRateBDT;
+    showaskingPrice =
+      pageDataI?.allData?.askingPrice * settings?.conversionRateBDT;
+  } else if (country === "Denmark") {
+    showafterDiscount = afterDiscount * settings?.conversionRateEuro;
+    showaskingPrice =
+      pageDataI?.allData?.askingPrice * settings?.conversionRateEuro;
+  }
 
   return (
     <div className="container mx-auto -mt-20 lg:mt-24 xl:mt-20 mb-10">
@@ -293,21 +306,34 @@ function ProductDetailspage({ id, color }) {
                 {pageDataI?.allData?.discount > 0 ? (
                   <span className="flex gap-3">
                     <span className="text-gold">
-                      €{" "}
-                      {Number.isInteger(afterDiscount)
-                        ? afterDiscount
-                        : afterDiscount.toFixed(2)}
+                      {country === "Bangladesh"
+                        ? "৳"
+                        : country === "Denmark"
+                        ? "€"
+                        : "$"}{" "}
+                      {Number.isInteger(showafterDiscount)
+                        ? showafterDiscount
+                        : showafterDiscount.toFixed(2)}
                     </span>
                     <span className="line-through">
-                      € {(pageDataI?.allData?.askingPrice).toFixed(2)}
+                      {country === "Bangladesh"
+                        ? "৳"
+                        : country === "Denmark"
+                        ? "€"
+                        : "$"}{" "}
+                      {showaskingPrice.toFixed(2)}
                     </span>{" "}
                   </span>
                 ) : (
                   <>
-                    €{" "}
-                    {Number.isInteger(afterDiscount)
-                      ? afterDiscount.toFixed(2)
-                      : afterDiscount.toFixed(2)}
+                    {country === "Bangladesh"
+                      ? "৳"
+                      : country === "Denmark"
+                      ? "€"
+                      : "$"}{" "}
+                    {Number.isInteger(showafterDiscount)
+                      ? showafterDiscount.toFixed(2)
+                      : showafterDiscount.toFixed(2)}
                   </>
                 )}
               </p>

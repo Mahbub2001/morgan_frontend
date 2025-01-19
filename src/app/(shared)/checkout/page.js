@@ -1,6 +1,7 @@
 "use client";
 import CheckOutForm from "@/components/CheckOutForm/CheckOutForm";
 import { AuthContext } from "@/hooks/AuthProvider";
+import { SettingsContext } from "@/hooks/SettingsProvider";
 import withProtectedRoute from "@/Wrapper/protectedRoute";
 import axios from "axios";
 import Cookies from "js-cookie";
@@ -10,6 +11,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 
 function CheckOut() {
+  const { country, settings } = useContext(SettingsContext);
   const { register, handleSubmit, watch, setValue } = useForm({
     defaultValues: {
       email: "",
@@ -111,7 +113,7 @@ function CheckOut() {
           if (res.success) {
             toast.success("Order placed successfully!");
             localStorage.removeItem("cartItems");
-            router
+            router;
             // window.location.replace("/order-confirmation");
             router.push("/check_orders");
           } else {
@@ -187,7 +189,35 @@ function CheckOut() {
                       </div>
                     </div>
                     <p className="text-sm font-extralight text-white">
-                      ${item.discountPrice * item.quantity}.00
+                      {country === "Bangladesh"
+                        ? "BDT "
+                        : country === "Denmark"
+                        ? "DKK "
+                        : "USD "}
+                      {country === "Bangladesh" ? (
+                        <span>
+                          {Number(
+                            item.discountPrice *
+                              item.quantity *
+                              settings?.conversionRateBDT
+                          ).toFixed(2)}
+                        </span>
+                      ) : country === "Denmark" ? (
+                        <span>
+                          {Number(
+                            item.discountPrice *
+                              item.quantity *
+                              settings?.conversionRateEuro
+                          ).toFixed(2)}
+                        </span>
+                      ) : (
+                        <span>
+                          {Number(item.discountPrice * item.quantity).toFixed(
+                            2
+                          )}
+                        </span>
+                      )}
+                      {/* ${item.discountPrice * item.quantity} */}
                     </p>
                   </li>
                 ))}
@@ -219,22 +249,90 @@ function CheckOut() {
               <div className="space-y-2 mt-5">
                 <p className="flex justify-between text-lg font-light text-white">
                   <span>Subtotal price:</span>
-                  <span>${(totalPrice - discount).toFixed(2)}</span>
+                  <span>
+                    {country === "Bangladesh" && "BDT "}
+                    {country === "Denmark" && "DKK "}
+                    {country !== "Bangladesh" &&
+                      country !== "Denmark" &&
+                      "USD "}
+                    {country === "Bangladesh"
+                      ? Number(
+                          (totalPrice - discount) * settings?.conversionRateBDT
+                        ).toFixed(2)
+                      : country === "Denmark"
+                      ? Number(
+                          (totalPrice - discount) * settings?.conversionRateEuro
+                        ).toFixed(2)
+                      : (totalPrice - discount).toFixed(2)}
+                  </span>
                 </p>
                 <p className="flex justify-between text-sm font-medium text-white">
                   <span>Vat: 10%</span>
-                  <span>${vat.toFixed(2)}</span>
+                  <span>
+                    {country === "Bangladesh" && "BDT "}
+                    {country === "Denmark" && "DKK "}
+                    {country !== "Bangladesh" &&
+                      country !== "Denmark" &&
+                      "USD "}
+                    {country === "Bangladesh"
+                      ? Number(vat * settings?.conversionRateBDT).toFixed(2)
+                      : country === "Denmark"
+                      ? Number(vat * settings?.conversionRateEuro).toFixed(2)
+                      : vat.toFixed(2)}
+                  </span>
                 </p>
+
+                {/* <p className="flex justify-between text-sm font-medium text-white">
+                  <span>Vat: 10%</span>
+                  <span>${vat.toFixed(2)}</span>
+                </p> */}
                 {discount > 0 && (
                   <p className="flex justify-between text-sm font-medium text-green-400">
                     <span>Discount Applied:</span>
-                    <span>-${discount.toFixed(2)}</span>
+                    <span>
+                      {country === "Bangladesh" && "BDT "}
+                      {country === "Denmark" && "DKK "}
+                      {country !== "Bangladesh" &&
+                        country !== "Denmark" &&
+                        "USD "}
+                      -
+                      {country === "Bangladesh"
+                        ? Number(
+                            discount * settings?.conversionRateBDT
+                          ).toFixed(2)
+                        : country === "Denmark"
+                        ? Number(
+                            discount * settings?.conversionRateEuro
+                          ).toFixed(2)
+                        : discount.toFixed(2)}
+                    </span>
                   </p>
                 )}
                 <p className="flex justify-between text-lg font-light text-white">
                   <span>Total price:</span>
-                  <span>${(totalPrice - discount + vat).toFixed(2)}</span>
+                  <span>
+                    {country === "Bangladesh" && "BDT "}
+                    {country === "Denmark" && "DKK "}
+                    {country !== "Bangladesh" &&
+                      country !== "Denmark" &&
+                      "USD "}
+                    {country === "Bangladesh"
+                      ? Number(
+                          (totalPrice - discount + vat).toFixed(2) *
+                            settings?.conversionRateBDT
+                        ).toFixed(2)
+                      : country === "Denmark"
+                      ? Number(
+                          (totalPrice - discount + vat).toFixed(2) *
+                            settings?.conversionRateEuro
+                        ).toFixed(2)
+                      : vat.toFixed(2)}
+                  </span>
                 </p>
+                {/* <p className="flex justify-between text-lg font-light text-white">
+                  <span>Total price:</span>
+                  <span>${(totalPrice - discount + vat).toFixed(2)}</span>
+                </p> */}
               </div>
             </div>
             <div className="relative mt-10 text-white">
