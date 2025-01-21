@@ -28,7 +28,7 @@ body {
 .back {
   /* margin: 0;
   padding: 0; */
-  color: white;
+  /* color: white; */
   /* min-height: 100vh; */
   background: linear-gradient(135deg, rgba(48, 53, 65,1) 55%, rgba(236, 28, 35, 1) 45%);
   background-attachment: fixed;

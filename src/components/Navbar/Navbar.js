@@ -86,13 +86,22 @@ function Navbar() {
 
   return (
     <>
-      <div className="fixed top-0 left-0 w-full z-50 bg-white shadow-sm back">
+      <div className="fixed top-0 left-0 w-full z-50 bg-white text-white shadow-sm back">
         <Announcement />
         <div className="border-b-[1px] py-8" ref={navbarRef}>
           <div className="main-navbar ">
             <div className="container mx-auto">
               <div className="flex justify-between items-center">
-                <ul className="flex gap-4 text-[0.9rem]">
+                <ul className="flex gap-4 text-[0.9rem] items-center">
+                  <li className="-pt-5">
+                    <Link href="/">
+                      <img
+                        className=" h-12 w-16 "
+                        src="/icon.png"
+                        alt="logo"
+                      />
+                    </Link>
+                  </li>
                   <li
                     onClick={() => toggleDropdown("Shop")}
                     className={`cursor-pointer border-b-2 ${

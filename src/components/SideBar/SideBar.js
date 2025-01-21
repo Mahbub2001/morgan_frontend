@@ -98,7 +98,7 @@ const Sidebar = ({ handleCartclick }) => {
 
   return (
     <>
-      <header className="fixed top-0 left-0 w-full h-16 bg-white shadow-md z-50 flex items-center justify-between px-4 md:px-8">
+      <header className="back fixed top-0 left-0 w-full h-16 bg-white shadow-md z-50 flex items-center justify-between px-4 md:px-8">
         <button
           className="text-2xl focus:outline-none"
           onClick={toggleSidebar}
@@ -115,7 +115,7 @@ const Sidebar = ({ handleCartclick }) => {
       </header>
 
       <motion.div
-        className={`fixed top-16 left-0 h-[calc(100%-4rem)] w-72 bg-white shadow-lg z-40 transition-transform duration-300 ${
+        className={`fixed top-16 left-0 h-[calc(100%-4rem)] w-72 back shadow-lg z-40 transition-transform duration-300 ${
           isSidebarOpen ? "translate-x-0" : "-translate-x-full"
         }`}
         variants={sidebarVariants}
