@@ -156,14 +156,14 @@ export const categories = [
         category: "Small Leather Goods",
         link: "/Kid/Small Leather Goods",
         items: [
-          { name: "Goods", link: "/Kid/Small Leather Goods/Goods" },
+          { name: "Toiletry Bags", link: "/Kid/Small Leather Goods/Toiletry Bags" },
           {
             name: "Wallets",
             link: "/Kid/Small Leather Goods/Wallets",
           },
           {
-            name: "Small",
-            link: "/Kid/Small Leather Goods/Small-bags",
+            name: "Phone Cases",
+            link: "/Kid/Small Leather Goods/Phone Cases",
           },
         ],
       },

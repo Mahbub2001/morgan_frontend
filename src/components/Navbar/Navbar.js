@@ -86,10 +86,10 @@ function Navbar() {
 
   return (
     <>
-      <div className="fixed top-0 left-0 w-full z-50 bg-white shadow-sm">
+      <div className="fixed top-0 left-0 w-full z-50 bg-white shadow-sm back">
         <Announcement />
         <div className="border-b-[1px] py-8" ref={navbarRef}>
-          <div className="main-navbar">
+          <div className="main-navbar ">
             <div className="container mx-auto">
               <div className="flex justify-between items-center">
                 <ul className="flex gap-4 text-[0.9rem]">
@@ -253,14 +253,14 @@ function Navbar() {
                       Kids
                     </li>
                   </div>
-                  <motion.div className="absolute left-0 right-0 mt-2 bg-white border-b-[1px] py-3">
+                  <motion.div className="absolute left-0 right-0 mt-2 back border-b-[1px] py-3">
                     <div className="container mx-auto">
                       <div className="grid grid-cols-12 gap-5">
                         <div className="col-span-8">
                           <div className="grid grid-cols-3 gap-5">
                             {categories[0].items.map((category) => (
                               <div key={category.category}>
-                                <p className="text-gray-700 text-sm font-semibold">
+                                <p className="text-white text-sm font-semibold">
                                   {category?.category}
                                 </p>
                                 <ul className="space-y-2 mt-1">
@@ -271,7 +271,7 @@ function Navbar() {
                                     >
                                       <Link
                                         onClick={() => setActiveDropdown(null)}
-                                        className="!font-futara-sans !text-xs text-gray-800 hover:text-blue-900"
+                                        className="!font-futara-sans !text-xs text-white hover:text-blue-300"
                                         href={{
                                           pathname: "/allproducts",
                                           query: { take: item?.link },
@@ -295,14 +295,14 @@ function Navbar() {
               )}
             </AnimatePresence>
             {activeDropdown === "women" && (
-              <div className="absolute left-0 right-0 mt-2 bg-white border-b-[1px] py-3">
+              <div className="absolute left-0 right-0 mt-2 back border-b-[1px] py-3">
                 <div className="container mx-auto">
                   <div className="grid grid-cols-12 gap-5">
                     <div className="col-span-8">
                       <div className="grid grid-cols-3 gap-5">
                         {categories[0].items.map((category) => (
                           <div key={category.category}>
-                            <p className="text-gray-700 text-sm font-semibold">
+                            <p className="text-white text-sm font-semibold">
                               {category?.category}
                             </p>
                             <ul className="space-y-2 mt-1">
@@ -313,7 +313,7 @@ function Navbar() {
                                 >
                                   <Link
                                     onClick={() => setActiveDropdown(null)}
-                                    className="!font-futara-sans !text-xs text-gray-800 hover:text-blue-900"
+                                    className="!font-futara-sans !text-xs text-white hover:text-blue-300"
                                     href={{
                                       pathname: "/allproducts",
                                       query: { take: item?.link },
@@ -336,14 +336,14 @@ function Navbar() {
             )}
 
             {activeDropdown === "men" && (
-              <div className="absolute left-0 right-0 mt-2 bg-white border-b-[1px] py-3">
+              <div className="absolute left-0 right-0 mt-2 back border-b-[1px] py-3">
                 <div className="container mx-auto">
                   <div className="grid grid-cols-12 gap-5">
                     <div className="col-span-8">
                       <div className="grid grid-cols-3 gap-5">
                         {categories[1].items.map((category) => (
                           <div key={category.category}>
-                            <p className="text-gray-700 text-sm font-semibold">
+                            <p className="text-white text-sm font-semibold">
                               {category.category}
                             </p>
                             <ul className="space-y-2 mt-1">
@@ -354,7 +354,7 @@ function Navbar() {
                                 >
                                   <Link
                                     onClick={() => setActiveDropdown(null)}
-                                    className="!font-futara-sans !text-xs text-gray-800 hover:text-blue-900"
+                                    className="!font-futara-sans !text-xs text-white hover:text-blue-300"
                                     href={{
                                       pathname: "/allproducts",
                                       query: { take: item?.link },
@@ -377,14 +377,14 @@ function Navbar() {
             )}
 
             {activeDropdown === "kids" && (
-              <div className="absolute left-0 right-0 mt-2 bg-white border-b-[1px] py-3">
+              <div className="absolute left-0 right-0 mt-2 back border-b-[1px] py-3">
                 <div className="container mx-auto">
                   <div className="grid grid-cols-12 gap-5">
                     <div className="col-span-8">
                       <div className="grid grid-cols-3 gap-5">
                         {categories[2].items.map((category) => (
                           <div key={category.category}>
-                            <p className="text-gray-700 text-sm font-semibold">
+                            <p className="text-white text-sm font-semibold">
                               {category?.category}
                             </p>
                             <ul className="space-y-2 mt-1">
@@ -395,7 +395,7 @@ function Navbar() {
                                 >
                                   <Link
                                     onClick={() => setActiveDropdown(null)}
-                                    className="!font-futara-sans !text-xs text-gray-800 hover:text-blue-900"
+                                    className="!font-futara-sans !text-xs text-white hover:text-blue-300"
                                     href={{
                                       pathname: "/allproducts",
                                       query: { take: item?.link },

@@ -31,18 +31,18 @@ const Dropdown2 = ({ title, items, isVisible, closeDropdown, dropdownRef }) => {
         exit="hidden"
         ref={dropdownRef}
         // style={animation}
-        className="absolute left-0 right-0 mt-2 bg-white border-b-[1px] py-5 origin-top"
+        className="absolute left-0 right-0 mt-2 back border-b-[1px] py-5 origin-top"
       >
         <div className="container mx-auto flex justify-between">
           <div>
-            <p className="text-gray-700 text-sm">{title}</p>
+            <p className="text-white text-sm">{title}</p>
             <ul className="space-y-2 mt-2">
               {items.map((item, index) => (
                 <motion.li
                   onClick={closeDropdown}
                   key={index}
                   variants={itemVariants}
-                  className="text-sm font-light cursor-pointer hover:bg-gray-200"
+                  className="text-sm font-light cursor-pointer hover:text-gray-200"
                 >
                   {item?.name}
                 </motion.li>
@@ -52,7 +52,7 @@ const Dropdown2 = ({ title, items, isVisible, closeDropdown, dropdownRef }) => {
           <div className="">
             <ul className="gap-5 flex justify-center items-center">
               <li className="text-[0.6rem]">
-                <p className="text-gray-700 text-sm cursor-pointer hover:border-b-2">
+                <p className="text-white text-sm cursor-pointer hover:border-b-2">
                   Hero Style
                 </p>
                 <div className="relative overflow-hidden">
@@ -68,7 +68,7 @@ const Dropdown2 = ({ title, items, isVisible, closeDropdown, dropdownRef }) => {
                 </div>
               </li>
               <li className="text-[0.6rem]">
-                <p className="text-gray-700 text-sm cursor-pointer hover:border-b-2">
+                <p className="text-white text-sm cursor-pointer hover:border-b-2">
                   Independent
                 </p>
                 <div className="relative overflow-hidden">

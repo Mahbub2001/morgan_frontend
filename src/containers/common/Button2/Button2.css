@@ -12,6 +12,7 @@
     height: 35px;
     padding: 10px 20px;
     border: 2px solid black;
+    /* border: 2px solid white; */
     background: transparent;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -29,6 +30,7 @@
   .btn-32:hover{
     background: transparent;
     color: black;
+    /* color: white; */
   }
   .btn-32 span {
     position: relative;
@@ -44,6 +46,7 @@
     content: "";
     left: 0;
     top: 0;
+    /* background: white; */
     background: black;
     transition: all 0.3s ease;
   }
@@ -67,6 +70,7 @@
     content: "";
     right: 0;
     bottom: 0;
+    /* background: white; */
     background: black;
     transition: all 0.3s ease;
   }

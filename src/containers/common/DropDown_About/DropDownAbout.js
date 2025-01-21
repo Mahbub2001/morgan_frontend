@@ -31,11 +31,11 @@ const Dropdown = ({ title, items, isVisible, closeDropdown, dropdownRef }) => {
       animate="visible"
       exit="hidden"
       ref={dropdownRef}
-      className="absolute left-0 right-0 mt-2 bg-white border-b-[1px] py-5 origin-top"
+      className="absolute left-0 right-0 mt-2 back border-b-[1px] py-5 origin-top"
     >
       <div className="container mx-auto flex justify-between ">
         <div>
-          <p className="text-gray-700 text-sm">{title}</p>
+          <p className="text-white text-sm">{title}</p>
           <ul className="space-y-2 mt-2">
             {items.map((item, index) => (
               <motion.li
@@ -48,7 +48,7 @@ const Dropdown = ({ title, items, isVisible, closeDropdown, dropdownRef }) => {
                   onClick={closeDropdown}
                   href={item?.link}
                   key={index}
-                  className="block text-sm font-light cursor-pointer hover:bg-gray-200"
+                  className="block text-sm font-light cursor-pointer hover:text-gray-200"
                 >
                   {item?.name}
                 </Link>

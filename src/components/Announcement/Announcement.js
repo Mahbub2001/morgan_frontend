@@ -8,7 +8,7 @@ function Announcement() {
           BLACK WEEK - SAVE 20% ON EVERYTHING
         </p>
       </div>
-      <div className="bg-gray-100 upper flex flex-col justify-center items-center">
+      <div className="bg-gray-100 upper flex flex-col justify-center items-center text-black">
         <p className="py-2 tracking-wider text-sm">
           Free shipping / Christmas gifts are exchanged until 15-01-25 / Easy
           returns

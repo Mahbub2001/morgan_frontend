@@ -64,7 +64,7 @@ function SelectedFavor({ best, settings }) {
                       className="border rounded-md cursor-pointer hover:border-gray-300 hover:scale-105 transition transform duration-200"
                     >
                       <span
-                        className="text-xs text-gray-500 p-0.5"
+                        className="text-xs change-color p-0.5"
                         // className="block h-3 w-3 rounded-full"
                         // style={{ backgroundColor: color }}
                       >
@@ -76,7 +76,7 @@ function SelectedFavor({ best, settings }) {
 
                 <div className="mt-1">
                   <div className="flex justify-between items-center py-1">
-                    <h1 className="text-1xl font-thin text-gray-700">
+                    <h1 className="text-1xl font-thin change-color">
                       {product?.productName}
                     </h1>
                     <p className="text-xs">
