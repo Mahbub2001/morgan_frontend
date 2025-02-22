@@ -2,6 +2,7 @@
 import Button3 from "@/containers/common/Button3/Button3";
 import React, { useState } from "react";
 import emailjs from "@emailjs/browser";
+
 function Contact() {
   const [formData, setFormData] = useState({
     name: "",
@@ -53,11 +54,25 @@ function Contact() {
         }
       );
   };
+
   return (
     <section className="body-font relative -mt-20 lg:mt-24 xl:mt-20">
-      <div className="container mx-auto px-5 py-24">
+      <div
+        className="absolute inset-0 bg-cover bg-center opacity-20 pointer-events-none"
+        style={{
+          backgroundImage: "url('/nmf_watermark.png')",
+          backgroundSize: "100%", 
+          backgroundRepeat: "no-repeat",
+          backgroundPosition: "center",
+          width: "100%", 
+          height: "100%",
+          zIndex: -1,
+        }}
+      ></div>
+
+      <div className="container mx-auto px-5 py-24 relative">
         <div className="mb-12 flex w-full flex-col text-center text-xs text-gray-700">
-          <h1 className="title-font mb-4 text-2xl font-medium  sm:text-3xl tracking-widest">
+          <h1 className="title-font mb-4 text-2xl font-medium sm:text-3xl tracking-widest">
             CONTACT
           </h1>
           <p className="mx-auto leading-relaxed lg:w-2/3 my-6">
@@ -79,7 +94,7 @@ function Contact() {
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
-                  className="peer w-full rounded border border-gray-700  bg-opacity-40 py-1 px-3 text-base leading-8 text-black placeholder-transparent outline-none transition-colors duration-200 ease-in-out focus:border-none focus:ring-2 focus:ring-indigo-900"
+                  className="peer w-full rounded border border-gray-700 bg-opacity-40 py-1 px-3 text-base leading-8 text-black placeholder-transparent outline-none transition-colors duration-200 ease-in-out focus:border-none focus:ring-2 focus:ring-indigo-900"
                   placeholder="Name"
                 />
                 <label
@@ -98,7 +113,7 @@ function Contact() {
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
-                  className="peer w-full rounded border border-gray-700  bg-opacity-40 py-1 px-3 text-base leading-8 text-black placeholder-transparent outline-none transition-colors duration-200 ease-in-out focus:border-none focus:ring-2 focus:ring-indigo-900"
+                  className="peer w-full rounded border border-gray-700 bg-opacity-40 py-1 px-3 text-base leading-8 text-black placeholder-transparent outline-none transition-colors duration-200 ease-in-out focus:border-none focus:ring-2 focus:ring-indigo-900"
                   placeholder="Email"
                 />
                 <label
@@ -116,7 +131,7 @@ function Contact() {
                   name="message"
                   value={formData.message}
                   onChange={handleChange}
-                  className="peer h-32 w-full resize-none rounded border border-gray-700  bg-opacity-40 py-1 px-3 text-base leading-6 text-black placeholder-transparent outline-none transition-colors duration-200 ease-in-out focus:border-none focus:ring-2 focus:ring-indigo-900"
+                  className="peer h-32 w-full resize-none rounded border border-gray-700 bg-opacity-40 py-1 px-3 text-base leading-6 text-black placeholder-transparent outline-none transition-colors duration-200 ease-in-out focus:border-none focus:ring-2 focus:ring-indigo-900"
                   placeholder="Message"
                 ></textarea>
                 <label
