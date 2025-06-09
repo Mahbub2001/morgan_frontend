@@ -161,502 +161,788 @@ function AddProduct() {
 
   return (
     <AdminRoute>
-      <div className="container mx-auto min-h-screen ">
-        <h1 className="text-lg font-bold mb-4">Add Product</h1>
-        <div className="container mx-auto">
-          <form
-            className="grid grid-cols-6 lg:gap-10 justify-between lg:grid-cols-12"
-            onSubmit={handleSubmit(onSubmit)}
-          >
-            <div className="col-span-5">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-                <div>
-                  <label
-                    htmlFor="person"
-                    className="block text-sm font-medium text-gray-900 dark:text-white"
-                  >
-                    Select Person
-                  </label>
-                  <select
-                    id="person"
-                    {...register("person", { required: "Person is required" })}
-                    className="cursor-pointer bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    value={selectedPerson}
-                    onChange={handlePersonChange}
-                  >
-                    <option value="">-- Select --</option>
-                    {categories.map((category) => (
-                      <option key={category.name} value={category.name}>
-                        {category.name}
-                      </option>
-                    ))}
-                  </select>
-                  {errors.person && (
-                    <p className="text-red-500 text-xs">
-                      {errors.person.message}
-                    </p>
-                  )}
-                </div>
-                <div>
-                  {selectedPerson && (
-                    <>
+      <div className="container mx-auto min-h-screen px-4 py-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="mb-8 text-center">
+            <h1 className="text-3xl font-bold text-gray-800 dark:text-white mb-2">
+              Add New Product
+            </h1>
+            <p className="text-gray-600 dark:text-gray-400">
+              Fill out the form below to add a new product to your inventory
+            </p>
+          </div>
+
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
+            <form
+              className="grid grid-cols-1 lg:grid-cols-12 gap-8"
+              onSubmit={handleSubmit(onSubmit)}
+            >
+              {/* Left Column */}
+              <div className="lg:col-span-7">
+                {/* Category Selection Card */}
+                <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-5 mb-8 shadow-sm">
+                  <h2 className="text-xl font-semibold text-gray-800 dark:text-white mb-4">
+                    Category Selection
+                  </h2>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div>
                       <label
-                        htmlFor="category"
-                        className="block text-sm font-medium text-gray-900 dark:text-white"
+                        htmlFor="person"
+                        className="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300"
                       >
-                        Select Category
+                        Select Person
                       </label>
                       <select
-                        id="category"
-                        {...register("category", {
-                          required: "Category is required",
+                        id="person"
+                        {...register("person", {
+                          required: "Person is required",
                         })}
-                        className="cursor-pointer bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        value={selectedCategory}
-                        onChange={handleCategoryChange}
+                        className="w-full bg-white dark:bg-gray-600 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white text-sm rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 block p-2.5 transition-colors"
+                        value={selectedPerson}
+                        onChange={handlePersonChange}
                       >
                         <option value="">-- Select --</option>
-                        {selectedPersonData?.items.map((item) => (
-                          <option key={item.category} value={item.category}>
-                            {item.category}
+                        {categories.map((category) => (
+                          <option key={category.name} value={category.name}>
+                            {category.name}
                           </option>
                         ))}
                       </select>
-                      {errors.category && (
-                        <p className="text-red-500 text-xs">
-                          {errors.category.message}
+                      {errors.person && (
+                        <p className="mt-1 text-red-500 text-xs">
+                          {errors.person.message}
                         </p>
                       )}
-                    </>
-                  )}
+                    </div>
+
+                    <div>
+                      {selectedPerson && (
+                        <>
+                          <label
+                            htmlFor="category"
+                            className="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300"
+                          >
+                            Select Category
+                          </label>
+                          <select
+                            id="category"
+                            {...register("category", {
+                              required: "Category is required",
+                            })}
+                            className="w-full bg-white dark:bg-gray-600 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white text-sm rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 block p-2.5 transition-colors"
+                            value={selectedCategory}
+                            onChange={handleCategoryChange}
+                          >
+                            <option value="">-- Select --</option>
+                            {selectedPersonData?.items.map((item) => (
+                              <option key={item.category} value={item.category}>
+                                {item.category}
+                              </option>
+                            ))}
+                          </select>
+                          {errors.category && (
+                            <p className="mt-1 text-red-500 text-xs">
+                              {errors.category.message}
+                            </p>
+                          )}
+                        </>
+                      )}
+                    </div>
+
+                    <div>
+                      {selectedCategory && (
+                        <>
+                          <label
+                            htmlFor="subCategory"
+                            className="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300"
+                          >
+                            Select Sub-Category
+                          </label>
+                          <select
+                            id="subCategory"
+                            {...register("subCategory")}
+                            className="w-full bg-white dark:bg-gray-600 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white text-sm rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 block p-2.5 transition-colors"
+                            value={selectedSubCategory}
+                            onChange={(e) =>
+                              setSelectedSubCategory(e.target.value)
+                            }
+                          >
+                            <option value="">-- Select --</option>
+                            {selectedCategoryData?.items.map((item) => (
+                              <option key={item.name} value={item.name}>
+                                {item.name}
+                              </option>
+                            ))}
+                          </select>
+                        </>
+                      )}
+                    </div>
+                  </div>
                 </div>
-                <div>
-                  {selectedCategory && (
-                    <>
+
+                {/* Product Information Card */}
+                <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-5 mb-8 shadow-sm">
+                  <h2 className="text-xl font-semibold text-gray-800 dark:text-white mb-4">
+                    Product Information
+                  </h2>
+                  <div className="space-y-4">
+                    <div>
                       <label
-                        htmlFor="subCategory"
-                        className="block text-sm font-medium text-gray-900 dark:text-white"
+                        htmlFor="large-input"
+                        className="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300"
                       >
-                        Select Sub-Category
+                        Name of Your Product
                       </label>
-                      <select
-                        id="subCategory"
-                        {...register("subCategory")}
-                        className="cursor-pointer bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        value={selectedSubCategory}
-                        onChange={(e) => setSelectedSubCategory(e.target.value)}
+                      <input
+                        type="text"
+                        id="large-input"
+                        {...register("productName", {
+                          required: "Product name is required",
+                        })}
+                        className="w-full bg-white dark:bg-gray-600 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white text-sm rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 block p-2.5 transition-colors"
+                      />
+                      {errors.productName && (
+                        <p className="mt-1 text-red-500 text-xs">
+                          {errors.productName.message}
+                        </p>
+                      )}
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div>
+                        <label
+                          htmlFor="large-input"
+                          className="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300"
+                        >
+                          Brand Name
+                        </label>
+                        <input
+                          type="text"
+                          id="large-input"
+                          {...register("brandName", {
+                            required: "Brand name is required",
+                          })}
+                          className="w-full bg-white dark:bg-gray-600 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white text-sm rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 block p-2.5 transition-colors"
+                        />
+                        {errors.brandName && (
+                          <p className="mt-1 text-red-500 text-xs">
+                            {errors.brandName.message}
+                          </p>
+                        )}
+                      </div>
+
+                      <div>
+                        <label
+                          htmlFor="large-input"
+                          className="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300"
+                        >
+                          Sub Brand If Any
+                        </label>
+                        <input
+                          type="text"
+                          id="large-input"
+                          {...register("subBrand", {
+                            required: "Sub brand is required",
+                          })}
+                          className="w-full bg-white dark:bg-gray-600 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white text-sm rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 block p-2.5 transition-colors"
+                        />
+                        {errors.subBrand && (
+                          <p className="mt-1 text-red-500 text-xs">
+                            {errors.subBrand.message}
+                          </p>
+                        )}
+                      </div>
+                    </div>
+
+                    <div>
+                      <label
+                        htmlFor="message"
+                        className="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300"
                       >
-                        <option value="">-- Select --</option>
-                        {selectedCategoryData?.items.map((item) => (
-                          <option key={item.name} value={item.name}>
-                            {item.name}
-                          </option>
-                        ))}
-                      </select>
-                    </>
-                  )}
+                        Product Description
+                        <span className="text-xs text-gray-500 ml-1">
+                          (Use '/n' for new paragraphs)
+                        </span>
+                      </label>
+                      <textarea
+                        id="message"
+                        {...register("productDescription", {
+                          required: "Product description is required",
+                        })}
+                        rows="4"
+                        className="w-full bg-white dark:bg-gray-600 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white text-sm rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 block p-2.5 transition-colors"
+                        placeholder="Describe your product..."
+                      ></textarea>
+                      {errors.productDescription && (
+                        <p className="mt-1 text-red-500 text-xs">
+                          {errors.productDescription.message}
+                        </p>
+                      )}
+                    </div>
+
+                    <div>
+                      <label
+                        htmlFor="message"
+                        className="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300"
+                      >
+                        Leather & Care
+                        <span className="text-xs text-gray-500 ml-1">
+                          (Use '/n' for new paragraphs)
+                        </span>
+                      </label>
+                      <textarea
+                        id="message"
+                        {...register("leatherCare", {
+                          required: "Leather care is required",
+                        })}
+                        rows="4"
+                        className="w-full bg-white dark:bg-gray-600 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white text-sm rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 block p-2.5 transition-colors"
+                        placeholder="Describe leather care instructions..."
+                      ></textarea>
+                      {errors.leatherCare && (
+                        <p className="mt-1 text-red-500 text-xs">
+                          {errors.leatherCare.message}
+                        </p>
+                      )}
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <div className="mt-5">
-                <div className="mb-5">
-                  <label
-                    htmlFor="large-input"
-                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                  >
-                    Name of Your Product
-                  </label>
-                  <input
-                    type="text"
-                    id="large-input"
-                    {...register("productName", {
-                      required: "Product name is required",
-                    })}
-                    className="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  />
-                  {errors.productName && (
-                    <p className="text-red-500 text-xs">
-                      {errors.productName.message}
-                    </p>
-                  )}
+
+                {/* Dimensions Card */}
+                <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-5 mb-8 shadow-sm">
+                  <h2 className="text-xl font-semibold text-gray-800 dark:text-white mb-4">
+                    Dimensions
+                  </h2>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                      <label
+                        htmlFor="large-input"
+                        className="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300"
+                      >
+                        Height
+                      </label>
+                      <div className="relative">
+                        <input
+                          type="number"
+                          step="0.01"
+                          id="large-input"
+                          {...register("height", {
+                            required: "Height is required",
+                            valueAsNumber: true,
+                          })}
+                          className="w-full bg-white dark:bg-gray-600 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white text-sm rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 block p-2.5 pl-10 transition-colors"
+                        />
+                        <span className="absolute left-3 top-2.5 text-gray-500 text-sm">
+                          cm
+                        </span>
+                      </div>
+                      {errors.height && (
+                        <p className="mt-1 text-red-500 text-xs">
+                          {errors.height.message}
+                        </p>
+                      )}
+                    </div>
+
+                    <div>
+                      <label
+                        htmlFor="large-input"
+                        className="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300"
+                      >
+                        Width
+                      </label>
+                      <div className="relative">
+                        <input
+                          type="number"
+                          step="0.01"
+                          id="large-input"
+                          {...register("width", {
+                            required: "Width is required",
+                            valueAsNumber: true,
+                          })}
+                          className="w-full bg-white dark:bg-gray-600 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white text-sm rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 block p-2.5 pl-10 transition-colors"
+                        />
+                        <span className="absolute left-3 top-2.5 text-gray-500 text-sm">
+                          cm
+                        </span>
+                      </div>
+                      {errors.width && (
+                        <p className="mt-1 text-red-500 text-xs">
+                          {errors.width.message}
+                        </p>
+                      )}
+                    </div>
+
+                    <div>
+                      <label
+                        htmlFor="large-input"
+                        className="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300"
+                      >
+                        Depth
+                      </label>
+                      <div className="relative">
+                        <input
+                          type="number"
+                          step="0.01"
+                          id="large-input"
+                          {...register("depth", {
+                            required: "Depth is required",
+                            valueAsNumber: true,
+                          })}
+                          className="w-full bg-white dark:bg-gray-600 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white text-sm rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 block p-2.5 pl-10 transition-colors"
+                        />
+                        <span className="absolute left-3 top-2.5 text-gray-500 text-sm">
+                          cm
+                        </span>
+                      </div>
+                      {errors.depth && (
+                        <p className="mt-1 text-red-500 text-xs">
+                          {errors.depth.message}
+                        </p>
+                      )}
+                    </div>
+                  </div>
                 </div>
-                <div className="mb-5">
-                  <label
-                    htmlFor="large-input"
-                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                  >
-                    Brand Name
-                  </label>
-                  <input
-                    type="text"
-                    id="large-input"
-                    {...register("brandName", {
-                      required: "Brand name is required",
-                    })}
-                    className="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  />
-                  {errors.brandName && (
-                    <p className="text-red-500 text-xs">
-                      {errors.brandName.message}
-                    </p>
-                  )}
+
+                {/* Pricing Card */}
+                <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-5 mb-8 shadow-sm">
+                  <h2 className="text-xl font-semibold text-gray-800 dark:text-white mb-4">
+                    Pricing
+                  </h2>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                      <label
+                        htmlFor="large-input"
+                        className="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300"
+                      >
+                        Asking Price
+                      </label>
+                      <div className="relative">
+                        <span className="absolute left-3 top-2.5 text-gray-500 text-sm">
+                          $
+                        </span>
+                        <input
+                          type="number"
+                          step="0.01"
+                          id="large-input"
+                          {...register("askingPrice", {
+                            required: "Asking Price is required",
+                            valueAsNumber: true,
+                          })}
+                          className="w-full bg-white dark:bg-gray-600 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white text-sm rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 block p-2.5 pl-8 transition-colors"
+                        />
+                      </div>
+                      {errors.askingPrice && (
+                        <p className="mt-1 text-red-500 text-xs">
+                          {errors.askingPrice.message}
+                        </p>
+                      )}
+                    </div>
+
+                    <div>
+                      <label
+                        htmlFor="large-input"
+                        className="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300"
+                      >
+                        Main Price
+                      </label>
+                      <div className="relative">
+                        <span className="absolute left-3 top-2.5 text-gray-500 text-sm">
+                          $
+                        </span>
+                        <input
+                          type="number"
+                          step="0.01"
+                          id="large-input"
+                          {...register("mainPrice", {
+                            required: "Main Price is required",
+                            valueAsNumber: true,
+                          })}
+                          className="w-full bg-white dark:bg-gray-600 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white text-sm rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 block p-2.5 pl-8 transition-colors"
+                        />
+                      </div>
+                      {errors.mainPrice && (
+                        <p className="mt-1 text-red-500 text-xs">
+                          {errors.mainPrice.message}
+                        </p>
+                      )}
+                    </div>
+
+                    <div>
+                      <label
+                        htmlFor="large-input"
+                        className="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300"
+                      >
+                        Discount (%)
+                      </label>
+                      <div className="relative">
+                        <input
+                          type="number"
+                          step="0.01"
+                          id="large-input"
+                          {...register("discount", {
+                            required: "Discount is required",
+                            valueAsNumber: true,
+                          })}
+                          className="w-full bg-white dark:bg-gray-600 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white text-sm rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 block p-2.5 pr-10 transition-colors"
+                        />
+                        <span className="absolute right-3 top-2.5 text-gray-500 text-sm">
+                          %
+                        </span>
+                      </div>
+                      {errors.discount && (
+                        <p className="mt-1 text-red-500 text-xs">
+                          {errors.discount.message}
+                        </p>
+                      )}
+                    </div>
+                  </div>
                 </div>
-                <div className="mb-5">
-                  <label
-                    htmlFor="large-input"
-                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                  >
-                    Sub Brand If Any
-                  </label>
-                  <input
-                    type="text"
-                    id="large-input"
-                    {...register("subBrand", {
-                      required: "Sub brand is required",
-                    })}
-                    className="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  />
-                  {errors.subBrand && (
-                    <p className="text-red-500 text-xs">
-                      {errors.subBrand.message}
-                    </p>
-                  )}
-                </div>
-                <div>
-                  <label
-                    htmlFor="message"
-                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                  >
-                    Product Description(Use '/n' for determine new paragraph)
-                  </label>
-                  <textarea
-                    id="message"
-                    {...register("productDescription", {
-                      required: "Product description is required",
-                    })}
-                    rows="4"
-                    className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Write Here..."
-                  ></textarea>
-                  {errors.productDescription && (
-                    <p className="text-red-500 text-xs">
-                      {errors.productDescription.message}
-                    </p>
-                  )}
-                </div>
-                <div className="mt-5">
-                  <label
-                    htmlFor="message"
-                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                  >
-                    Leather & Care(Use '/n' for determine new paragraph)
-                  </label>
-                  <textarea
-                    id="message"
-                    {...register("leatherCare", {
-                      required: "Leather care is required",
-                    })}
-                    rows="4"
-                    className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Write Here..."
-                  ></textarea>
-                  {errors.leatherCare && (
-                    <p className="text-red-500 text-xs">
-                      {errors.leatherCare.message}
-                    </p>
-                  )}
-                </div>
-              </div>
-              <div className="mt-5 grid grid-cols-3 gap-2">
-                <div className="mb-5">
-                  <label
-                    htmlFor="large-input"
-                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                  >
-                    Height
-                  </label>
-                  <input
-                    type="text"
-                    step="0.01"
-                    id="large-input"
-                    {...register("height", {
-                      required: "Height is required",
-                      valueAsNumber: true,
-                    })}
-                    className="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  />
-                  {errors.height && (
-                    <p className="text-red-500 text-xs">
-                      {errors.height.message}
-                    </p>
-                  )}
-                </div>
-                <div className="mb-5">
-                  <label
-                    htmlFor="large-input"
-                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                  >
-                    Width
-                  </label>
-                  <input
-                    type="text"
-                    step="0.01"
-                    id="large-input"
-                    {...register("width", {
-                      required: "Width is required",
-                      valueAsNumber: true,
-                    })}
-                    className="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  />
-                  {errors.width && (
-                    <p className="text-red-500 text-xs">
-                      {errors.width.message}
-                    </p>
-                  )}
-                </div>
-                <div className="mb-5">
-                  <label
-                    htmlFor="large-input"
-                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                  >
-                    Depth
-                  </label>
-                  <input
-                    type="text"
-                    step="0.01"
-                    id="large-input"
-                    {...register("depth", {
-                      required: "Depth is required",
-                      valueAsNumber: true,
-                    })}
-                    className="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  />
-                  {errors.depth && (
-                    <p className="text-red-500 text-xs">
-                      {errors.depth.message}
-                    </p>
-                  )}
-                </div>
-              </div>
-              <div className="grid grid-cols-2 gap-2">
-                <div className="mb-5">
-                  <label
-                    htmlFor="large-input"
-                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                  >
-                    Asking Price
-                  </label>
-                  <input
-                    type="number"
-                    step="0.01"
-                    id="large-input"
-                    {...register("askingPrice", {
-                      required: "Asking Price is required",
-                      valueAsNumber: true,
-                    })}
-                    className="block w-full text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  />
-                  {errors.askingPrice && (
-                    <p className="text-red-500 text-xs">
-                      {errors.askingPrice.message}
-                    </p>
-                  )}
-                </div>
-                <div className="mb-5">
-                  <label
-                    htmlFor="large-input"
-                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                  >
-                    Main Price
-                  </label>
-                  <input
-                    type="number"
-                    step="0.01"
-                    id="large-input"
-                    {...register("mainPrice", {
-                      required: "Main Price is required",
-                      valueAsNumber: true,
-                    })}
-                    className="block w-full  text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  />
-                  {errors.mainPrice && (
-                    <p className="text-red-500 text-xs">
-                      {errors.mainPrice.message}
-                    </p>
-                  )}
-                </div>
-                <div className="mb-5">
-                  <label
-                    htmlFor="large-input"
-                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                  >
-                    Discount(%)
-                  </label>
-                  <input
-                    type="number"
-                    step="0.01"
-                    id="large-input"
-                    {...register("discount", {
-                      required: "Discount is required",
-                      valueAsNumber: true,
-                    })}
-                    className="block w-full  text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  />
-                  {errors.discount && (
-                    <p className="text-red-500 text-xs">
-                      {errors.discount.message}
-                    </p>
-                  )}
-                </div>
-              </div>
-              <div>
-                <div className="mb-5">
-                  <label
-                    htmlFor="base-input"
-                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                  >
-                    Features(Sizes & Details)
-                  </label>
-                  <div className="flex items-center justify-center gap-2">
-                    <input
-                      type="text"
-                      id="base-input"
-                      value={inputValue}
-                      onChange={(e) => setInputValue(e.target.value)}
-                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    />
-                    <button
-                      onClick={handleAdd}
-                      type="button"
-                      className=" px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+
+                {/* Features Card */}
+                <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-5 shadow-sm">
+                  <h2 className="text-xl font-semibold text-gray-800 dark:text-white mb-4">
+                    Features & Details
+                  </h2>
+                  <div>
+                    <label
+                      htmlFor="base-input"
+                      className="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300"
                     >
-                      Add
+                      Features (Sizes & Details)
+                    </label>
+                    <div className="flex items-center gap-2">
+                      <input
+                        type="text"
+                        id="base-input"
+                        value={inputValue}
+                        onChange={(e) => setInputValue(e.target.value)}
+                        className="flex-grow bg-white dark:bg-gray-600 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white text-sm rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 block p-2.5 transition-colors"
+                        placeholder="Add a feature..."
+                      />
+                      <button
+                        onClick={handleAdd}
+                        type="button"
+                        className="px-4 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 transition-colors"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="h-5 w-5"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path
+                            fillRule="evenodd"
+                            d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
+                            clipRule="evenodd"
+                          />
+                        </svg>
+                      </button>
+                    </div>
+
+                    {dataArray.length > 0 && (
+                      <div className="mt-4 bg-white dark:bg-gray-600 rounded-lg border border-gray-200 dark:border-gray-600 p-3">
+                        <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                          Added Features:
+                        </h3>
+                        <ul className="space-y-1">
+                          {dataArray.map((item, index) => (
+                            <li
+                              key={index}
+                              className="flex items-center text-gray-800 dark:text-gray-200 text-sm"
+                            >
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                className="h-4 w-4 text-green-500 mr-2"
+                                viewBox="0 0 20 20"
+                                fill="currentColor"
+                              >
+                                <path
+                                  fillRule="evenodd"
+                                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                  clipRule="evenodd"
+                                />
+                              </svg>
+                              {item}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              {/* Right Column */}
+              <div className="lg:col-span-5">
+                <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-5 shadow-sm sticky top-4">
+                  <h2 className="text-xl font-semibold text-gray-800 dark:text-white mb-4">
+                    Color Variants & Images
+                  </h2>
+
+                  <div className="mb-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                      <div>
+                        <label
+                          className="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300"
+                          htmlFor="color_input"
+                        >
+                          Color Name
+                        </label>
+                        <div className="relative">
+                          <input
+                            className="w-full bg-white dark:bg-gray-600 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white text-sm rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 block p-2.5 transition-colors"
+                            id="color_input"
+                            type="text"
+                            placeholder="e.g. Black"
+                            value={colorInput}
+                            onChange={(e) => setColorInput(e.target.value)}
+                          />
+                          <div
+                            className="absolute right-3 top-2.5 w-4 h-4 rounded-full border border-gray-300"
+                            style={{
+                              backgroundColor: colorInput.toLowerCase(),
+                            }}
+                          ></div>
+                        </div>
+                      </div>
+
+                      <div>
+                        <label
+                          className="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300"
+                          htmlFor="product_input"
+                        >
+                          Quantity
+                        </label>
+                        <input
+                          className="w-full bg-white dark:bg-gray-600 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white text-sm rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 block p-2.5 transition-colors"
+                          id="product_input"
+                          type="number"
+                          placeholder="Number of products"
+                          value={productInput}
+                          onChange={(e) => setProductInput(e.target.value)}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="mb-4">
+                      <label
+                        className="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300"
+                        htmlFor="subname_input"
+                      >
+                        Color Variant Name
+                      </label>
+                      <input
+                        className="w-full bg-white dark:bg-gray-600 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white text-sm rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 block p-2.5 transition-colors"
+                        id="subname_input"
+                        type="text"
+                        placeholder="e.g. Midnight Black"
+                        value={subnameInput}
+                        onChange={(e) => setSubnameInput(e.target.value)}
+                      />
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={handleAddColor}
+                      className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500 transition-colors"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-5 w-5"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                      Add Color Variant
                     </button>
                   </div>
-                  <div className="mt-4">
-                    <h2 className="text-lg font-medium">Added Data:</h2>
-                    <ul className="list-disc ml-5">
-                      {dataArray.map((item, index) => (
-                        <li
-                          key={index}
-                          className="text-gray-800 dark:text-gray-200"
-                        >
-                          {item}
-                        </li>
-                      ))}
-                    </ul>
+
+                  <div className="space-y-6">
+                    {pictures.map((picture, index) => (
+                      <div
+                        key={index}
+                        className="bg-white dark:bg-gray-600 rounded-lg border border-gray-200 dark:border-gray-700 p-4"
+                      >
+                        <div className="flex items-center justify-between mb-3">
+                          <h3 className="font-medium text-gray-800 dark:text-white">
+                            <span
+                              className="inline-block w-3 h-3 rounded-full mr-2"
+                              style={{
+                                backgroundColor: picture.color.toLowerCase(),
+                              }}
+                            ></span>
+                            {picture.color}
+                            <span className="text-gray-500 ml-2">
+                              ({picture.productCount} items)
+                            </span>
+                          </h3>
+                          {picture.subname && (
+                            <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">
+                              {picture.subname}
+                            </span>
+                          )}
+                        </div>
+
+                        <div className="mb-3">
+                          <label className="block mb-1 text-sm text-gray-700 dark:text-gray-300">
+                            Upload images for {picture.color}
+                          </label>
+                          <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg cursor-pointer bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
+                            <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                className="h-8 w-8 text-gray-400"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={2}
+                                  d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                                />
+                              </svg>
+                              <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
+                                <span className="font-semibold">
+                                  Click to upload
+                                </span>{" "}
+                                or drag and drop
+                              </p>
+                              <p className="text-xs text-gray-500 dark:text-gray-400">
+                                PNG, JPG, GIF (MAX. 5MB each)
+                              </p>
+                            </div>
+                            <input
+                              type="file"
+                              multiple
+                              onChange={(e) =>
+                                handleImageUpload(e, picture.color)
+                              }
+                              className="hidden"
+                            />
+                          </label>
+                        </div>
+
+                        {picture.images.length > 0 && (
+                          <div>
+                            <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                              Uploaded Images:
+                            </h4>
+                            <div className="flex flex-wrap gap-2">
+                              {picture.images.map((file, fileIndex) => (
+                                <div key={fileIndex} className="relative group">
+                                  <div className="w-16 h-16 rounded border border-gray-200 dark:border-gray-600 bg-gray-100 dark:bg-gray-700 flex items-center justify-center">
+                                    <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      className="h-8 w-8 text-gray-400"
+                                      fill="none"
+                                      viewBox="0 0 24 24"
+                                      stroke="currentColor"
+                                    >
+                                      <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth={2}
+                                        d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                                      />
+                                    </svg>
+                                  </div>
+                                  <div className="absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <button
+                                      type="button"
+                                      className="text-white"
+                                      onClick={() => {
+                                        /* Add remove functionality if needed */
+                                      }}
+                                    >
+                                      <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        className="h-5 w-5"
+                                        viewBox="0 0 20 20"
+                                        fill="currentColor"
+                                      >
+                                        <path
+                                          fillRule="evenodd"
+                                          d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                                          clipRule="evenodd"
+                                        />
+                                      </svg>
+                                    </button>
+                                  </div>
+                                  <p className="text-xs text-gray-500 truncate w-16 mt-1">
+                                    {file.name}
+                                  </p>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>
-            </div>
-            <div className="col-span-6">
-              <div className="mb-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-                  <div>
-                    <label
-                      className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                      htmlFor="color_input"
-                    >
-                      Enter Color
-                    </label>
-                    <input
-                      className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                      id="color_input"
-                      type="text"
-                      placeholder="Enter color"
-                      value={colorInput}
-                      onChange={(e) => setColorInput(e.target.value)}
-                    />
-                  </div>
-                  <div>
-                    <label
-                      className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                      htmlFor="product_input"
-                    >
-                      Enter Number of Products
-                    </label>
-                    <input
-                      className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                      id="product_input"
-                      type="number"
-                      placeholder="Number of products"
-                      value={productInput}
-                      onChange={(e) => setProductInput(e.target.value)}
-                    />
-                  </div>
-                  <div>
-                    <label
-                      className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                      htmlFor="subname_input"
-                    >
-                      Subname of Product(Which will define the product color)
-                    </label>
-                    <input
-                      className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                      id="subname_input"
-                      type="text"
-                      placeholder="Sub Name"
-                      value={subnameInput}
-                      onChange={(e) => setSubnameInput(e.target.value)}
-                    />
-                  </div>
-                </div>
+
+              {/* Submit Button */}
+              <div className="lg:col-span-12 mt-6">
                 <button
-                  type="button"
-                  onClick={handleAddColor}
-                  className="mt-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-700"
+                  type="submit"
+                  className="w-full py-3 px-4 bg-gradient-to-r from-orange-500 to-amber-500 text-white font-medium rounded-lg shadow-md hover:from-orange-600 hover:to-amber-600 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-opacity-50 transition-all"
+                  disabled={isLoading}
                 >
-                  Add Color
+                  <div className="flex items-center justify-center">
+                    {isLoading ? (
+                      <>
+                        <svg
+                          className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                        >
+                          <circle
+                            className="opacity-25"
+                            cx="12"
+                            cy="12"
+                            r="10"
+                            stroke="currentColor"
+                            strokeWidth="4"
+                          ></circle>
+                          <path
+                            className="opacity-75"
+                            fill="currentColor"
+                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                          ></path>
+                        </svg>
+                        Adding Product...
+                      </>
+                    ) : (
+                      <>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="h-5 w-5 mr-2"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path
+                            fillRule="evenodd"
+                            d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z"
+                            clipRule="evenodd"
+                          />
+                        </svg>
+                        Add Product
+                      </>
+                    )}
+                  </div>
                 </button>
               </div>
-              {pictures.map((picture, index) => (
-                <div key={index} className="mb-4">
-                  <h3 className="text-lg font-medium text-gray-900 dark:text-white">
-                    {picture.color} - {picture.productCount} Product(s)
-                  </h3>
-                  <div className="mt-2">
-                    <input
-                      type="file"
-                      multiple
-                      onChange={(e) => handleImageUpload(e, picture.color)}
-                      className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                    />
-                  </div>
-                  {picture.images.length > 0 && (
-                    <div className="mt-2">
-                      <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                        Uploaded Images for {picture.color}:
-                      </h4>
-                      <ul>
-                        {picture.images.map((file, fileIndex) => (
-                          <li
-                            key={fileIndex}
-                            className="text-sm text-gray-600 dark:text-gray-400"
-                          >
-                            {file.name}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-            <div className="col-span-6 mt-5">
-              <button
-                type="submit"
-                className="w-full text-white rounded-md"
-                disabled={isLoading}
-              >
-                {/* {mutation.isLoading ? "Adding Product..." : "Add Product"} */}
-                <Button3
-                  backgroundColor="orange"
-                  borderColor="orange"
-                  text={isLoading ? "Adding Product..." : "Add Product"}
-                  textColor="white"
-                />
-              </button>
-            </div>
-          </form>
+            </form>
+          </div>
         </div>
       </div>
     </AdminRoute>
