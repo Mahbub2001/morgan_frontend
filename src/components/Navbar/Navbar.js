@@ -97,7 +97,7 @@ function Navbar() {
                     <Link href="/">
                       <img
                         className=" h-12 w-16 "
-                        src="/icon.png"
+                        src="/white_icon.png"
                         alt="logo"
                       />
                     </Link>

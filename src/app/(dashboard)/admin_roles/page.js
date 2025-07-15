@@ -9,11 +9,14 @@ import { toast } from "react-toastify";
 function AdminRoles() {
   const [settings, setSettings] = useState({
     firstTop: "",
+    firstTopVisible: false,
     secondTop: "",
+    secondTopVisible: false,
     shippingCharge: "",
     shippingStatus: "OFF",
     conversionRateBDT: 0,
     conversionRateEuro: 0,
+    conversionRateDanish: 0,
   });
 
   useEffect(() => {
@@ -31,11 +34,14 @@ function AdminRoles() {
         const data = await response.json();
         setSettings({
           firstTop: data.firstTop || "",
+          firstTopVisible: data.firstTopVisible || false,
           secondTop: data.secondTop || "",
+          secondTopVisible: data.secondTopVisible || false,
           shippingCharge: data.shippingCharge || "",
           shippingStatus: data.shippingStatus || "OFF",
           conversionRateBDT: data.conversionRateBDT || 0,
           conversionRateEuro: data.conversionRateEuro || 0,
+          conversionRateDanish: data.conversionRateDanish || 0,
         });
       } catch (error) {
         console.error("Error fetching settings:", error);
@@ -46,17 +52,21 @@ function AdminRoles() {
   }, []);
 
   const handleChange = (e) => {
-    const { id, value } = e.target;
+    const { id, value, type, checked } = e.target;
 
     setSettings((prevSettings) => ({
       ...prevSettings,
-      [id]: [
-        "shippingCharge",
-        "conversionRateBDT",
-        "conversionRateEuro",
-      ].includes(id)
-        ? parseFloat(value) || 0
-        : value,
+      [id]:
+        type === "checkbox"
+          ? checked
+          : [
+              "shippingCharge",
+              "conversionRateBDT",
+              "conversionRateEuro",
+              "conversionRateDanish",
+            ].includes(id)
+          ? parseFloat(value) || 0
+          : value,
     }));
   };
 
@@ -77,7 +87,6 @@ function AdminRoles() {
         });
       toast.success("Settings saved successfully!");
     } catch (error) {
-      // console.error("Error saving settings:", error);
       toast.error("Failed to save settings.", error);
     }
   };
@@ -91,15 +100,32 @@ function AdminRoles() {
         <div className="space-y-6">
           <div className="flex flex-col md:flex-row gap-5 items-center">
             <div className="w-full">
-              <label
-                htmlFor="firstTop"
-                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-              >
-                First Top
-              </label>
+              <div className="flex justify-between items-center mb-2">
+                <label
+                  htmlFor="firstTop"
+                  className="block text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  First Top
+                </label>
+                <div className="flex items-center">
+                  <label
+                    htmlFor="firstTopVisible"
+                    className="mr-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                  >
+                    Visible
+                  </label>
+                  <input
+                    id="firstTopVisible"
+                    type="checkbox"
+                    checked={settings.firstTopVisible}
+                    onChange={handleChange}
+                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                  />
+                </div>
+              </div>
               <textarea
                 id="firstTop"
-                value={settings?.firstTop}
+                value={settings.firstTop}
                 onChange={handleChange}
                 className="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 h-32 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
                 placeholder="Discount Offer"
@@ -107,15 +133,32 @@ function AdminRoles() {
               />
             </div>
             <div className="w-full">
-              <label
-                htmlFor="secondTop"
-                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-              >
-                Second Top
-              </label>
+              <div className="flex justify-between items-center mb-2">
+                <label
+                  htmlFor="secondTop"
+                  className="block text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  Second Top
+                </label>
+                <div className="flex items-center">
+                  <label
+                    htmlFor="secondTopVisible"
+                    className="mr-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                  >
+                    Visible
+                  </label>
+                  <input
+                    id="secondTopVisible"
+                    type="checkbox"
+                    checked={settings.secondTopVisible}
+                    onChange={handleChange}
+                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                  />
+                </div>
+              </div>
               <textarea
                 id="secondTop"
-                value={settings?.secondTop}
+                value={settings.secondTop}
                 onChange={handleChange}
                 className="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 h-32 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
                 placeholder="Free Shipping Offer"
@@ -134,7 +177,7 @@ function AdminRoles() {
               <input
                 type="text"
                 id="shippingCharge"
-                value={settings?.shippingCharge}
+                value={settings.shippingCharge}
                 onChange={handleChange}
                 className="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
                 placeholder="Enter Shipping Charge"
@@ -151,7 +194,7 @@ function AdminRoles() {
                     id="shippingStatusOn"
                     type="radio"
                     value="ON"
-                    checked={settings?.shippingStatus === "ON"}
+                    checked={settings.shippingStatus === "ON"}
                     onChange={() =>
                       setSettings((prevSettings) => ({
                         ...prevSettings,
@@ -173,7 +216,7 @@ function AdminRoles() {
                     id="shippingStatusOff"
                     type="radio"
                     value="OFF"
-                    checked={settings?.shippingStatus === "OFF"}
+                    checked={settings.shippingStatus === "OFF"}
                     onChange={() =>
                       setSettings((prevSettings) => ({
                         ...prevSettings,
@@ -204,7 +247,7 @@ function AdminRoles() {
               <input
                 type="number"
                 id="conversionRateBDT"
-                value={settings?.conversionRateBDT}
+                value={settings.conversionRateBDT}
                 onChange={handleChange}
                 className="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
                 placeholder="Enter rate"
@@ -221,7 +264,24 @@ function AdminRoles() {
               <input
                 type="number"
                 id="conversionRateEuro"
-                value={settings?.conversionRateEuro}
+                value={settings.conversionRateEuro}
+                onChange={handleChange}
+                className="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                placeholder="Enter rate"
+                required
+              />
+            </div>
+            <div className="w-full">
+              <label
+                htmlFor="usdToEur"
+                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >
+                USD to Danish Krone Conversion Rate
+              </label>
+              <input
+                type="number"
+                id="conversionRateDanish"
+                value={settings.conversionRateDanish}
                 onChange={handleChange}
                 className="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
                 placeholder="Enter rate"
