@@ -2,7 +2,9 @@ import Button1 from "@/containers/common/Button1/Button1";
 import Link from "next/link";
 import React from "react";
 
-function BannerFirstPage() {
+function BannerFirstPage(settings) {
+  // console.log("Settings in BannerFirstPage:", settings);
+  
   return (
     <div className="relative bg-gray-800 h-[30rem] flex items-center z-40">
       <div

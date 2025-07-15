@@ -75,7 +75,7 @@ export default function Home() {
         </div>
       ) : (
         <>
-          <BannerFirstPage />
+          <BannerFirstPage settings={settings}/>
           <div className="text-center mt-20">
             <p className="font-semibold font-sans text-2xl">
               Decadent Copenhagen, a name that stands for luxury, elegance and

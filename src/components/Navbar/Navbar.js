@@ -22,12 +22,16 @@ import { FiLogOut } from "react-icons/fi";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "motion/react";
 import CartDrawer from "@/containers/common/CartDrawer/CartDrawer";
+import { SettingsContext } from "@/hooks/SettingsProvider";
 
 function Navbar() {
   const [activeDropdown, setActiveDropdown] = useState(null);
   const { user, logout } = useContext(AuthContext);
   const [cartDrawer, setCartDrawer] = useState(false);
   const [role, setRole] = useState(null);
+  const { settings } = useContext(SettingsContext);
+  console.log("settings", settings);
+  
 
   const navbarRef = useRef(null);
 
@@ -87,7 +91,7 @@ function Navbar() {
   return (
     <>
       <div className="fixed top-0 left-0 w-full z-50 bg-white text-white shadow-sm back">
-        <Announcement />
+        <Announcement settings={settings} />
         <div className="border-b-[1px] py-8" ref={navbarRef}>
           <div className="main-navbar ">
             <div className="container mx-auto">
