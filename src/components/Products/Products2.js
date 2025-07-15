@@ -1,5 +1,6 @@
 "use client";
 
+import euroCountries from "@/Data/Countries";
 import { SettingsContext } from "@/hooks/SettingsProvider";
 import Link from "next/link";
 import React, { useContext, useState } from "react";
@@ -7,7 +8,7 @@ import { IoAdd } from "react-icons/io5";
 
 function Products2({ products }) {
   const [hoveredIndex, setHoveredIndex] = useState(null);
-  const { country,settings } = useContext(SettingsContext);
+  const { country, settings } = useContext(SettingsContext);
 
   const handleMouseEnter = (index) => {
     setHoveredIndex(index);
@@ -68,19 +69,35 @@ function Products2({ products }) {
                 {validUtility?.subName}
               </p>
               <p className="pt-1 text-center text-xs">
-                {country == "Bangladesh" && (
+                {country === "Bangladesh" && (
                   <span>
-                    BDT {product?.askingPrice * settings?.conversionRateBDT}
+                    BDT{" "}
+                    {Math.round(
+                      product?.askingPrice * settings?.conversionRateBDT
+                    )}
                   </span>
                 )}
-                {country == "Denmark" && (
+                {country === "Denmark" && (
                   <span>
-                    € {product?.askingPrice * settings?.conversionRateEuro}
+                    kr.{" "}
+                    {Math.round(
+                      product?.askingPrice * settings?.conversionRateDanish
+                    )}
                   </span>
                 )}
-                {country !== "Bangladesh" && country !== "Denmark" && (
-                  <span>$ {product?.askingPrice}</span>
+                {euroCountries.includes(country) && (
+                  <span>
+                    €{" "}
+                    {Math.round(
+                      product?.askingPrice * settings?.conversionRateEuro
+                    )}
+                  </span>
                 )}
+                {country !== "Bangladesh" &&
+                  country !== "Denmark" &&
+                  !euroCountries.includes(country) && (
+                    <span>$ {product?.askingPrice}</span>
+                  )}
               </p>
             </Link>
           );
