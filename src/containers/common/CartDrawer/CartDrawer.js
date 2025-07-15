@@ -4,6 +4,7 @@ import Button3 from "../Button3/Button3";
 import Link from "next/link";
 import { AuthContext } from "@/hooks/AuthProvider";
 import { SettingsContext } from "@/hooks/SettingsProvider";
+import { convertPrice, getCurrencySymbol } from "@/utils/currencyUtils";
 
 function CartDrawer({
   isDrawerOpen,
@@ -196,32 +197,12 @@ function CartDrawer({
                           {product.name}
                         </p>
                         <p className="font-futura-sans text-xs pt-1">
-                          {country === "Bangladesh"
-                            ? "BDT "
-                            : country === "Denmark"
-                            ? "DKK "
-                            : "USD "}
-
-                          {country === "Bangladesh" ? (
-                            <span>
-                              {Number(
-                                product.discountPrice *
-                                  settings?.conversionRateBDT
-                              ).toFixed(2)}
-                            </span>
-                          ) : country === "Denmark" ? (
-                            <span>
-                              {Number(
-                                product.discountPrice *
-                                  settings?.conversionRateEuro
-                              ).toFixed(2)}
-                            </span>
-                          ) : (
-                            <span>
-                              {Number(product.discountPrice).toFixed(2)}
-                            </span>
-                          )}
-                          {/* {Number(product.discountPrice).toFixed(2)} */}
+                          {getCurrencySymbol(country)}{" "}
+                          {convertPrice(
+                            product.discountPrice,
+                            country,
+                            settings
+                          ).toFixed(2)}
                         </p>
                       </div>
                       <div className="flex items-center gap-2">

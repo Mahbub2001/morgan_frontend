@@ -7,15 +7,19 @@ import { Range } from "react-range";
 const PriceFilter = ({ min = 0, step = 1, onChange, resetFilter }) => {
   const { country, settings } = useContext(SettingsContext);
 
-  const max = useMemo(() => {
-    if (country === "Bangladesh") {
-      return 1000 * settings?.conversionRateBDT;
-    } else if (country === "Denmark") {
-      return 1000 * settings?.conversionRateEuro;
-    } else {
-      return 1000;
-    }
-  }, [country]);
+const max = useMemo(() => {
+  const baseAmount = 1000;
+  
+  if (country === "Bangladesh") {
+    return baseAmount * (settings?.conversionRateBDT || 1);
+  } else if (country === "Denmark") {
+    return baseAmount * (settings?.conversionRateDanish || 1);
+  } else if (euroCountries.includes(country)) {
+    return baseAmount * (settings?.conversionRateEuro || 1);
+  } else {
+    return baseAmount; 
+  }
+}, [country, settings?.conversionRateBDT, settings?.conversionRateDanish, settings?.conversionRateEuro]);
 
   const [values, setValues] = useState([min, max]);
 
