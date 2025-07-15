@@ -1,6 +1,7 @@
 "use client";
 
 import Button2 from "@/containers/common/Button2/Button2";
+import euroCountries from "@/Data/Countries";
 import { productData } from "@/Data/ProductData";
 import { SettingsContext } from "@/hooks/SettingsProvider";
 import Link from "next/link";
@@ -10,7 +11,7 @@ function SelectedFavor({ best, settings }) {
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const { country } = useContext(SettingsContext);
 
-  console.log(country);
+  // console.log(country);
 
   // console.log(best);
 
@@ -80,21 +81,36 @@ function SelectedFavor({ best, settings }) {
                       {product?.productName}
                     </h1>
                     <p className="text-xs">
-                      {country == "Bangladesh" && (
+                      {country === "Bangladesh" && (
                         <span>
                           BDT{" "}
-                          {product?.askingPrice * settings?.conversionRateBDT}
+                          {Math.round(
+                            product?.askingPrice * settings?.conversionRateBDT
+                          )}
                         </span>
                       )}
-                      {country == "Denmark" && (
+                      {country === "Denmark" && (
+                        <span>
+                          kr.{" "}
+                          {Math.round(
+                            product?.askingPrice *
+                              settings?.conversionRateDanish
+                          )}
+                        </span>
+                      )}
+                      {euroCountries.includes(country) && (
                         <span>
                           €{" "}
-                          {product?.askingPrice * settings?.conversionRateEuro}
+                          {Math.round(
+                            product?.askingPrice * settings?.conversionRateEuro
+                          )}
                         </span>
                       )}
-                      {country !== "Bangladesh" && country !== "Denmark" && (
-                        <span>$ {product?.askingPrice}</span>
-                      )}
+                      {country !== "Bangladesh" &&
+                        country !== "Denmark" &&
+                        !euroCountries.includes(country) && (
+                          <span>$ {product?.askingPrice}</span>
+                        )}
                     </p>
                   </div>
                   {product?.sales > 5 && (
