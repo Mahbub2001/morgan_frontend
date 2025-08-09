@@ -1,16 +1,20 @@
 import Button2 from "@/containers/common/Button2/Button2";
 import Link from "next/link";
+import Image from "next/image";
 import React from "react";
 
 function Forside() {
   return (
     <div className="mt-10">
       <div className="flex flex-col md:flex-row items-center place-items-center justify-between px-6 md:px-12 py-12 bg-white">
-        <div className="">
-          <img
-            src="/images/forside.jpg"
-            alt="Crossbody bags"
-            className="w-full"
+        <div>
+          <Image
+            src="/images/work_bag.jpg"
+            alt="Work bags"
+            width={640}      // set an appropriate width
+            height={640}     // set an appropriate height
+            quality={70}     // compress to save bandwidth
+            className="w-[40rem] h-auto"
           />
         </div>
         <div className="md:w-1/2 mb-8 md:mb-0">

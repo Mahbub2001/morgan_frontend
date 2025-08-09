@@ -1,5 +1,6 @@
 import Button2 from "@/containers/common/Button2/Button2";
 import Link from "next/link";
+import Image from "next/image";
 import React from "react";
 
 function CrossbodyBags() {
@@ -24,11 +25,14 @@ function CrossbodyBags() {
             <Button2 text="See More" />
           </Link>
         </div>
-        <div className="">
-          <img
-            src="/images/cross1.jpg"
+        <div>
+          <Image
+            src="/images/crossbody2.jpg"
             alt="Crossbody bags"
-            className="w-full"
+            width={640}   // set proper width
+            height={640}  // set proper height
+            quality={70}  // compress image
+            className="w-[40rem] h-auto"
           />
         </div>
       </div>

@@ -11,7 +11,7 @@ function GiveReview({ order }) {
   const [comment, setComment] = useState("");
   const [selectedProduct, setSelectedProduct] = useState(null);
 
-  console.log(order);
+  // console.log(order);
 
   const handleStarClick = (index) => {
     setRating(index);

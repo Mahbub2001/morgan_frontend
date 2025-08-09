@@ -110,7 +110,7 @@ function Promote1() {
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log(data);
+          // console.log(data);
         });
       toast.success("Settings saved successfully!");
     } catch (error) {

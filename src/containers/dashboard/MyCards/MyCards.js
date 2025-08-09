@@ -70,7 +70,7 @@ function MyCards() {
   }, []);
   
 
-  console.log("productDetails", productDetails);
+  // console.log("productDetails", productDetails);
 
   const updateLocalStorage = (updatedQuantities) => {
     const updatedProducts = productDetails.map((product) => ({

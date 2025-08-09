@@ -33,15 +33,15 @@ function AdminRoles() {
         );
         const data = await response.json();
         setSettings({
-          firstTop: data.firstTop || "",
-          firstTopVisible: data.firstTopVisible || false,
-          secondTop: data.secondTop || "",
-          secondTopVisible: data.secondTopVisible || false,
-          shippingCharge: data.shippingCharge || "",
-          shippingStatus: data.shippingStatus || "OFF",
-          conversionRateBDT: data.conversionRateBDT || 0,
-          conversionRateEuro: data.conversionRateEuro || 0,
-          conversionRateDanish: data.conversionRateDanish || 0,
+          firstTop: data?.firstTop || "",
+          firstTopVisible: data?.firstTopVisible || false,
+          secondTop: data?.secondTop || "",
+          secondTopVisible: data?.secondTopVisible || false,
+          shippingCharge: data?.shippingCharge || "",
+          shippingStatus: data?.shippingStatus || "OFF",
+          conversionRateBDT: data?.conversionRateBDT || 0,
+          conversionRateEuro: data?.conversionRateEuro || 0,
+          conversionRateDanish: data?.conversionRateDanish || 0,
         });
       } catch (error) {
         console.error("Error fetching settings:", error);
@@ -83,7 +83,7 @@ function AdminRoles() {
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log(data);
+          // console.log(data);
         });
       toast.success("Settings saved successfully!");
     } catch (error) {

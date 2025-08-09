@@ -76,10 +76,10 @@ function Contact() {
             CONTACT
           </h1>
           <p className="mx-auto leading-relaxed lg:w-2/3 my-6">
-            Please fill out the form below or email at info@gmail.com
+            Please fill out the form below or email at info@nymorgen.com
           </p>
           <p>
-            Studio Telephone:16546 565 566{" "}
+            Studio Telephone:+45 91 42 91 64{" "}
             <span className="italic">Office Hours Only</span>{" "}
           </p>
         </div>

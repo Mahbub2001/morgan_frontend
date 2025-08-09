@@ -85,7 +85,7 @@ function AdminOrderManagement() {
       products: orders.find((order) => order._id === id).products,
     }));
 
-    console.log("updates", updates);
+    // console.log("updates", updates);
     try {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/admin/orders/bulk-update`,

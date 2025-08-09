@@ -1,6 +1,7 @@
 "use client";
 
 import { insta } from "@/Data/ProductData";
+import Image from "next/image";
 import React, { useState } from "react";
 
 function LandingInsta() {
@@ -17,12 +18,15 @@ function LandingInsta() {
             <div
               key={index}
               className="relative basis-1/3 sm:basis-1/4 md:basis-1/5 hover:opacity-40 transition-opacity"
+              onClick={() => setSelectedImage(image)}
             >
-              <img
+              <Image
                 src={image}
                 alt={`Gallery image ${index + 1}`}
+                width={300} // thumbnail width
+                height={300} // thumbnail height
+                quality={70} // compress
                 className="w-full h-[18rem] cursor-pointer object-cover rounded-lg"
-                onClick={() => setSelectedImage(image)}
               />
             </div>
           ))}
@@ -37,15 +41,14 @@ function LandingInsta() {
               >
                 &times;
               </button>
-              <img
+              <Image
                 src={selectedImage}
                 alt="Enlarged view"
-                className="w-full max-w-4xl h-[40rem]"
+                width={1200} // modal size
+                height={800}
+                quality={80} // keep a bit higher for large view
+                className="w-full max-w-4xl h-[40rem] object-cover"
               />
-              {/* <p className="text-center mt-4 text-sm text-gray-600">
-                If you want to extend the strap and use Cathrine as a
-                crossbody...
-              </p> */}
             </div>
           </div>
         )}

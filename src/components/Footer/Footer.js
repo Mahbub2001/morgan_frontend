@@ -4,7 +4,6 @@ import Newsletter from "../NewsLetter/Newsletter";
 import FooterLast from "../FooterLast/FooterLast";
 
 function Footer() {
-  
   return (
     <div>
       {/* <Newsletter/> */}
@@ -15,16 +14,16 @@ function Footer() {
               <p className="max-w-xs">Ny Morgen</p>
               <div className="flex flex-col mt-2 font-thin text-sm">
                 <Link href="" className="hover:opacity-75">
-                  Greisvej 54,1th.2300 
+                  Greisvej 54,1th.2300 Copenhagen S, Denmark.
                 </Link>
                 <Link href="" className="hover:opacity-75">
-                  Copenhagen S, Denmark.
+                 BD Office: 295,Sher-E-Bangla Road, Jafrabad Pulpar,West Dhanmondi.
                 </Link>
                 <Link href="" className="hover:opacity-75">
-                 info@nymorgen.com
+                  info@nymorgen.com
                 </Link>
                 <Link href="" className="hover:opacity-75">
-                 +45 91 42 91 64
+                  +45 91 42 91 64
                 </Link>
                 <Link href="" className="hover:opacity-75">
                   CVR no.45064840
@@ -38,13 +37,19 @@ function Footer() {
                   <Link className="hover:opacity-75" href="/about">
                     About Us
                   </Link>
-                  <Link className="hover:opacity-75" href="/about/responsibility">
+                  <Link
+                    className="hover:opacity-75"
+                    href="/about/responsibility"
+                  >
                     Our Responsibility
                   </Link>
                   <Link className="hover:opacity-75" href="/strength">
                     Our Strength
                   </Link>
-                  <Link className="hover:opacity-75" href="/about/sustainability">
+                  <Link
+                    className="hover:opacity-75"
+                    href="/about/sustainability"
+                  >
                     Our Sustainability
                   </Link>
                 </nav>
@@ -83,7 +88,10 @@ function Footer() {
               <div>
                 <p className="font-medium">Follow</p>
                 <nav className="flex flex-col mt-2 space-y-2 text-sm font-thin">
-                  <Link className="hover:opacity-75" href="">
+                  <Link
+                    className="hover:opacity-75"
+                    href="https://www.facebook.com/profile.php?id=61565628512486"
+                  >
                     Facebook
                   </Link>
                   <Link className="hover:opacity-75" href="">
@@ -102,7 +110,7 @@ function Footer() {
           <p className="mt-8 text-xs text-gray-800">© 2024 Ny Morgen</p>
         </div>
       </div>
-      <FooterLast/>
+      <FooterLast />
     </div>
   );
 }

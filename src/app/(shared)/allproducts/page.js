@@ -64,7 +64,7 @@ function AllProducts() {
   }, []);
 
   const fetchFilteredProducts = async () => {
-    console.log("filterParams", filterParams);
+    // console.log("filterParams", filterParams);
     const filteredProducts = await fetchProducts(filterParams);
     setProducts(filteredProducts);
   };

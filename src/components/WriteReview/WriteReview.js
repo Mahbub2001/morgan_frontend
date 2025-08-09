@@ -30,7 +30,7 @@ function WriteReview({ pageDataI }) {
       },
     };
 
-    console.log("reviewData", reviewData);
+    // console.log("reviewData", reviewData);
 
     const response = fetch(`${process.env.NEXT_PUBLIC_API_URL}/add_reviews`, {
       method: "POST",

@@ -166,7 +166,7 @@ function AdminProductEdit() {
       );
 
       if (response.status === 200) {
-        console.log("Product updated successfully:", response.data);
+        // console.log("Product updated successfully:", response.data);
         alert("Product updated successfully!");
       } else {
         alert("Failed to update product. Please try again.");

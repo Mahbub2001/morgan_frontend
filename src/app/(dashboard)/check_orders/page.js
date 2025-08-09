@@ -30,7 +30,7 @@ function CheckOrders() {
   const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
   const [selectedCancelOrder, setSelectedCancelOrder] = useState(null);
 
-    // Helper function to determine currency and conversion rate
+  // Helper function to determine currency and conversion rate
   const getCurrencyInfo = () => {
     if (country === "Bangladesh") {
       return {
@@ -58,7 +58,7 @@ function CheckOrders() {
       };
     }
   };
- const renderPrice = (price) => {
+  const renderPrice = (price) => {
     const { symbol, rate } = getCurrencyInfo();
     return `${symbol}${Number(price * rate).toFixed(2)}`;
   };
@@ -75,43 +75,52 @@ function CheckOrders() {
 
   const fetchOrders = async (me, token) => {
     if (me?._id) {
-      const ordersResponse = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/orders/${me._id}?page=${currentPage}&limit=${limit}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
+      try {
+        const ordersResponse = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/orders/${me._id}?page=${currentPage}&limit=${limit}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        if (!ordersResponse.ok) {
+          const errorData = await ordersResponse.json();
+          // throw new Error(errorData.message || "Failed to fetch orders");
         }
-      );
 
-      if (!ordersResponse.ok) {
-        throw new Error("Failed to fetch orders");
+        const { data, pagination } = await ordersResponse.json();
+        setMyorders(data);
+        setTotalPages(pagination.totalPages);
+      } catch (error) {
+        // console.error("Fetch orders error:", error);
+        setMyorders([]);
+        setTotalPages(1);
+        // Optionally show a user-friendly error message
       }
-
-      const { data, pagination } = await ordersResponse.json();
-      setMyorders(data);
-      setTotalPages(pagination.totalPages);
     }
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const token = Cookies.get("ny-token");
-        if (user?.email) {
-          const userData = await getUserProfile(user.email);
-          setMe(userData);
-          await fetchOrders(userData, token);
-        }
-      } catch (error) {
-        alert(error.message);
+useEffect(() => {
+  const fetchData = async () => {
+    try {
+      const token = Cookies.get("ny-token");
+      if (user?.email) {
+        const userData = await getUserProfile(user.email);
+        // console.log("User data:", userData);
+        setMe(userData);
+        await fetchOrders(userData, token);
       }
-    };
+    } catch (error) {
+      // console.error("Error in fetchData:", error); // More detailed error
+    }
+  };
 
-    fetchData();
-  }, [user?.email, currentPage, limit, ft]);
+  fetchData();
+}, [user?.email, currentPage, limit, ft]);
 
   const handleCancelOrder = async (order) => {
     setSelectedCancelOrder(order);
@@ -222,7 +231,7 @@ function CheckOrders() {
                             Price:
                           </dt>
                           <dd className="mt-1.5 text-xs text-gray-900 dark:text-white">
-                           {renderPrice(order?.totalPrice)}
+                            {renderPrice(order?.totalPrice)}
                           </dd>
                         </dl>
                         {order?.status === "pending" && (
@@ -345,7 +354,9 @@ function CheckOrders() {
                           </dl>
                         )}
                         <div className="w-full grid sm:grid-cols-2 lg:flex lg:w-44 lg:items-center lg:justify-end gap-4">
-                          {order?.status === "received" && <GiveReview order={order} />}
+                          {order?.status === "received" && (
+                            <GiveReview order={order} />
+                          )}
                           {order?.status !== "received" && (
                             <button
                               onClick={(e) => {

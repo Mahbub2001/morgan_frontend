@@ -30,7 +30,7 @@ function Navbar() {
   const [cartDrawer, setCartDrawer] = useState(false);
   const [role, setRole] = useState(null);
   const { settings } = useContext(SettingsContext);
-  console.log("settings", settings);
+  // console.log("settings", settings);
   
 
   const navbarRef = useRef(null);
@@ -66,12 +66,12 @@ function Navbar() {
   };
   const router = useRouter();
   const handleProfileClick = async () => {
-    // console.log("user", user);
+    console.log("user", user);
     if (!user) {
       router.push("/login");
       return;
     }
-    router.push("/user_profile");
+    router.push("/dash");
   };
 
   const handleCartclick = () => {

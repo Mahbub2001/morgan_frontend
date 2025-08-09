@@ -128,6 +128,8 @@ const AuthProvider = ({ children }) => {
         password
       );
       const user = userCredential.user;
+      // console.log(user);
+      
       if (!user || !user.emailVerified) {
         await signOut(auth);
         removeCookie("ny-token");

@@ -9,18 +9,23 @@ import SalesProfit from "@/components/SalesProfit/SalesProfit";
 import TopSaleFiveProduct from "@/components/TopSaleFiveProduct/TopSaleFiveProduct";
 import { AuthContext } from "@/hooks/AuthProvider";
 import React, { useContext, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 function Dash() {
   const { user } = useContext(AuthContext);
 
   const [role, setRole] = useState(null);
   const [loading, setLoading] = useState(true);
+  const router = useRouter();
   useEffect(() => {
     if (user?.email) {
       setLoading(true);
       getUserRole(user.email).then((data) => {
         setRole(data);
         setLoading(false);
+         if (data !== "admin") {
+          router.push("/user_profile");
+        }
       });
     }
   }, [user]);
@@ -45,7 +50,7 @@ function Dash() {
         </div>
       ) : (
         <div className="">
-          <p> You are User........</p>
+          {/* <p> You are User........</p> */}
         </div>
       )}
     </>
