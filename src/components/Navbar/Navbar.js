@@ -181,13 +181,13 @@ function Navbar() {
                 </Link>
 
                 <div className="flex gap-5">
-                  <motion.div
+                  {/* <motion.div
                     className="cursor-pointer"
                     variants={iconVariants}
                     whileHover="hover"
                   >
                     <CiSearch />
-                  </motion.div>
+                  </motion.div> */}
                   <motion.button
                     className="cursor-pointer"
                     onClick={handleCartclick}

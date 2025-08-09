@@ -254,7 +254,7 @@ const Sidebar = ({ handleCartclick }) => {
             </>
           )}
           <div className="flex gap-5 mt-10 ">
-            <CiSearch className="cursor-pointer" />
+            {/* <CiSearch className="cursor-pointer" /> */}
             <FaShoppingBag onClick={Cartclick} className="cursor-pointer" />
             <button onClick={handleProfileClick} className="cursor-pointer">
               <GoPerson />
