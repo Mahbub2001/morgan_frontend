@@ -77,7 +77,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="min-h-screen container mx-auto -mt-20 md:mt-40 z-0 mb-20">
+    <div className="min-h-screen container mx-auto -mt-24 md:-mt-26 z-0 mb-20">
       {loading ? (
         <div className="flex justify-center items-center min-h-screen">
           <div className="flex flex-col items-center">

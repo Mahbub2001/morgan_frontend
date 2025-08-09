@@ -40,12 +40,12 @@ function LandingInsta() {
               <img
                 src={selectedImage}
                 alt="Enlarged view"
-                className="w-full max-w-4xl h-auto"
+                className="w-full max-w-4xl h-[40rem]"
               />
-              <p className="text-center mt-4 text-sm text-gray-600">
+              {/* <p className="text-center mt-4 text-sm text-gray-600">
                 If you want to extend the strap and use Cathrine as a
                 crossbody...
-              </p>
+              </p> */}
             </div>
           </div>
         )}

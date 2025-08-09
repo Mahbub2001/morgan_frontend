@@ -71,12 +71,12 @@ export const productData = [
   
 
   export const insta = [
-    "/images/ac1.jpg",
-    "/images/ac2.jpg",
-    "/images/ac3.jpg",
-    "/images/ac4.jpg",
-    "/images/ac5.jpg",
-    "/images/ac6.jpg",
-    "/images/ac7.jpg",
-    "/images/ac2.jpg",
+    "/images/g1.jpg",
+    "/images/g2.jpg",
+    "/images/g3.jpg",
+    "/images/g4.jpg",
+    "/images/g5.jpg",
+    "/images/g6.jpg",
+    "/images/g7.jpg",
+    "/images/g8.jpg",
   ];
