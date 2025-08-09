@@ -27,31 +27,47 @@ export default function Home() {
           fetch(`${process.env.NEXT_PUBLIC_API_URL}/top-sales`),
           fetch(`${process.env.NEXT_PUBLIC_API_URL}/settings`),
         ]);
+
         const countryData = await countryRes.json();
         const bestData = await bestRes.json();
         const settingsData = await settingsRes.json();
 
-        setCountry(countryData.country);
-        setBest(bestData);
-        setSettings(settingsData);
+        setCountry(countryData.country || "");
+        setBest(bestData || []);
+        setSettings(settingsData || {});
 
-        const promote1Ids = settingsData.promote1.checkedId.join(",");
-        const promote2Ids = settingsData.promote2.checkedId.join(",");
+        const promote1Ids = settingsData?.promote1?.checkedId?.length
+          ? settingsData.promote1.checkedId.join(",")
+          : null;
+        const promote2Ids = settingsData?.promote2?.checkedId?.length
+          ? settingsData.promote2.checkedId.join(",")
+          : null;
 
-        const promote1Res = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/promoted-products?ids=${promote1Ids}`
-        );
-        const promote2Res = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/promoted-products?ids=${promote2Ids}`
-        );
+        if (promote1Ids) {
+          const promote1Res = await fetch(
+            `${process.env.NEXT_PUBLIC_API_URL}/promoted-products?ids=${promote1Ids}`
+          );
+          setPromote1((await promote1Res.json()) || []);
+        } else {
+          console.warn("No promote1 products configured.");
+          setPromote1([]);
+        }
 
-        const promote1Data = await promote1Res.json();
-        const promote2Data = await promote2Res.json();
-
-        setPromote1(promote1Data);
-        setPromote2(promote2Data);
+        if (promote2Ids) {
+          const promote2Res = await fetch(
+            `${process.env.NEXT_PUBLIC_API_URL}/promoted-products?ids=${promote2Ids}`
+          );
+          setPromote2((await promote2Res.json()) || []);
+        } else {
+          console.warn("No promote2 products configured.");
+          setPromote2([]);
+        }
       } catch (error) {
         console.error("Error fetching data:", error);
+        setBest([]);
+        setPromote1([]);
+        setPromote2([]);
+        setSettings({});
       } finally {
         setLoading(false);
       }
@@ -59,8 +75,6 @@ export default function Home() {
 
     fetchAllData();
   }, []);
-
-  // console.log("Country:", country);
 
   return (
     <div className="min-h-screen container mx-auto -mt-20 md:mt-40 z-0 mb-20">

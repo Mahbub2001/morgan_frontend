@@ -22,7 +22,7 @@ function SelectedSuede({ promote1, settings }) {
       </h2>
       <div className="container mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 place-items-center">
-          {promote1.map((product, index) => {
+          {promote1?.map((product, index) => {
             let validUtility = product?.utilities.find(
               (utility) => utility?.numberOfProducts > 0
             );

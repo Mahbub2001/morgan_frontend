@@ -80,13 +80,13 @@ const Sidebar = ({ handleCartclick }) => {
     hidden: {
       x: "-100%",
       transition: {
-        duration: 0.2, 
+        duration: 0.2,
       },
     },
     visible: {
       x: "0%",
       transition: {
-        duration: 0.2, 
+        duration: 0.2,
       },
     },
   };
@@ -145,14 +145,33 @@ const Sidebar = ({ handleCartclick }) => {
                 transition={{ delay: categories.length * 0.05 }}
               >
                 About Ny Morgen
+                <hr className="my-3" />
               </motion.li>
-              <motion.li
+              {/* <motion.li
                 className="cursor-pointer hover:text-blue-600 font-medium text-sm"
                 onClick={() => openSubmenu(journalItems)}
                 variants={itemVariants}
                 transition={{ delay: (categories.length + 1) * 0.05 }}
               >
                 Journal
+              </motion.li> */}
+              <motion.li
+                className="cursor-pointer hover:text-blue-600 font-medium text-sm"
+                onClick={() => setIsSidebarOpen(false)}
+                variants={itemVariants}
+                transition={{ delay: (categories.length + 1) * 0.05 }}
+              >
+                <Link href="/contact">Contact</Link>
+                <hr className="my-3" />
+              </motion.li>
+              <motion.li
+                className="cursor-pointer hover:text-blue-600 font-medium text-sm"
+                onClick={() => setIsSidebarOpen(false)}
+                variants={itemVariants}
+                transition={{ delay: (categories.length + 1) * 0.05 }}
+              >
+                <Link href="/strength">Our Strength</Link>
+                <hr className="my-3" />
               </motion.li>
             </motion.ul>
           )}

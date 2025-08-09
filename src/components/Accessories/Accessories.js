@@ -21,7 +21,7 @@ function Accessories({ promote2, settings }) {
       </h2>
       <div className="container mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 place-items-center">
-          {promote2.map((product, index) => {
+          {promote2?.map((product, index) => {
             let validUtility = product?.utilities.find(
               (utility) => utility?.numberOfProducts > 0
             );

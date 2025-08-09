@@ -1,5 +1,6 @@
 "use client";
 import CheckOutForm from "@/components/CheckOutForm/CheckOutForm";
+import euroCountries from "@/Data/Countries";
 import { AuthContext } from "@/hooks/AuthProvider";
 import { SettingsContext } from "@/hooks/SettingsProvider";
 import withProtectedRoute from "@/Wrapper/protectedRoute";
@@ -38,6 +39,34 @@ function CheckOut() {
   const { user } = useContext(AuthContext);
   let token = Cookies.get("ny-token");
   const router = useRouter();
+
+  const getCurrencyInfo = () => {
+    if (country === "Bangladesh") {
+      return {
+        currency: "BDT",
+        rate: settings?.conversionRateBDT || 1,
+        symbol: "BDT ",
+      };
+    } else if (country === "Denmark") {
+      return {
+        currency: "DKK",
+        rate: settings?.conversionRateDanish || 1,
+        symbol: "DKK ",
+      };
+    } else if (euroCountries.includes(country)) {
+      return {
+        currency: "EUR",
+        rate: settings?.conversionRateEuro || 1,
+        symbol: "€",
+      };
+    } else {
+      return {
+        currency: "USD",
+        rate: 1,
+        symbol: "USD ",
+      };
+    }
+  };
 
   useEffect(() => {
     fetch(`${process.env.NEXT_PUBLIC_API_URL}/coupons`)
@@ -92,6 +121,8 @@ function CheckOut() {
   const onSubmit = (data) => {
     // return;
     if (selectedMethod === "CASH ON DELIVERY") {
+      const { currency, rate } = getCurrencyInfo();
+
       data.payment = "pending";
       data.status = "pending";
       if (coupon !== "") {
@@ -100,29 +131,9 @@ function CheckOut() {
       data.products = cartItems;
       data.totalPriceWithOutDiscount = totalPrice.toFixed(2);
       data.totalPrice = (totalPrice - discount + vat).toFixed(2);
-      data.currency =
-        country === "Bangladesh"
-          ? "BDT"
-          : country === "Denmark"
-          ? "DKK"
-          : "USD";
-      data.currencyRate =
-        country === "Bangladesh"
-          ? settings?.conversionRateBDT
-          : country === "Denmark"
-          ? settings?.conversionRateEuro
-          : 1;
-      data.total_with_payment_method =
-        country === "Bangladesh"
-          ? Number(
-              (totalPrice - discount + vat) * settings?.conversionRateBDT
-            ).toFixed(2)
-          : country === "Denmark"
-          ? Number(
-              (totalPrice - discount + vat) * settings?.conversionRateEuro
-            ).toFixed(2)
-          : (totalPrice - discount + vat).toFixed(2);
-          
+      data.currency = currency;
+      data.currencyRate = rate;
+
       fetch(`${process.env.NEXT_PUBLIC_API_URL}/orders`, {
         method: "POST",
         headers: {
@@ -169,6 +180,11 @@ function CheckOut() {
       });
   };
 
+  const renderPrice = (price) => {
+    const { symbol, rate } = getCurrencyInfo();
+    return `${symbol}${Number(price * rate).toFixed(2)}`;
+  };
+
   return (
     <div className="container mx-auto font-futara-sans">
       <div className="relative mx-auto w-full bg-white">
@@ -212,34 +228,7 @@ function CheckOut() {
                       </div>
                     </div>
                     <p className="text-sm font-extralight text-white">
-                      {country === "Bangladesh"
-                        ? "BDT "
-                        : country === "Denmark"
-                        ? "DKK "
-                        : "USD "}
-                      {country === "Bangladesh" ? (
-                        <span>
-                          {Number(
-                            item.discountPrice *
-                              item.quantity *
-                              settings?.conversionRateBDT
-                          ).toFixed(2)}
-                        </span>
-                      ) : country === "Denmark" ? (
-                        <span>
-                          {Number(
-                            item.discountPrice *
-                              item.quantity *
-                              settings?.conversionRateEuro
-                          ).toFixed(2)}
-                        </span>
-                      ) : (
-                        <span>
-                          {Number(item.discountPrice * item.quantity).toFixed(
-                            2
-                          )}
-                        </span>
-                      )}
+                      {renderPrice(item.discountPrice * item.quantity)}
                       {/* ${item.discountPrice * item.quantity} */}
                     </p>
                   </li>
@@ -272,37 +261,11 @@ function CheckOut() {
               <div className="space-y-2 mt-5">
                 <p className="flex justify-between text-lg font-light text-white">
                   <span>Subtotal price:</span>
-                  <span>
-                    {country === "Bangladesh" && "BDT "}
-                    {country === "Denmark" && "DKK "}
-                    {country !== "Bangladesh" &&
-                      country !== "Denmark" &&
-                      "USD "}
-                    {country === "Bangladesh"
-                      ? Number(
-                          (totalPrice - discount) * settings?.conversionRateBDT
-                        ).toFixed(2)
-                      : country === "Denmark"
-                      ? Number(
-                          (totalPrice - discount) * settings?.conversionRateEuro
-                        ).toFixed(2)
-                      : (totalPrice - discount).toFixed(2)}
-                  </span>
+                 <span>{renderPrice(totalPrice - discount)}</span>
                 </p>
                 <p className="flex justify-between text-sm font-medium text-white">
                   <span>Vat: 10%</span>
-                  <span>
-                    {country === "Bangladesh" && "BDT "}
-                    {country === "Denmark" && "DKK "}
-                    {country !== "Bangladesh" &&
-                      country !== "Denmark" &&
-                      "USD "}
-                    {country === "Bangladesh"
-                      ? Number(vat * settings?.conversionRateBDT).toFixed(2)
-                      : country === "Denmark"
-                      ? Number(vat * settings?.conversionRateEuro).toFixed(2)
-                      : vat.toFixed(2)}
-                  </span>
+                  <span>{renderPrice(vat)}</span>
                 </p>
 
                 {/* <p className="flex justify-between text-sm font-medium text-white">
@@ -312,45 +275,12 @@ function CheckOut() {
                 {discount > 0 && (
                   <p className="flex justify-between text-sm font-medium text-green-400">
                     <span>Discount Applied:</span>
-                    <span>
-                      {country === "Bangladesh" && "BDT "}
-                      {country === "Denmark" && "DKK "}
-                      {country !== "Bangladesh" &&
-                        country !== "Denmark" &&
-                        "USD "}
-                      -
-                      {country === "Bangladesh"
-                        ? Number(
-                            discount * settings?.conversionRateBDT
-                          ).toFixed(2)
-                        : country === "Denmark"
-                        ? Number(
-                            discount * settings?.conversionRateEuro
-                          ).toFixed(2)
-                        : discount.toFixed(2)}
-                    </span>
+                    <span>-{renderPrice(discount)}</span>
                   </p>
                 )}
                 <p className="flex justify-between text-lg font-light text-white">
                   <span>Total price:</span>
-                  <span>
-                    {country === "Bangladesh" && "BDT "}
-                    {country === "Denmark" && "DKK "}
-                    {country !== "Bangladesh" &&
-                      country !== "Denmark" &&
-                      "USD "}
-                    {country === "Bangladesh"
-                      ? Number(
-                          (totalPrice - discount + vat).toFixed(2) *
-                            settings?.conversionRateBDT
-                        ).toFixed(2)
-                      : country === "Denmark"
-                      ? Number(
-                          (totalPrice - discount + vat).toFixed(2) *
-                            settings?.conversionRateEuro
-                        ).toFixed(2)
-                      : vat.toFixed(2)}
-                  </span>
+                   <span>{renderPrice(totalPrice - discount + vat)}</span>
                 </p>
                 {/* <p className="flex justify-between text-lg font-light text-white">
                   <span>Total price:</span>

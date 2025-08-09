@@ -1,14 +1,52 @@
 "use client";
 import Button3 from "@/containers/common/Button3/Button3";
+import euroCountries from "@/Data/Countries";
+import { SettingsContext } from "@/hooks/SettingsProvider";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 function MyCards() {
+  const {country, settings} = useContext(SettingsContext);
   const [cards, setCards] = useState([]);
   const [quantities, setQuantities] = useState({});
   const [productDetails, setProductDetails] = useState([]);
   const [pageDataI, setPageDataI] = useState({});
   const [isNoteVisible, setIsNoteVisible] = useState(false);
+
+   // Helper function to determine currency and conversion rate
+  const getCurrencyInfo = () => {
+    if (country === "Bangladesh") {
+      return {
+        currency: "BDT",
+        rate: settings?.conversionRateBDT || 1,
+        symbol: "BDT ",
+      };
+    } else if (country === "Denmark") {
+      return {
+        currency: "DKK",
+        rate: settings?.conversionRateDanish || 1,
+        symbol: "DKK ",
+      };
+    } else if (euroCountries.includes(country)) {
+      return {
+        currency: "EUR",
+        rate: settings?.conversionRateEuro || 1,
+        symbol: "€",
+      };
+    } else {
+      return {
+        currency: "USD",
+        rate: 1,
+        symbol: "$",
+      };
+    }
+  };
+
+  // Function to render price with currency conversion
+  const renderPrice = (price) => {
+    const { symbol, rate } = getCurrencyInfo();
+    return `${symbol}${Number(price * rate).toFixed(2)}`;
+  };
 
   const toggleNote = () => {
     setIsNoteVisible(!isNoteVisible);
@@ -117,7 +155,7 @@ function MyCards() {
                           {product.name}
                         </p>
                         <p className="font-futura-sans text-xs pt-1">
-                          $ {Number(product.discountPrice).toFixed(2)}
+                           {renderPrice(product.discountPrice)}
                         </p>
                       </div>
                       <div className="flex items-center gap-2">

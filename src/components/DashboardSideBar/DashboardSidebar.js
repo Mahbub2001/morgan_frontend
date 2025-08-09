@@ -117,14 +117,14 @@ const DashboardSidebar = ({ role }) => {
             isSidebarOpen ? "max" : "mini"
           } mt-20 flex flex-col space-y-2 w-full h-[calc(100vh)]`}
         >
-          <SidebarItem
+          {/* <SidebarItem
             icon="dashboard"
             label="Dashboard"
             href="/dash"
             isOpen={isSidebarOpen}
             activeLink={activeLink}
             setActiveLink={setActiveLink}
-          />
+          /> */}
           {role === "admin" && (
             <>
               <SidebarItem
@@ -243,14 +243,14 @@ const DashboardSidebar = ({ role }) => {
                 activeLink={activeLink}
                 setActiveLink={setActiveLink}
               />
-              <SidebarItem
+              {/* <SidebarItem
                 icon="wishlist"
                 label="Check Wishlist"
                 isOpen={isSidebarOpen}
                 href={"/userwishlist"}
                 activeLink={activeLink}
                 setActiveLink={setActiveLink}
-              />
+              /> */}
             </>
           )}
         </div>

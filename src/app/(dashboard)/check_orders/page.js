@@ -9,8 +9,11 @@ import Cookies from "js-cookie";
 import { FaGetPocket } from "react-icons/fa6";
 import React, { useContext, useEffect, useState } from "react";
 import GiveReview from "@/components/GiveReview/GiveReview";
+import { SettingsContext } from "@/hooks/SettingsProvider";
+import euroCountries from "@/Data/Countries";
 
 function CheckOrders() {
+  const { country, settings } = useContext(SettingsContext);
   const [myorders, setMyorders] = useState([]);
   const { user } = useContext(AuthContext);
   const [me, setMe] = useState(null);
@@ -26,6 +29,39 @@ function CheckOrders() {
 
   const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
   const [selectedCancelOrder, setSelectedCancelOrder] = useState(null);
+
+    // Helper function to determine currency and conversion rate
+  const getCurrencyInfo = () => {
+    if (country === "Bangladesh") {
+      return {
+        currency: "BDT",
+        rate: settings?.conversionRateBDT || 1,
+        symbol: "BDT ",
+      };
+    } else if (country === "Denmark") {
+      return {
+        currency: "DKK",
+        rate: settings?.conversionRateDanish || 1,
+        symbol: "DKK ",
+      };
+    } else if (euroCountries.includes(country)) {
+      return {
+        currency: "EUR",
+        rate: settings?.conversionRateEuro || 1,
+        symbol: "€",
+      };
+    } else {
+      return {
+        currency: "USD",
+        rate: 1,
+        symbol: "USD ",
+      };
+    }
+  };
+ const renderPrice = (price) => {
+    const { symbol, rate } = getCurrencyInfo();
+    return `${symbol}${Number(price * rate).toFixed(2)}`;
+  };
 
   const handleViewDetails = (order) => {
     setSelectedOrder(order);
@@ -186,7 +222,7 @@ function CheckOrders() {
                             Price:
                           </dt>
                           <dd className="mt-1.5 text-xs text-gray-900 dark:text-white">
-                            ${order?.totalPrice}
+                           {renderPrice(order?.totalPrice)}
                           </dd>
                         </dl>
                         {order?.status === "pending" && (
@@ -415,7 +451,7 @@ function CheckOrders() {
                                 {item.name} - {item.size} - {item.color}
                               </p>
                               <p className="text-sm text-gray-700 dark:text-gray-300">
-                                {item.price} x {item.quantity}
+                                {renderPrice(item.price)} x {item.quantity}
                               </p>
                             </div>
                           </div>

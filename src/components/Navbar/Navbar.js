@@ -71,7 +71,7 @@ function Navbar() {
       router.push("/login");
       return;
     }
-    router.push("/dash");
+    router.push("/user_profile");
   };
 
   const handleCartclick = () => {
@@ -140,7 +140,7 @@ function Navbar() {
                   >
                     Discover
                   </li>
-                  <li
+                  {/* <li
                     onClick={() => toggleDropdown("journal")}
                     className={`cursor-pointer border-b-2 ${
                       activeDropdown === "journal"
@@ -149,8 +149,8 @@ function Navbar() {
                     } hover:border-black`}
                   >
                     Journal
-                  </li>
-                  <li
+                  </li> */}
+                  {/* <li
                     onClick={() => toggleDropdown("inspiration")}
                     className={`cursor-pointer border-b-2 ${
                       activeDropdown === "inspiration"
@@ -159,7 +159,18 @@ function Navbar() {
                     } hover:border-black`}
                   >
                     New Inspiration
-                  </li>
+                  </li> */}
+                  <Link
+                    href="/strength"
+                    // onClick={() => toggleDropdown("inspiration")}
+                    className={`cursor-pointer border-b-2 ${
+                      activeDropdown === "inspiration"
+                        ? "border-black"
+                        : "border-transparent"
+                    } hover:border-black`}
+                  >
+                    Our Strength
+                  </Link>
                 </ul>
                 {/* Logo */}
                 <Link
