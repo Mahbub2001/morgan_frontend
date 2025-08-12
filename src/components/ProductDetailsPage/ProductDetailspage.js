@@ -543,14 +543,18 @@ function ProductDetailspage({ id, color }) {
           </div>
         </div>
         <hr className="mt-16" />
-        <p className="mt-10 font-extralight tracking-widest mb-6 text-center text-2xl md:text-3xl">
-          RELATED PRODUCTS
-        </p>
-        <div>
-          <div className="mt-10">
-            <RelatedProduct relatedProducts={relatedProducts} />
-          </div>
-        </div>
+        {relatedProducts.length > 0 && (
+          <>
+            <p className="mt-10 font-extralight tracking-widest mb-6 text-center text-2xl md:text-3xl">
+              RELATED PRODUCTS
+            </p>
+            <div>
+              <div className="mt-10">
+                <RelatedProduct relatedProducts={relatedProducts} />
+              </div>
+            </div>
+          </>
+        )}
         <hr className="mt-16" />
         <div className="mt-10">
           <ProductDetailFooter />

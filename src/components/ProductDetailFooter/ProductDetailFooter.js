@@ -8,7 +8,7 @@ function ProductDetailFooter() {
   const features = [
     {
       icon: <CgCheckO />,
-      title: "Crafted in England",
+      title: "Crafted in Bangladesh",
       description: "Made in Small Batches",
     },
     {
@@ -16,15 +16,15 @@ function ProductDetailFooter() {
       title: "Ethically Sourced",
       description: "Natural Veg Tan Leathers",
     },
-    {
-      icon: <LiaShippingFastSolid />,
-      title: "Shipping",
-      description: "Free Shipping on Orders over £200",
-    },
+    // {
+    //   icon: <LiaShippingFastSolid />,
+    //   title: "Shipping",
+    //   description: "Free Shipping on Orders over £200",
+    // },
     {
       icon: <SiAmazonsimpleemailservice />,
       title: "Customer Service",
-      description: "Email info@mhulot.co.uk",
+      description: "Email info@nymorgen.com",
     },
   ];
 
@@ -104,7 +104,7 @@ function ProductDetailFooter() {
           ))}
         </div>
         {/* large screen */}
-        <div className="hidden sm:grid grid-cols-2 lg:grid-cols-4 gap-8 text-center">
+        <div className="hidden sm:grid grid-cols-2 lg:grid-cols-3 gap-8 text-center">
           {features.map((feature, index) => (
             <div key={index}>
               <div className="flex justify-center mb-4">{feature.icon}</div>

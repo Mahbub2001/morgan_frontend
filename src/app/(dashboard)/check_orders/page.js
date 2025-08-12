@@ -172,6 +172,8 @@ useEffect(() => {
     }
     closeCancelModal();
   };
+  console.log(selectedOrder);
+  
 
   return (
     <section className="container mx-auto px-4">
@@ -453,16 +455,16 @@ useEffect(() => {
                             className="flex items-center gap-4 py-2"
                           >
                             <img
-                              src={item.image}
-                              alt={item.name}
+                              src={item?.image}
+                              alt={item?.name}
                               className="w-12 h-12 object-cover rounded-lg"
                             />
                             <div className="flex-1">
                               <p className="text-sm  text-gray-900 dark:text-white">
-                                {item.name} - {item.size} - {item.color}
+                                {item?.name} - {item?.size} - {item?.color}
                               </p>
                               <p className="text-sm text-gray-700 dark:text-gray-300">
-                                {renderPrice(item.price)} x {item.quantity}
+                                {renderPrice(item?.discountPrice)} x {item?.quantity}
                               </p>
                             </div>
                           </div>

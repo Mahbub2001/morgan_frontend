@@ -22,17 +22,24 @@ export default function Home() {
       setLoading(true);
 
       try {
-        const [countryRes, bestRes, settingsRes] = await Promise.all([
-          fetch("http://ip-api.com/json/"),
+        // const [countryRes, bestRes, settingsRes] = await Promise.all([
+        const [bestRes, settingsRes] = await Promise.all([
+          // fetch("http://ip-api.com/json/"),
           fetch(`${process.env.NEXT_PUBLIC_API_URL}/top-sales`),
           fetch(`${process.env.NEXT_PUBLIC_API_URL}/settings`),
         ]);
+        // const [countryRes, bestRes, settingsRes] = await Promise.all([
+        //   fetch("http://ip-api.com/json/"),
+        //   fetch(`${process.env.NEXT_PUBLIC_API_URL}/top-sales`),
+        //   fetch(`${process.env.NEXT_PUBLIC_API_URL}/settings`),
+        // ]);
 
-        const countryData = await countryRes.json();
+        // const countryData = await countryRes.json();
         const bestData = await bestRes.json();
         const settingsData = await settingsRes.json();
 
-        setCountry(countryData.country || "");
+        // setCountry(countryData.country || "");
+        setCountry("America");
         setBest(bestData || []);
         setSettings(settingsData || {});
 
@@ -89,7 +96,7 @@ export default function Home() {
         </div>
       ) : (
         <>
-          <BannerFirstPage settings={settings}/>
+          <BannerFirstPage settings={settings} />
           <div className="text-center mt-20">
             <p className="font-semibold font-sans text-2xl">
               Decadent Copenhagen, a name that stands for luxury, elegance and
@@ -101,13 +108,17 @@ export default function Home() {
               design, intertwined with incredible functionality.
             </p>
           </div>
-          <SelectedFavor best={best} settings={settings} />
+          {best.length > 0 && <SelectedFavor best={best} settings={settings} />}
           <Compromising />
           <SecondBanner />
-          <SelectedSuede promote1={promote1} settings={settings} />
+          {promote1.length > 0 && (
+            <SelectedSuede promote1={promote1} settings={settings} />
+          )}
           <CrossbodyBags />
           <Forside />
-          <Accessories promote2={promote2} settings={settings} />
+          {promote2.length > 0 && (
+            <Accessories promote2={promote2} settings={settings} />
+          )}
           <LandingInsta />
         </>
       )}

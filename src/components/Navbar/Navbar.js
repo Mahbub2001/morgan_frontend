@@ -31,7 +31,6 @@ function Navbar() {
   const [role, setRole] = useState(null);
   const { settings } = useContext(SettingsContext);
   // console.log("settings", settings);
-  
 
   const navbarRef = useRef(null);
 
@@ -160,17 +159,6 @@ function Navbar() {
                   >
                     New Inspiration
                   </li> */}
-                  <Link
-                    href="/strength"
-                    // onClick={() => toggleDropdown("inspiration")}
-                    className={`cursor-pointer border-b-2 ${
-                      activeDropdown === "inspiration"
-                        ? "border-black"
-                        : "border-transparent"
-                    } hover:border-black`}
-                  >
-                    Our Strength
-                  </Link>
                 </ul>
                 {/* Logo */}
                 <Link

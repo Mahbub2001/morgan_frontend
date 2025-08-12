@@ -189,6 +189,7 @@ export const aboutNyItems = [
   { name: "About Ny Morgen", link: "/about" },
   { name: "Our Responsibility", link: "/about/responsibility" },
   { name: "Our Sustainability", link: "/about/sustainability" },
+  { name: "Our Strength", link: "/about/strength" },
   { name: "Contact", link: "/contact" },
 ];
 

@@ -18,9 +18,10 @@ function About() {
           We represent sophisticated and timeless Scandinavian elegance through
           our collections of skillfully crafted leather goods and accessories of
           the finest quality. “Ny Morgen” is a Danish word meaning “New
-          Morning”. Ny Morgen is a symbol of nature, strength, and generosity as
-          depicted in our products, designed at our RRP (SHAKIL & ALIF) studio
-          in Bangladesh.
+          Morning”. Ny Morgen is a symbol of nature, strength and generosity 
+          as depicted in our products, designed at Ny Morgen studio in Bangladesh, 
+          Our team constantly focus on classical and functional design
+          with a distinctly contemporary approach.
         </p>
       </motion.div>
 
@@ -31,8 +32,7 @@ function About() {
         transition={{ delay: 0.5, duration: 1 }}
       >
         <p className="text-gray-600 leading-6 sm:leading-7 text-sm sm:text-base">
-          Our team constantly focuses on classical and functional design with a
-          distinctly contemporary approach. To design Ny Morgen products that
+           To design Ny Morgen products that
           would make women feel empowered and men feel confident in their life.
         </p>
       </motion.div>

@@ -79,7 +79,7 @@ function SelectedSuede({ promote1, settings }) {
 
                 <div className="mt-1">
                   <div className="flex justify-between items-center py-1">
-                    <h1 className="text-1xl font-thin text-gray-700">
+                    <h1 className="text-xs font-thin text-gray-700">
                       {product?.productName}
                     </h1>
                     <p className="text-xs">
@@ -111,7 +111,7 @@ function SelectedSuede({ promote1, settings }) {
                       {country !== "Bangladesh" &&
                         country !== "Denmark" &&
                         !euroCountries.includes(country) && (
-                          <span>$ {product?.askingPrice}</span>
+                          <span>${product?.askingPrice}</span>
                         )}
                     </p>
                   </div>

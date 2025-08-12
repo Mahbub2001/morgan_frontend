@@ -9,12 +9,14 @@ function TopSaleFiveProduct() {
     axios
       .get(`${process.env.NEXT_PUBLIC_API_URL}/top-sales`)
       .then((res) => {
-        setData(res.data);
+        setData(res?.data?.products);
       })
       .catch((err) => {
         // console.log(err);
       });
   }, []);
+  // console.log(data);
+  
 
   return (
     <div className="shadow-md p-4 max-w-full overflow-x-auto">

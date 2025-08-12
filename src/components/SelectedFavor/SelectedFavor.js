@@ -77,7 +77,7 @@ function SelectedFavor({ best, settings }) {
 
                 <div className="mt-1">
                   <div className="flex justify-between items-center py-1">
-                    <h1 className="text-1xl font-thin change-color">
+                    <h1 className="text-xs font-thin change-color">
                       {product?.productName}
                     </h1>
                     <p className="text-xs">
@@ -109,7 +109,7 @@ function SelectedFavor({ best, settings }) {
                       {country !== "Bangladesh" &&
                         country !== "Denmark" &&
                         !euroCountries.includes(country) && (
-                          <span>$ {product?.askingPrice}</span>
+                          <span>${product?.askingPrice}</span>
                         )}
                     </p>
                   </div>

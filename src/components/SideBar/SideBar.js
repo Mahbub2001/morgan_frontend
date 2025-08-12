@@ -164,15 +164,6 @@ const Sidebar = ({ handleCartclick }) => {
                 <Link href="/contact">Contact</Link>
                 <hr className="my-3" />
               </motion.li>
-              <motion.li
-                className="cursor-pointer hover:text-blue-600 font-medium text-sm"
-                onClick={() => setIsSidebarOpen(false)}
-                variants={itemVariants}
-                transition={{ delay: (categories.length + 1) * 0.05 }}
-              >
-                <Link href="/strength">Our Strength</Link>
-                <hr className="my-3" />
-              </motion.li>
             </motion.ul>
           )}
 

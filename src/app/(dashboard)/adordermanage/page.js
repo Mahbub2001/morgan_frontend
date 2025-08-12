@@ -16,6 +16,9 @@ function AdminOrderManagement() {
   const [loading, setLoading] = useState(false);
   const [editedOrders, setEditedOrders] = useState({});
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedOrder, setSelectedOrder] = useState(null);
+
   const fetchOrders = async (page = 1) => {
     setLoading(true);
     try {
@@ -77,6 +80,17 @@ function AdminOrderManagement() {
       [orderId]: newStatus,
     }));
   };
+
+  const handleOpenModal = (order) => {
+    setSelectedOrder(order);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setSelectedOrder(null);
+  };
+
   const saveChanges = async () => {
     const updates = Object.keys(editedOrders).map((id) => ({
       id,
@@ -109,6 +123,13 @@ function AdminOrderManagement() {
     } catch (error) {
       console.error("Error saving changes:", error);
     }
+  };
+
+  const renderPrice = (price) => {
+    return new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD",
+    }).format(price);
   };
 
   loading && <p>Loading...</p>;
@@ -253,13 +274,20 @@ function AdminOrderManagement() {
                     </td>
                     <td className="px-6 py-4">{order?.orderId}</td>
                     <td className="px-6 py-4">{order?.customer_firstName}</td>
-                    <td className="px-6 py-4">{order?.email}</td>
+                    <td className="px-6 py-4">{order?.customer_email}</td>
                     <td className="px-6 py-4">{order?.userId}</td>
-                    <td className="px-6 py-4">Product details</td>
-                    <td className="px-6 py-4">{order?.totalPrice}</td>
+                    <td className="px-6 py-4">
+                      <button
+                        onClick={() => handleOpenModal(order)}
+                        className="text-blue-600 hover:underline"
+                      >
+                        Product details
+                      </button>
+                    </td>
                     <td className="px-6 py-4">
                       <p>{order?.status}</p>
                     </td>
+                    <td className="px-6 py-4">{order?.totalPrice}</td>
                     <td className="px-6 py-4">
                       <select
                         value={editedOrders[order._id] || order.status}
@@ -310,6 +338,102 @@ function AdminOrderManagement() {
             </div>
           )}
         </div>
+        {isModalOpen && (
+          <div
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
+            aria-labelledby="modal-title"
+            role="dialog"
+            aria-modal="true"
+          >
+            <div className="relative w-full max-w-md p-4 bg-white rounded-lg shadow-lg dark:bg-gray-800">
+              {/* Modal Header */}
+              <div className="flex items-start justify-between">
+                <h3 className="text-lg text-center text-gray-900 dark:text-white">
+                  Order Details
+                </h3>
+                <button
+                  onClick={handleCloseModal}
+                  className="ml-auto text-gray-400 hover:text-gray-900 hover:bg-gray-200 p-1.5 rounded-lg dark:hover:bg-gray-700 dark:hover:text-white"
+                >
+                  <span className="sr-only">Close modal</span>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth="1.5"
+                    stroke="currentColor"
+                    className="w-5 h-5"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
+                </button>
+              </div>
+              {/* Modal Body */}
+              <div className="mt-4">
+                {selectedOrder ? (
+                  <div>
+                    <p className="text-xs flex justify-between text-gray-700 dark:text-gray-300">
+                      <span>
+                        <strong>Order ID:</strong> {selectedOrder?.orderId}
+                      </span>
+                      <span>
+                        <strong>Date:</strong>{" "}
+                        {new Date(selectedOrder?.createdAt).toLocaleString()}{" "}
+                      </span>
+                    </p>
+                    <div>
+                      {selectedOrder?.products.map((item, index) => (
+                        <div
+                          key={index}
+                          className="flex items-center gap-4 py-2"
+                        >
+                          <img
+                            src={item?.image}
+                            alt={item?.name}
+                            className="w-12 h-12 object-cover rounded-lg"
+                          />
+                          <div className="flex-1">
+                            <p className="text-sm text-gray-900 dark:text-white">
+                              {item?.name} - {item?.size} - {item?.color}
+                            </p>
+                            <p className="text-sm text-gray-700 dark:text-gray-300">
+                              {renderPrice(item?.discountPrice)} x{" "}
+                              {item?.quantity}
+                            </p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                    <p className="text-sm text-gray-700 dark:text-gray-300 mt-3">
+                      <strong>Status:</strong> {selectedOrder?.status}
+                    </p>
+                    <p className="text-sm text-gray-700 dark:text-gray-300">
+                      <strong>Total:</strong>{" "}
+                      {renderPrice(selectedOrder?.totalPrice)}
+                    </p>
+                  </div>
+                ) : (
+                  <p className="text-sm text-gray-500 dark:text-gray-400">
+                    No order details available.
+                  </p>
+                )}
+              </div>
+              {/* Modal Footer */}
+              <div className="mt-6 flex justify-end">
+                <button
+                  onClick={handleCloseModal}
+                  className="px-4 py-2 text-sm text-white bg-primary-600 rounded-lg hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </AdminRoute>
   );

@@ -7,6 +7,7 @@ import {
   applyActionCode,
   verifyPasswordResetCode,
   confirmPasswordReset,
+  checkActionCode,
 } from "firebase/auth";
 import app from "@/firebase/firebase.config";
 
@@ -41,19 +42,29 @@ const Verify = () => {
     }
   }, []);
 
-  const handleEmailVerification = async (oobCode) => {
-    try {
-      await applyActionCode(auth, oobCode);
-      setSuccess(true);
-      setTimeout(() => {
-        // router.push("/login");
-        router.push("/");
-      }, 3000);
-    } catch (error) {
-      setError("Invalid or expired verification link.");
-    }
-  };
+const handleEmailVerification = async (oobCode) => {
+  try {
+    const info = await checkActionCode(auth, oobCode);
+    const email = info['data'].email; 
 
+    await applyActionCode(auth, oobCode);
+
+    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/${email}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ verified: true }),
+    });
+
+    setSuccess(true);
+    setTimeout(() => {
+      router.push("/login"); 
+    }, 3000);
+  } catch (error) {
+    setError("Invalid or expired verification link.");
+  }
+};
   const verifyPasswordReset = async (oobCode) => {
     try {
       await verifyPasswordResetCode(auth, oobCode);

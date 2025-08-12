@@ -78,13 +78,12 @@ function CheckOut() {
     if (typeof window !== "undefined") {
       const items = JSON.parse(localStorage.getItem("cartItems")) || [];
       setCartItems(items);
-
       const total = items.reduce(
         (sum, item) => sum + item.discountPrice * item.quantity,
         0
       );
       setTotalPrice(total);
-      setVat(total * 0.1);
+      setVat(total * 0.0); //vat add
     }
   }, []);
 
@@ -261,12 +260,12 @@ function CheckOut() {
               <div className="space-y-2 mt-5">
                 <p className="flex justify-between text-lg font-light text-white">
                   <span>Subtotal price:</span>
-                 <span>{renderPrice(totalPrice - discount)}</span>
+                  <span>{renderPrice(totalPrice - discount)}</span>
                 </p>
-                <p className="flex justify-between text-sm font-medium text-white">
+                {/* <p className="flex justify-between text-sm font-medium text-white">
                   <span>Vat: 10%</span>
                   <span>{renderPrice(vat)}</span>
-                </p>
+                </p> */}
 
                 {/* <p className="flex justify-between text-sm font-medium text-white">
                   <span>Vat: 10%</span>
@@ -280,7 +279,7 @@ function CheckOut() {
                 )}
                 <p className="flex justify-between text-lg font-light text-white">
                   <span>Total price:</span>
-                   <span>{renderPrice(totalPrice - discount + vat)}</span>
+                  <span>{renderPrice(totalPrice - discount + vat)}</span>
                 </p>
                 {/* <p className="flex justify-between text-lg font-light text-white">
                   <span>Total price:</span>
@@ -291,11 +290,11 @@ function CheckOut() {
             <div className="relative mt-10 text-white">
               <h3 className="mb-5 text-lg font-light">Support</h3>
               <p className="text-sm font-extralight">
-                +01 653 235 211{" "}
+                +45 91 42 91 64{" "}
                 <span className="font-light">(International)</span>
               </p>
               <p className="mt-1 text-sm font-extralight">
-                support@nanohair.com <span className="font-light">(Email)</span>
+                info@nymorgen.com <span className="font-light">(Email)</span>
               </p>
               <p className="mt-2 text-xs font-medium">
                 Call us now for payment related issues

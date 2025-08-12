@@ -1,5 +1,6 @@
 // components/PriceFilter.js
 "use client";
+import euroCountries from "@/Data/Countries";
 import { SettingsContext } from "@/hooks/SettingsProvider";
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import { Range } from "react-range";

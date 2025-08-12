@@ -56,7 +56,7 @@ function SalesProfit() {
     fetchSales();
   }, []);
 
-  // console.log(data);
+  console.log(salesState);
 
   return (
     <div className="p-6 bg-white rounded-lg shadow-lg">
