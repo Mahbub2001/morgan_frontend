@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 import { toast } from 'react-toastify';
 
 function Login() {
-  const { signin } = useContext(AuthContext);
+  const { login,setUser } = useContext(AuthContext);
   const router = useRouter();
 
   const {
@@ -19,27 +19,36 @@ function Login() {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    const promise = signin(data?.email, data?.password);
-    toast.promise(promise, {
-      pending: "Logging in...",
-      success: "Login Successful! 🎉",
-      error: "Login Failed. Please check your credentials.",
-    });
-    promise
-      .then((result) => {
-        // toast.success("Login Successful.....!");
-        // setLoading(false);
-        setAuthToken(result.user);
-        router.push("/");
-        // navigate(from, { replace: true });
-      })
-      .catch((err) => {
-        // toast.error(err.message);
-        // console.log(err);
-        // setLoading(false);
+  const onSubmit = async (data) => {
+    try {
+      const promise = login(data.email, data.password);
+      
+      toast.promise(promise, {
+        pending: "Logging in...",
+        success: {
+          render({ data }) {
+            return `Welcome back, ${data.firstName}!`;
+          }
+        },
+        error: {
+          render({ data }) {
+            return data.message || "Login failed. Please try again.";
+          }
+        }
       });
+
+      const user = await promise;
+      setUser(user);
+      // console.log(user);
+      if (user) {
+        router.push("/"); 
+      }
+    } catch (error) {
+      // Error is already handled by toast.promise
+      console.error("Login error:", error);
+    }
   };
+
 
   return (
     <div className="flex justify-center items-center min-h-screen pb-72">

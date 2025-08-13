@@ -10,6 +10,7 @@ import TopSaleFiveProduct from "@/components/TopSaleFiveProduct/TopSaleFiveProdu
 import { AuthContext } from "@/hooks/AuthProvider";
 import React, { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import withProtectedRoute from "@/Wrapper/protectedRoute";
 
 function Dash() {
   const { user } = useContext(AuthContext);
@@ -29,10 +30,12 @@ function Dash() {
       });
     }
   }, [user]);
+  // console.log("inside dash "+user);
+  
   return (
     <>
       {loading ? (
-        <div>Loading...</div>
+        <div>Loading...l</div>
       ) : role === "admin" ? (
         <div className="font-futura-sans font-thin">
           <div className="">
@@ -57,4 +60,4 @@ function Dash() {
   );
 }
 
-export default Dash;
+export default withProtectedRoute(Dash);

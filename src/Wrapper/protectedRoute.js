@@ -16,7 +16,7 @@ const withProtectedRoute = (WrappedComponent) => {
 
     useEffect(() => {
       setIsLoading(true);
-      const token = getCookie("ny-token");
+      const token = getCookie("ny-token");      
       if (!token) {
         router.push("/login");
       } else {
@@ -31,8 +31,8 @@ const withProtectedRoute = (WrappedComponent) => {
     return <WrappedComponent {...props} />;
   };
 
-  WithAuthProtection.displayName = `WithProtectedRoute(${
-    WrappedComponent.displayName || WrappedComponent.name || "Component"
+  WithAuthProtection.firstName = `WithProtectedRoute(${
+    WrappedComponent.firstName || WrappedComponent.name || "Component"
   })`;
 
   return WithAuthProtection;

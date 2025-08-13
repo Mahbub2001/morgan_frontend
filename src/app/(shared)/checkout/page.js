@@ -169,7 +169,7 @@ function CheckOut() {
         // payment_method: paymentMethod,
       })
       .then((response) => {
-        console.log(response);
+        // console.log(response);
 
         const redirectUrl = response.data.paymentUrl;
 

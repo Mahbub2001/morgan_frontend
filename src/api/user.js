@@ -2,7 +2,7 @@ import Cookies from "js-cookie";
 
 export const getUserRole = async (email) => {
   const token = Cookies.get("ny-token");
-
+  
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/user/${email}`,
     {

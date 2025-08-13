@@ -65,7 +65,7 @@ function Navbar() {
   };
   const router = useRouter();
   const handleProfileClick = async () => {
-    console.log("user", user);
+
     if (!user) {
       router.push("/login");
       return;

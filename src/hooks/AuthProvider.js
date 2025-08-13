@@ -2,28 +2,16 @@
 
 import React, { useState, useEffect, createContext, useMemo } from "react";
 import Cookies from "js-cookie";
-import {
-  createUserWithEmailAndPassword,
-  getAuth,
-  GoogleAuthProvider,
-  sendEmailVerification,
-  onAuthStateChanged,
-  sendPasswordResetEmail,
-  signInWithEmailAndPassword,
-  signInWithPopup,
-  signOut,
-  updateProfile,
-} from "firebase/auth";
-import app from "../firebase/firebase.config";
+import { useRouter } from "next/navigation";
 
 export const AuthContext = createContext();
-
-const auth = getAuth(app);
-const googleProvider = new GoogleAuthProvider();
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const router = useRouter();
+
+  // Cookie helpers
   const setCookie = (name, value, options = {}) => {
     Cookies.set(name, value, { path: "/", ...options });
   };
@@ -36,148 +24,220 @@ const AuthProvider = ({ children }) => {
     return Cookies.get(name);
   };
 
-  // Create User
-  const createUser = async (email, password) => {
+  // Register new user
+  const register = async (userData) => {
     try {
       setLoading(true);
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/register`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(userData),
+        }
       );
-      return userCredential;
-    } catch (error) {
-      console.error("Error creating user:", error);
-      throw error;
-    } finally {
-      setLoading(false);
-    }
-  };
 
-  const verifyEmail = async () => {
-    try {
-      if (!auth.currentUser) {
-        throw new Error("No user is currently signed in.");
+      if (!response.ok) {
+        throw new Error(await response.text());
       }
-      const actionCodeSettings = {
-        url: `${window.location.origin}/verify?mode=verifyEmail`,
-        handleCodeInApp: true,
-      };
-      await sendEmailVerification(auth.currentUser, actionCodeSettings);
-      // console.log("Verification email sent.");
+
+      const data = await response.json();
+      if (data.token) {
+        setCookie("ny-token", data.token, { expires: 7 });
+      }
+      return data;
     } catch (error) {
-      console.error("Error sending verification email:", error);
+      console.error("Registration error:", error);
       throw error;
+    } finally {
+      setLoading(false);
     }
   };
 
-  // Update User Profile
-  const updateUserProfile = async (name, photo) => {
+  // Login user
+  // In your AuthProvider
+  const login = async (email, password) => {
     try {
       setLoading(true);
-      await updateProfile(auth.currentUser, {
-        displayName: name,
-        photoURL: photo,
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
       });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Login failed");
+      }
+
+      const { token, user } = await response.json();
+
+      setCookie("ny-token", token, {
+        expires: 7,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "strict",
+      });
+
+      setUser(user);
+
+      return user;
     } catch (error) {
-      console.error("Error updating profile:", error);
+      console.error("Login error:", error);
       throw error;
     } finally {
       setLoading(false);
     }
   };
-
-  // Google Sign-In
-  const signInWithGoogle = async () => {
-    try {
-      setLoading(true);
-      const result = await signInWithPopup(auth, googleProvider);
-      const token = await result.user.getIdToken();
-      setCookie("ny-token", token, { expires: 7 });
-      return result;
-    } catch (error) {
-      console.error("Error signing in with Google:", error);
-      throw error;
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // Logout
+  // Logout user
   const logout = async () => {
     try {
       setLoading(true);
-      await signOut(auth);
       removeCookie("ny-token");
       removeCookie("user-role");
+      setUser(null);
+      router.push("/login");
     } catch (error) {
-      console.error("Error signing out:", error);
+      console.error("Logout error:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Verify email
+  const verifyEmail = async (token) => {
+    try {
+      setLoading(true);
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/verify-email?token=${token}`
+      );
+
+      if (!response.ok) {
+        throw new Error(await response.text());
+      }
+
+      const { token: authToken, user } = await response.json();
+      setCookie("ny-token", authToken, { expires: 7 });
+      setUser(user);
+      return user;
+    } catch (error) {
       throw error;
     } finally {
       setLoading(false);
     }
   };
 
-  // Login with Password
-  const signin = async (email, password) => {
+  // Resend verification email
+  const resendVerificationEmail = async (email) => {
     try {
-      // setLoading(true);
-      const userCredential = await signInWithEmailAndPassword(
-        auth,
-        email,
-        password
+      setLoading(true);
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/resend-verification`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email }),
+        }
       );
-      const user = userCredential.user;
-      // console.log(user);
-      
-      if (!user || !user.emailVerified) {
-        await signOut(auth);
-        removeCookie("ny-token");
-        alert(
-          "Email not verified. Please check your inbox to verify your email."
-        );
-      }
-      const token = await user.getIdToken();
-      setCookie("ny-token", token, { expires: 7 });
 
-      return userCredential;
+      if (!response.ok) {
+        throw new Error(await response.text());
+      }
+
+      return await response.json();
     } catch (error) {
       throw error;
     } finally {
-      // setLoading(false);
+      setLoading(false);
     }
   };
 
-  // Reset Password
-  const resetPassword = async (email) => {
+  // Forgot password
+  const forgotPassword = async (email) => {
     try {
-      const actionCodeSettings = {
-        url: `${window.location.origin}/verify?mode=resetPassword`,
-        handleCodeInApp: true,
-      };
-      await sendPasswordResetEmail(auth, email, actionCodeSettings);
-      // console.log("Password reset email sent.");
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/forgot-password`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(await response.text());
+      }
+
+      return await response.json();
     } catch (error) {
-      console.error("Error sending password reset email:", error);
       throw error;
     }
   };
 
-  // Observe Auth State Changes
+  // Reset password
+  const resetPassword = async (token, newPassword) => {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/reset-password`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ token, newPassword }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(await response.text());
+      }
+
+      return await response.json();
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  // Check auth state on initial load
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
-      if (currentUser && currentUser.emailVerified) {
-        // const token = await currentUser.getIdToken();
-        // setCookie("ny-token", token, { expires: 7 });
-        setUser(currentUser);
-      } else {
+    const checkAuth = async () => {
+      try {
+        const token = getCookie("ny-token");
+        if (token) {
+          const response = await fetch(
+            `${process.env.NEXT_PUBLIC_API_URL}/verify`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+
+          if (response.ok) {
+            const userData = await response.json();
+            setUser(userData);
+          } else {
+            removeCookie("ny-token");
+            setUser(null);
+          }
+        }
+      } catch (error) {
+        console.error("Auth verification error:", error);
         removeCookie("ny-token");
         setUser(null);
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
-    });
+    };
 
-    return () => unsubscribe();
+    checkAuth();
   }, []);
 
   const authInfo = useMemo(
@@ -185,14 +245,14 @@ const AuthProvider = ({ children }) => {
       user,
       loading,
       setLoading,
-      createUser,
-      verifyEmail,
-      updateUserProfile,
-      signInWithGoogle,
+      register,
+      login,
       logout,
-      signin,
+      setUser,
+      verifyEmail,
+      resendVerificationEmail,
+      forgotPassword,
       resetPassword,
-      auth,
     }),
     [user, loading]
   );

@@ -22,7 +22,7 @@ function WriteReview({ pageDataI }) {
       comment,
       productId: pageDataI.allData._id,
       color: pageDataI.utility.color,
-      user_name: user.displayName,
+      user_name: user.firstName,
       user_email: user.email,
       helpful: {
         yes: 0,

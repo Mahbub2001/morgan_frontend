@@ -5,10 +5,12 @@ import AuthProvider from "@/hooks/AuthProvider";
 
 export default function RootLayout({ children }) {
   return (
-    <AuthProvider>
+    // <AuthProvider>
+    <>
       <Navbar />
       <div className="min-h-screen mt-40">{children}</div>
       <Footer />
-    </AuthProvider>
+    </>
+    // </AuthProvider>
   );
 }

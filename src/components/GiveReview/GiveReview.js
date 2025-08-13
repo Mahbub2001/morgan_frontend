@@ -40,7 +40,7 @@ function GiveReview({ order }) {
       comment,
       productId: selectedProduct.id,
       color: selectedProduct.color,
-      user_name: user.displayName,
+      user_name: user.firstName,
       user_email: user.email,
       helpful: {
         yes: 0,

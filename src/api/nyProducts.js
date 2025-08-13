@@ -116,7 +116,7 @@ export const fetchReviewEligibility = async (user,pageDataI) => {
     const data = await response.json();
 
     return data;
-    console.log(data);
+    // console.log(data);
   } catch (error) {
     console.error("Error checking eligibility:", error.message);
   }

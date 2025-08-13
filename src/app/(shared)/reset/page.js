@@ -9,7 +9,7 @@ import { setAuthToken } from "@/api/auth";
 import { useRouter } from "next/navigation";
 
 function ResetPassword() {
-  const { resetPassword, setLoading } = useContext(AuthContext);
+  const { forgotPassword, setLoading } = useContext(AuthContext);
   const router = useRouter();
 
   const {
@@ -21,7 +21,7 @@ function ResetPassword() {
   const onSubmit = async (data) => {
     setLoading(true);
     try {
-      await resetPassword(data.email);
+      await forgotPassword(data.email);
       alert("Password reset email sent. Check your inbox.");
       router.push("/login");
     } catch (error) {

@@ -11,7 +11,7 @@ function RootLayout({ children }) {
   // console.log(user);
 
   const [role, setRole] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (user?.email) {
@@ -22,8 +22,6 @@ function RootLayout({ children }) {
       });
     }
   }, [user]);
-
-  // console.log(role);
 
   return (
     <>
@@ -41,7 +39,7 @@ function RootLayout({ children }) {
                 <div className="flex-none flex justify-center">
                   <div className="w-8 h-8 flex ">
                     <img
-                      src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShta_GXR2xdnsxSzj_GTcJHcNykjVKrCBrZ9qouUl0usuJWG2Rpr_PbTDu3sA9auNUH64&usqp=CAU"
+                      src="https://img.icons8.com/?size=100&id=7819&format=png&color=000000"
                       alt="profile"
                       className="shadow rounded-full object-cover"
                     />
@@ -49,7 +47,7 @@ function RootLayout({ children }) {
                 </div>
 
                 <div className="hidden md:block text-sm md:text-md text-black dark:text-white">
-                  {user?.displayName}
+                  {user?.firstName}
                 </div>
               </div>
             </div>

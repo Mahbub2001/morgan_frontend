@@ -2,74 +2,54 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import "../login/login.css";
-import {
-  getAuth,
-  applyActionCode,
-  verifyPasswordResetCode,
-  confirmPasswordReset,
-  checkActionCode,
-} from "firebase/auth";
-import app from "@/firebase/firebase.config";
-
-const auth = getAuth(app);
 
 const Verify = () => {
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
   const [passwordResetMode, setPasswordResetMode] = useState(false);
   const [newPassword, setNewPassword] = useState("");
-  const [oobCode, setOobCode] = useState(null);
+  const [token, setToken] = useState(null);
   const [confirmPassword, setConfirmPassword] = useState("");
   const router = useRouter();
 
   useEffect(() => {
     const queryParams = window.location.search;
     const mode = new URLSearchParams(queryParams).get("mode");
-    const oobCode = new URLSearchParams(queryParams).get("oobCode");
+    const token = new URLSearchParams(queryParams).get("token");
 
-    if (!mode || !oobCode) {
+    if (!mode || !token) {
       setError("Invalid link.");
       return;
     }
 
-    setOobCode(oobCode);
+    setToken(token);
 
     if (mode === "verifyEmail") {
-      handleEmailVerification(oobCode);
+      handleEmailVerification(token);
     } else if (mode === "resetPassword") {
       setPasswordResetMode(true);
-      verifyPasswordReset(oobCode);
     }
   }, []);
 
-const handleEmailVerification = async (oobCode) => {
-  try {
-    const info = await checkActionCode(auth, oobCode);
-    const email = info['data'].email; 
-
-    await applyActionCode(auth, oobCode);
-
-    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/${email}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ verified: true }),
-    });
-
-    setSuccess(true);
-    setTimeout(() => {
-      router.push("/login"); 
-    }, 3000);
-  } catch (error) {
-    setError("Invalid or expired verification link.");
-  }
-};
-  const verifyPasswordReset = async (oobCode) => {
+  const handleEmailVerification = async (token) => {
     try {
-      await verifyPasswordResetCode(auth, oobCode);
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/verify-email?token=${token}`
+      );
+      const data = await response.json();
+
+      if (!response.ok || !data.success) {
+        // Handle error case properly
+        throw new Error(data.message || "Verification failed");
+      }
+
+      setSuccess(true);
+      setTimeout(() => {
+        router.push("/login");
+      }, 3000);
     } catch (error) {
-      setError("Invalid or expired password reset link.");
+      setError("Invalid or expired verification link.");
+      setError(error.message || "Verification failed");
     }
   };
 
@@ -85,13 +65,31 @@ const handleEmailVerification = async (oobCode) => {
         return;
       }
 
-      await confirmPasswordReset(auth, oobCode, newPassword);
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/reset-password`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            token,
+            newPassword,
+          }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(await response.text());
+      }
+
       setSuccess(true);
       setTimeout(() => {
         router.push("/login");
       }, 3000);
     } catch (error) {
       setError("Failed to reset password. Please try again.");
+      console.error("Password reset error:", error);
     }
   };
 
@@ -146,7 +144,13 @@ const handleEmailVerification = async (oobCode) => {
               </div>
             </div>
           ) : (
-            <div>Verifying your email...</div>
+            <div>
+              {error ? (
+                <div className="text-red-500">{error}</div>
+              ) : (
+                <div>Verifying your email...</div>
+              )}
+            </div>
           )}
         </div>
       )}

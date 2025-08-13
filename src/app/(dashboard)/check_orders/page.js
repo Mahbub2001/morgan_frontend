@@ -134,7 +134,7 @@ useEffect(() => {
     if (!selectedCancelOrder) {
       return;
     }
-    console.log(selectedCancelOrder);
+    // console.log(selectedCancelOrder);
     try {
       const token = Cookies.get("ny-token");
 
@@ -172,7 +172,7 @@ useEffect(() => {
     }
     closeCancelModal();
   };
-  console.log(selectedOrder);
+  // console.log(selectedOrder);
   
 
   return (

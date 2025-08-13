@@ -5,11 +5,12 @@ import "../login/login.css";
 import { AuthContext } from "@/hooks/AuthProvider";
 import { useForm } from "react-hook-form";
 import { setAuthToken, setAuthToken1 } from "@/api/auth";
+import { useRouter } from "next/navigation";
 // import { toast } from "react-toastify";
 
 function Register() {
-  const { createUser, updateUserProfile, setLoading, verifyEmail } =
-    useContext(AuthContext);
+   const { register: registerUser, setLoading } = useContext(AuthContext);
+  const router = useRouter();
 
   const {
     register,
@@ -21,36 +22,26 @@ function Register() {
     setLoading(true);
     const { firstName, lastName, email, password } = data;
 
-    const role = "user";
-    const display_url = "";
-
-    data.role = role;
-    data.display_url = display_url;
-
     try {
-      const result = await createUser(email, password);
+      const result = await registerUser({
+        email,
+        password,
+        firstName,
+        lastName
+      });
 
-      setAuthToken1(data);
-      await updateUserProfile(firstName, display_url);
-      await handleEmailVerification();
-      // toast.success("Sign Up Successful");
+      if (result) {
+        router.push("/login");
+        alert("Registration successful! Please check your email to verify your account.");
+      }
     } catch (error) {
       console.error("Error during registration:", error);
+      alert(error.message || "Registration failed. Please try again.");
     } finally {
       setLoading(false);
     }
   };
 
-  const handleEmailVerification = async () => {
-    try {
-      await verifyEmail();
-      // console.log("Verification email sent successfully.");
-      alert("Verification email sent. Please check your inbox.");
-    } catch (error) {
-      console.error("Error sending verification email:", error);
-      alert("Failed to send verification email.");
-    }
-  };
 
   return (
     <div className="flex justify-center items-center min-h-screen pb-72">
