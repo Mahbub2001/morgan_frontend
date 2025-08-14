@@ -18,6 +18,7 @@ import ProductReviews from "../ProductReviews/ProductReviews";
 import { AuthContext } from "@/hooks/AuthProvider";
 import { SettingsContext } from "@/hooks/SettingsProvider";
 import { convertPrice, getCurrencySymbol } from "@/utils/currencyUtils";
+import { X } from "lucide-react";
 function ProductDetailspage({ id, color }) {
   const { country, settings } = useContext(SettingsContext);
   const [data, setData] = useState(null);
@@ -35,7 +36,23 @@ function ProductDetailspage({ id, color }) {
     eligible: false,
     message: "Failed to load review eligibility",
   });
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedIndex, setSelectedIndex] = useState(0);
 
+  const openModal = (image, index) => {
+    setSelectedImage(image);
+    setSelectedIndex(index);
+  };
+
+  const closeModal = () => {
+    setSelectedImage(null);
+  };
+
+  const handleBackdropClick = (e) => {
+    if (e.target === e.currentTarget) {
+      closeModal();
+    }
+  };
   const toggleDrawer = () => {
     setIsDrawerOpen(!isDrawerOpen);
   };
@@ -196,7 +213,26 @@ function ProductDetailspage({ id, color }) {
       imageElements.forEach((el) => observer.unobserve(el));
     };
   }, [pageDataI]);
+  // Add escape key listener
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape" && selectedImage) {
+        closeModal();
+      }
+    };
 
+    if (selectedImage) {
+      document.addEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = "unset";
+    };
+  }, [selectedImage]);
   // console.log(pageDataI?.utility?.numberOfProducts);
 
   const handleChange = (e) => {
@@ -274,11 +310,12 @@ function ProductDetailspage({ id, color }) {
           <div className="flex flex-col gap-4">
             {pageDataI?.utility?.pictures?.map((image, index) => (
               <img
-                className="w-full middle-image"
+                className="w-full middle-image cursor-pointer hover:opacity-90 transition-opacity"
                 key={index}
                 data-index={index}
                 src={image}
                 alt={pageDataI.utility.name}
+                onClick={() => openModal(image, index)}
               />
             ))}
           </div>
@@ -561,6 +598,26 @@ function ProductDetailspage({ id, color }) {
         </div>
         <hr className="mt-16" />
       </div>
+      {selectedImage && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-50 p-4"
+          onClick={handleBackdropClick}
+        >
+          <button
+            onClick={closeModal}
+            className="absolute top-4 right-4 z-60 bg-white bg-opacity-20 hover:bg-opacity-30 rounded-full p-2 transition-all"
+          >
+            <X className="w-6 h-6 text-white" />
+          </button>
+
+          <img
+            src={selectedImage}
+            alt={pageDataI.utility.name}
+            className="max-w-full max-h-full object-contain"
+            onClick={(e) => e.stopPropagation()}
+          />
+        </div>
+      )}
     </div>
   );
 }

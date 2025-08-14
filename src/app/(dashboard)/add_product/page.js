@@ -361,7 +361,7 @@ function AddProduct() {
                       >
                         Product Description
                         <span className="text-xs text-gray-500 ml-1">
-                          (Use '/n' for new paragraphs)
+                          (Use '\n' for new paragraphs)
                         </span>
                       </label>
                       <textarea
@@ -387,7 +387,7 @@ function AddProduct() {
                       >
                         Leather & Care
                         <span className="text-xs text-gray-500 ml-1">
-                          (Use '/n' for new paragraphs)
+                          (Use '\n' for new paragraphs)
                         </span>
                       </label>
                       <textarea

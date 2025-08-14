@@ -56,7 +56,7 @@ const Dropdown = ({ title, items, isVisible, closeDropdown, dropdownRef }) => {
             ))}
           </ul>
         </div>
-        <div>
+        {/* <div>
           <ul className="gap-5 flex justify-center items-center">
             <li className="text-[0.6rem]">
               <p className="text-gray-700 text-sm cursor-pointer hover:border-b-2">
@@ -91,7 +91,7 @@ const Dropdown = ({ title, items, isVisible, closeDropdown, dropdownRef }) => {
               </div>
             </li>
           </ul>
-        </div>
+        </div> */}
       </div>
     </motion.div>
   );

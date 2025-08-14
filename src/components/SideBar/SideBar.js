@@ -12,7 +12,7 @@ import { GoPerson } from "react-icons/go";
 import { useRouter } from "next/navigation";
 import { motion } from "motion/react";
 
-const Sidebar = ({ handleCartclick }) => {
+const Sidebar = ({ settings, handleCartclick }) => {
   const { user, logout } = useContext(AuthContext);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [menuHistory, setMenuHistory] = useState(["main"]);
@@ -98,25 +98,53 @@ const Sidebar = ({ handleCartclick }) => {
 
   return (
     <>
-      <header className="back fixed top-0 left-0 w-full h-16 bg-white shadow-md z-50 flex items-center justify-between px-4 md:px-8">
-        <button
-          className="text-2xl focus:outline-none"
-          onClick={toggleSidebar}
-          aria-label={isSidebarOpen ? "Close Sidebar" : "Open Sidebar"}
-        >
-          {isSidebarOpen ? <AiOutlineClose /> : <AiOutlineMenu />}
-        </button>
-        <Link href="/" className="text-lg font-semibold">
-          Ny Morgen
-        </Link>
-        <button className="text-2xl focus:outline-none">
-          <FiSearch />
-        </button>
+      <header className="fixed top-0 left-0 w-full bg-white shadow-md z-50">
+        {/* Settings banners at the top */}
+        {settings?.firstTopVisible && (
+          <div className="bg-black text-white w-full flex flex-col justify-center items-center">
+            <p className="h-10 flex flex-col justify-center items-center tracking-widest text-xs">
+              {settings.firstTop || "BLACK WEEK - SAVE 20% ON EVERYTHING"}
+            </p>
+          </div>
+        )}
+        {settings?.secondTopVisible && (
+          <div className="bg-gray-100 w-full flex flex-col justify-center items-center text-black">
+            <p className="h-8 flex flex-col justify-center items-center tracking-widest text-xs">
+              {settings.secondTop ||
+                "Free shipping / Christmas gifts are exchanged until 15-01-25 / Easy returns"}
+            </p>
+          </div>
+        )}
+
+        {/* Main header content */}
+        <div className="h-16 flex back bg-black items-center justify-between px-4 md:px-8">
+          <button
+            className="text-2xl focus:outline-none"
+            onClick={toggleSidebar}
+            aria-label={isSidebarOpen ? "Close Sidebar" : "Open Sidebar"}
+          >
+            {isSidebarOpen ? <AiOutlineClose /> : <AiOutlineMenu />}
+          </button>
+          <Link href="/" className="text-lg font-semibold">
+            Ny Morgen
+          </Link>
+          <button className="text-2xl focus:outline-none">
+            <FiSearch />
+          </button>
+        </div>
       </header>
 
       <motion.div
-        className={`fixed top-16 left-0 h-[calc(100%-4rem)] w-72 back shadow-lg z-40 transition-transform duration-300 ${
+        className={`fixed left-0 w-72 back shadow-lg z-40 transition-transform duration-300 ${
           isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+        } ${
+          settings?.firstTopVisible && settings?.secondTopVisible
+            ? "top-[8rem] h-[100%]"
+            : settings?.firstTopVisible
+            ? "top-[6.25rem] h-[100%]"
+            : settings?.secondTopVisible
+            ? "top-[5rem] h-[100%]"
+            : "top-16 h-[100%]"
         }`}
         variants={sidebarVariants}
         initial="hidden"

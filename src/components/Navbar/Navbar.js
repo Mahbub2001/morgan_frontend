@@ -298,8 +298,8 @@ function Navbar() {
                             ))}
                           </div>
                         </div>
-                        <News />
-                        <Latest />
+                        {/* <News />
+                        <Latest /> */}
                       </div>
                     </div>
                   </motion.div>
@@ -340,8 +340,8 @@ function Navbar() {
                         ))}
                       </div>
                     </div>
-                    <News />
-                    <Latest />
+                    {/* <News />
+                    <Latest /> */}
                   </div>
                 </div>
               </div>
@@ -381,15 +381,15 @@ function Navbar() {
                         ))}
                       </div>
                     </div>
-                    <News />
-                    <Latest />
+                    {/* <News />
+                    <Latest /> */}
                   </div>
                 </div>
               </div>
             )}
 
             {activeDropdown === "kids" && (
-              <div className="absolute left-0 right-0 mt-2 back border-b-[1px] py-3">
+              <div className="absolute left-0 right-0 mt-2 back border-b-[1px] py-16">
                 <div className="container mx-auto">
                   <div className="grid grid-cols-12 gap-5">
                     <div className="col-span-8">
@@ -422,8 +422,8 @@ function Navbar() {
                         ))}
                       </div>
                     </div>
-                    <News />
-                    <Latest />
+                    {/* <News />
+                    <Latest /> */}
                   </div>
                 </div>
               </div>
@@ -457,7 +457,7 @@ function Navbar() {
           </div>
         </div>
         <div className="mobile-sidebar">
-          <Sidebar handleCartclick={handleCartclick} />
+          <Sidebar settings={settings} handleCartclick={handleCartclick} />
         </div>
       </div>
 
