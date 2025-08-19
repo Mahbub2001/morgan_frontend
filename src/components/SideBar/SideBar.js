@@ -12,7 +12,17 @@ import { GoPerson } from "react-icons/go";
 import { useRouter } from "next/navigation";
 import { motion } from "motion/react";
 
-const Sidebar = ({ settings, handleCartclick }) => {
+const Sidebar = ({
+  iconVariants,
+  handleSearchSubmit,
+  handleSearchClick,
+  searchQuery,
+  setSearchQuery,
+  showSearchInput,
+  setShowSearchInput,
+  settings,
+  handleCartclick,
+}) => {
   const { user, logout } = useContext(AuthContext);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [menuHistory, setMenuHistory] = useState(["main"]);
@@ -125,12 +135,42 @@ const Sidebar = ({ settings, handleCartclick }) => {
           >
             {isSidebarOpen ? <AiOutlineClose /> : <AiOutlineMenu />}
           </button>
-          <Link href="/" className="text-lg font-semibold">
-            Ny Morgen
-          </Link>
-          <button className="text-2xl focus:outline-none">
-            <FiSearch />
-          </button>
+          {!showSearchInput && (
+            <Link href="/" className="text-lg font-semibold">
+              Ny Morgen
+            </Link>
+          )}
+
+          <div className="relative flex items-center">
+            {showSearchInput && (
+              <motion.form
+                initial={{ width: 0 }}
+                animate={{ width: 200 }}
+                exit={{ width: 0 }}
+                transition={{ duration: 0.3 }}
+                onSubmit={handleSearchSubmit}
+                className="overflow-hidden"
+              >
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Search..."
+                  className="text-black px-2 py-1 rounded w-full focus:outline-none"
+                  autoFocus
+                />
+              </motion.form>
+            )}
+            <motion.button
+              type="button"
+              className="cursor-pointer"
+              onClick={handleSearchClick}
+              variants={iconVariants}
+              whileHover="hover"
+            >
+              <CiSearch />
+            </motion.button>
+          </div>
         </div>
       </header>
 
@@ -172,7 +212,7 @@ const Sidebar = ({ settings, handleCartclick }) => {
                 variants={itemVariants}
                 transition={{ delay: categories.length * 0.05 }}
               >
-                About Ny Morgen
+                Discover
                 <hr className="my-3" />
               </motion.li>
               {/* <motion.li

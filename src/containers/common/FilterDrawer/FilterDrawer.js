@@ -93,6 +93,7 @@ function FilterDrawer({ setFilterParams, filterParams, resetFilter }) {
         price: null,
         size: [],
         typeOfProducts: {},
+        search: "",
       });
     }
   }, [resetFilter, setFilterParams]);
@@ -158,6 +159,7 @@ function FilterDrawer({ setFilterParams, filterParams, resetFilter }) {
               "orange",
               "purple",
               "Dark Chocolate",
+              "Ivory",
             ].map((color, index) => (
               <div
                 key={index}

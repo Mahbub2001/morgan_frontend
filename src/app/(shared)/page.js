@@ -99,13 +99,12 @@ export default function Home() {
           <BannerFirstPage settings={settings} />
           <div className="text-center mt-20">
             <p className="font-semibold font-sans text-2xl">
-              Decadent Copenhagen, a name that stands for luxury, elegance and
-              versatility.
+              NY MORGEN stands for Elegance, Versatility, Reflection
+              of Personality.
             </p>
             <p className="mt-5 font-sans">
-              Subtly sophisticated, not characterized by large logos, but by a
-              unified aesthetic consisting of quality leather <br /> and simple
-              design, intertwined with incredible functionality.
+              To design Ny Morgen products that would make women feel empowered
+              and men feel confident in their life.
             </p>
           </div>
           {best.length > 0 && <SelectedFavor best={best} settings={settings} />}

@@ -20,7 +20,7 @@ function SelectedFavor({ best, settings }) {
       <h2 className="text-2xl font-thin mb-6">Currently Most Favorited</h2>
       <div className="container mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-2 place-items-center">
-          {best.map((product, index) => {
+          {best?.map((product, index) => {
             let validUtility = product?.utilities.find(
               (utility) => utility?.numberOfProducts > 0
             );

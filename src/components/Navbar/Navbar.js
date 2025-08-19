@@ -30,6 +30,8 @@ function Navbar() {
   const [cartDrawer, setCartDrawer] = useState(false);
   const [role, setRole] = useState(null);
   const { settings } = useContext(SettingsContext);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [showSearchInput, setShowSearchInput] = useState(false);
   // console.log("settings", settings);
 
   const navbarRef = useRef(null);
@@ -56,6 +58,30 @@ function Navbar() {
       setActiveDropdown(dropdownName);
     }
   };
+
+  const handleSearchClick = () => {
+    setShowSearchInput(!showSearchInput);
+    if (showSearchInput && searchQuery.trim()) {
+      handleSearchSubmit();
+    }
+  };
+
+  const handleSearchSubmit = (e) => {
+    if (e) e.preventDefault();
+    const trimmedQuery = searchQuery?.trim() || "";
+
+    if (trimmedQuery) {
+      const searchPath = `/allproducts?take=search/${encodeURIComponent(
+        trimmedQuery
+      )}`;
+
+      router.push(searchPath);
+
+      setSearchQuery("");
+      setShowSearchInput(false);
+    }
+  };
+
   const handleLogOut = () => {
     logout()
       .then((result) => {})
@@ -65,7 +91,6 @@ function Navbar() {
   };
   const router = useRouter();
   const handleProfileClick = async () => {
-
     if (!user) {
       router.push("/login");
       return;
@@ -202,7 +227,36 @@ function Navbar() {
                       <FiLogOut />
                     </motion.div>
                   )}
-                  {/* <CiSearch className="cursor-pointer" /> */}
+                  <div className="relative flex items-center">
+                    {showSearchInput && (
+                      <motion.form
+                        initial={{ width: 0 }}
+                        animate={{ width: 200 }}
+                        exit={{ width: 0 }}
+                        transition={{ duration: 0.3 }}
+                        onSubmit={handleSearchSubmit}
+                        className="overflow-hidden"
+                      >
+                        <input
+                          type="text"
+                          value={searchQuery}
+                          onChange={(e) => setSearchQuery(e.target.value)}
+                          placeholder="Search..."
+                          className="text-black px-2 py-1 rounded w-full focus:outline-none"
+                          autoFocus
+                        />
+                      </motion.form>
+                    )}
+                    <motion.button
+                      type="button"
+                      className="cursor-pointer"
+                      onClick={handleSearchClick}
+                      variants={iconVariants}
+                      whileHover="hover"
+                    >
+                      <CiSearch />
+                    </motion.button>
+                  </div>
                   {/* <button className="cursor-pointer" onClick={handleCartclick}>
                     <FaShoppingBag />
                   </button>
@@ -457,7 +511,17 @@ function Navbar() {
           </div>
         </div>
         <div className="mobile-sidebar">
-          <Sidebar settings={settings} handleCartclick={handleCartclick} />
+          <Sidebar
+            iconVariants={iconVariants}
+            handleSearchSubmit={handleSearchSubmit}
+            handleSearchClick={handleSearchClick}
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+            showSearchInput={showSearchInput}
+            setShowSearchInput={setShowSearchInput}
+            settings={settings}
+            handleCartclick={handleCartclick}
+          />
         </div>
       </div>
 

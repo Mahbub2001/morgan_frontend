@@ -31,6 +31,7 @@ function AllProducts() {
   const [products, setProducts] = useState([]);
   const [reset, setReset] = useState(false);
   const taking = searchParams.get("take");
+
   const [filterParams, setFilterParams] = useState({
     sortPar: "",
     availability: [],
@@ -38,6 +39,7 @@ function AllProducts() {
     price: null,
     size: [],
     typeOfProducts: {},
+    search: "",
   });
 
   const handleLayoutChange = useCallback((newLayout) => {
@@ -59,6 +61,7 @@ function AllProducts() {
       price: null,
       size: [],
       typeOfProducts: {},
+      search: "",
     });
     setReset((prev) => !prev);
   }, []);
@@ -86,6 +89,20 @@ function AllProducts() {
               },
             },
           },
+          search: "",
+        };
+
+        setFilterParams(newFilterParams);
+
+        const filteredProducts = await fetchProducts(newFilterParams);
+        setProducts(filteredProducts);
+      } else if (taking && taking.startsWith("search/")) {
+        // Case: search/keyword
+        const searchQuery = taking.replace("search/", "");
+
+        const newFilterParams = {
+          ...filterParams, // keep current filters
+          search: searchQuery,
         };
 
         setFilterParams(newFilterParams);
@@ -99,7 +116,7 @@ function AllProducts() {
     };
 
     fetchInitialProducts();
-  }, [taking]);
+  }, [taking, search]);
 
   useEffect(() => {
     const fetchFilteredProducts = async () => {
@@ -111,6 +128,15 @@ function AllProducts() {
 
     fetchFilteredProducts();
   }, [filterParams]);
+
+  useEffect(() => {
+  const fetchFilteredProducts = async () => {
+    const filteredProducts = await fetchProducts(filterParams || {});
+    setProducts(filteredProducts);
+  };
+
+  fetchFilteredProducts();
+}, [filterParams]);
 
   // console.log(filterParams);
 
@@ -152,6 +178,9 @@ function AllProducts() {
         return <Products1 products={products} />;
     }
   }, [layout, products]);
+
+  console.log(filterParams);
+  
 
   return (
     <div className="-mt-20 lg:mt-24 xl:mt-20">
@@ -211,7 +240,10 @@ function AllProducts() {
               </button>
               {isOpenSort && (
                 <div className="absolute top-full mt-1 z-50 w-40">
-                  <SortByDrawer setFilterParams={setFilterParams} setSortParams={setSortParams} />
+                  <SortByDrawer
+                    setFilterParams={setFilterParams}
+                    setSortParams={setSortParams}
+                  />
                 </div>
               )}
             </div>

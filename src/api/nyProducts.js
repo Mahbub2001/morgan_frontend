@@ -44,6 +44,10 @@ export const fetchProducts = async (filterParams = {}) => {
       queryParams.append("sortPar", filterParams.sortPar);
     }
 
+    if (filterParams.search && filterParams.search.trim() !== "") {
+      queryParams.append("search", filterParams.search.trim());
+    }
+
     // console.log("queryParams", queryParams.toString());
 
     const response = await fetch(
