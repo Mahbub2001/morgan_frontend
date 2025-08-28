@@ -102,6 +102,7 @@ function ProductDetailspage({ id, color }) {
           pageDataI.allData.productName,
           pageDataI.allData.category,
           pageDataI.allData.subCategory,
+          pageDataI.allData.person,
           8
         );
         if (relatedProductsData) {
@@ -583,7 +584,7 @@ function ProductDetailspage({ id, color }) {
         {relatedProducts.length > 0 && (
           <>
             <p className="mt-10 font-extralight tracking-widest mb-6 text-center text-2xl md:text-3xl">
-              RELATED PRODUCTS
+              You Might Also Like
             </p>
             <div>
               <div className="mt-10">

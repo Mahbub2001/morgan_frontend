@@ -86,7 +86,7 @@ const RelatedProductSlider = ({ productInfo, pictures }) => {
                     }}
                     src={hoveredIndex === index ? src[1] : src[0]}
                     alt={`Slide ${index + 1}`}
-                    className="w-full h-full object-cover rounded-sm shadow-sm"
+                    className="w-full h-[25rem] object-cover rounded-sm shadow-sm"
                   />
                   {product?.discount > 0 && (
                     <div

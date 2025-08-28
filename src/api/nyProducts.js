@@ -79,13 +79,16 @@ export const fetchRelatedProducts = async (
   productName,
   category,
   subCategory,
+  person,
   limit
 ) => {
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/related-products?productName=${productName}&category=${category}&subCategory=${subCategory}&limit=${limit}`
+      `${process.env.NEXT_PUBLIC_API_URL}/related-products?productName=${productName}&category=${category}&subCategory=${subCategory}&person=${person}&limit=${limit}`
     );
     const data = await response.json();
+    console.log(data);
+    
     return data;
   } catch (error) {
     console.error("Error fetching related products:", error);
