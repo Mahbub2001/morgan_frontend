@@ -20,13 +20,20 @@ function Compromising() {
             Morgen - Classic, refined, uncompromising.
           </h3>
           <p className="font-sans text-sm md:text-xl mt-2 font-light text-justify">
-            The woman who chooses a Decadent bag uncompromisingly goes for a <br/>
-            logo-free and stylish expression. For her, it is more than an<br/>
-            accessory; it is an investment in timeless design and exceptional<br/>
-            craftsmanship. NY's bags are created to follow her through the<br/>
-            changing seasons and everyday needs, where function and design merge<br/>
-            in harmonious balance. With their refined and unique details, the<br/>
-            bags pay homage to her sense of quality and classic aesthetics.<br/>
+            A woman who selects a Ny Morgen bag embraces a sophisticated and{" "}
+            <br />
+            understated style, free from logos yet rich in character. For her,{" "}
+            <br />
+            it is not just an accessory but a lasting investment in timeless{" "}
+            <br />
+            design and masterful craftsmanship. Each NY bag is thoughtfully
+            <br />
+            designed to accompany her through shifting seasons and daily life,{" "}
+            <br />
+            where practicality and elegance come together in perfect harmony.{" "}
+            <br />
+            With their distinctive, refined details, the bags reflect her <br />
+            appreciation for quality and enduring aesthetics. <br />
           </p>
         </div>
       </div>
