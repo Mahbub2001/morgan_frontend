@@ -37,10 +37,10 @@ export default function Home() {
         // const countryData = await countryRes.json();
         const bestData = await bestRes.json();
         const settingsData = await settingsRes.json();
-
+        // console.log(bestData?.products);
         // setCountry(countryData.country || "");
         setCountry("America");
-        setBest(bestData || []);
+        setBest(bestData?.products || []);
         setSettings(settingsData || {});
 
         const promote1Ids = settingsData?.promote1?.checkedId?.length
