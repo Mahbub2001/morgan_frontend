@@ -1,8 +1,50 @@
-'use client'
-import React from "react";
+"use client";
+import React, { useState, useEffect } from "react";
 import { motion } from "motion/react";
 
 function Sustainability() {
+  const [content, setContent] = useState({
+    title: "Our Sustainability",
+    paragraph1:
+      "Sustainability is so our style. We make the products you love in the most responsible way, from using green energy sources to monitoring our day-to-day practices including packaging and transport. Every step we make helps to protect the future of our planet.",
+    paragraph2:
+      "We always have our finger on the pulse of how we can make positive changes in our business and encourage change elsewhere. Ethically,environmentally, and socially. This makes a big difference in how we design, source, manufacture, and sell our products.",
+    paragraph3:
+      "Ny Morgen deeply associates with the great Nobel Peace Prize winner Prof. Muhammad Yunus, offering his vision of an emerging new economic system in his new book,A World of Three Zeros: “Zero Poverty, Zero Unemployment, and Zero Net Carbon Emissions”.",
+    quote1: "“Every step we take contributes to a brighter future.”",
+  });
+
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    fetchAboutUsContent();
+  }, []);
+
+  const fetchAboutUsContent = async () => {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/sustainability`
+      );
+      if (response.ok) {
+        const data = await response.json();
+        if (data.title) {
+          setContent(data);
+        }
+      }
+    } catch (error) {
+      console.error("Error fetching about us content:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  if (isLoading) {
+    return (
+      <div className="bg-gray-50 p-6 sm:p-8 md:p-12 mx-auto my-8 sm:my-12 md:my-16 rounded-lg shadow-lg max-w-full sm:max-w-lg md:max-w-3xl -mt-20 lg:mt-24 xl:mt-20 flex justify-center items-center h-64">
+        <div className="text-xl">Loading...</div>
+      </div>
+    );
+  }
   return (
     <div className="bg-white p-6 sm:p-8 md:p-12 mx-auto my-8 sm:my-12 md:my-16 rounded-lg shadow-lg max-w-full sm:max-w-lg md:max-w-3xl -mt-20 lg:mt-24 xl:mt-20">
       <motion.div
@@ -12,13 +54,10 @@ function Sustainability() {
         transition={{ duration: 1 }}
       >
         <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800 mb-6">
-          Sustainability
+          {content?.title}
         </h1>
         <p className="text-gray-600 leading-6 sm:leading-7 text-sm sm:text-base">
-          Sustainability is so our style. We make the products you love in the
-          most responsible way, from using green energy sources to monitoring
-          our day-to-day practices including packaging and transport. Every step
-          we make helps to protect the future of our planet.
+          {content?.paragraph1}
         </p>
       </motion.div>
 
@@ -29,10 +68,7 @@ function Sustainability() {
         transition={{ delay: 0.5, duration: 1 }}
       >
         <p className="text-gray-600 leading-6 sm:leading-7 text-sm sm:text-base">
-          We always have our finger on the pulse of how we can make positive
-          changes in our business and encourage change elsewhere. Ethically,
-          environmentally, and socially. This makes a big difference in how we
-          design, source, manufacture, and sell our products.
+          {content?.paragraph2}
         </p>
       </motion.div>
 
@@ -43,10 +79,7 @@ function Sustainability() {
         transition={{ delay: 1, duration: 1 }}
       >
         <p className="text-gray-600 leading-6 sm:leading-7 text-sm sm:text-base">
-          Ny Morgen deeply associates with the great Nobel Peace Prize winner
-          Prof. Muhammad Yunus, offering his vision of an emerging new economic
-          system in his new book, <em>A World of Three Zeros</em>: “Zero
-          Poverty, Zero Unemployment, and Zero Net Carbon Emissions”.
+          {content?.paragraph3}
         </p>
       </motion.div>
 
@@ -57,7 +90,7 @@ function Sustainability() {
         transition={{ delay: 1.5, duration: 1 }}
       >
         <p className="italic text-gray-500 text-sm sm:text-base">
-          “Every step we take contributes to a brighter future.”
+          {content?.quote1}
         </p>
       </motion.div>
     </div>

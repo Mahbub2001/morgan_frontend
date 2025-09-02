@@ -56,7 +56,7 @@ function Strength() {
         </div>
       </section>
 
-      <section className="max-w-6xl mx-auto mb-16 bg-amber-50 rounded-xl p-8 sm:p-10">
+      <section className="max-w-6xl mx-auto mb-16 bg-amber-50 rounded-xl p-8 sm:p-10 overflow-hidden">
         <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-6">
           Diversifying Sourcing: Unlocking Leather Industry Potential
         </h2>

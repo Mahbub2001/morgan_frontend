@@ -215,6 +215,30 @@ const DashboardSidebar = ({ role }) => {
                 activeLink={activeLink}
                 setActiveLink={setActiveLink}
               /> */}
+                <SidebarItem
+                icon="product_list"
+                label="About Us"
+                isOpen={isSidebarOpen}
+                href={"/adminaboutus"}
+                activeLink={activeLink}
+                setActiveLink={setActiveLink}
+              />
+                <SidebarItem
+                icon="product_list"
+                label="Responsibility"
+                isOpen={isSidebarOpen}
+                href={"/adminresponsibility"}
+                activeLink={activeLink}
+                setActiveLink={setActiveLink}
+              />
+                <SidebarItem
+                icon="product_list"
+                label="Sustainability"
+                isOpen={isSidebarOpen}
+                href={"/adminsustainability"}
+                activeLink={activeLink}
+                setActiveLink={setActiveLink}
+              />
               <SidebarItem
                 icon="admin_roles"
                 label="Admin Roles"
