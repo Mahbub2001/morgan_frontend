@@ -54,6 +54,9 @@ function ProductDetailspage({ id, color }) {
     }
   };
   const toggleDrawer = () => {
+    if(pageDataI?.utility?.numberOfProducts == 0){
+      return;
+    }
     setIsDrawerOpen(!isDrawerOpen);
   };
   useEffect(() => {
@@ -248,12 +251,12 @@ function ProductDetailspage({ id, color }) {
   };
 
   const increment = () => {
-    const maxQuantity = pageDataI?.utility?.numberOfProducts || 50;
+    const maxQuantity = pageDataI?.utility?.numberOfProducts;
     setQuantity((prev) => Math.min(prev + 1, maxQuantity));
   };
 
   const decrement = () => {
-    setQuantity((prev) => Math.max(prev - 1, 1));
+    setQuantity((prev) => Math.max(prev - 1, 0));
   };
 
   const handleBlur = () => {
