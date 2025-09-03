@@ -89,7 +89,7 @@ function ProductReviews({ pageDataI, eligibleDat }) {
 
   return (
     <section>
-      <div className="bg-white antialiased dark:bg-gray-900 ">
+      <div className="bg-white antialiased dark:bg-gray-900 overflow-hidden">
         <div className="mx-auto max-w-screen-xl px-4 2xl:px-0">
           <div className="md:flex items-center gap-2">
             <h2 className="text-2xl font-semibold text-gray-900 dark:text-white">
